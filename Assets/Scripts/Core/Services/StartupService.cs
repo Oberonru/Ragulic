@@ -15,7 +15,7 @@ namespace Core.Services
         public void Initialize()
         {
 #if UNITY_EDITOR
-            SceneManager.LoadScene("Boot");
+            SceneManager.LoadScene("Level_1");
 #endif
 
             Application.targetFrameRate = _frameRate;
