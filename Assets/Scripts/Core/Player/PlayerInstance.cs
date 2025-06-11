@@ -1,16 +1,16 @@
-using System;
 using Core.Configs.Player;
 using Core.Player.Components;
+using Unity.Collections;
 using UnityEngine;
 using Zenject;
 
 namespace Core.Player
 {
     [RequireComponent(typeof(PlayerMovement))]
-    public class PlayerInstance : MonoBehaviour
+    public class PlayerInstance : MonoBehaviour, IPlayerInstance
     {
         [Inject] private PlayerConfig _playerStats;
-        [SerializeField] private PlayerMovement _movement;
+        [SerializeField, ReadOnly] private PlayerMovement _movement;
 
         public PlayerConfig Stats => _playerStats;
         
