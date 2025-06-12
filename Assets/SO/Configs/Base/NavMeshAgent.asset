@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdf23a6f1cb64491abf92d8a4c64454c, type: 3}
-  m_Name: NavMesh
+  m_Name: NavMeshAgent
   m_EditorClassIdentifier: 
   _agentTypeId: 0
-  _baseOffset: 0
+  _baseOffset: 0.5
   _angularSpeed: 120
   _acceleration: 8
-  _autoBracking: 0
+  _autoBracking: 1
   _radius: 0.5
   _height: 1
   _quality: 4
   _priority: 50
-  _autoTraverseOffMeshLink: 0
-  _autoRepath: 0
+  _autoTraverseOffMeshLink: 1
+  _autoRepath: 1

@@ -1,6 +1,7 @@
 using Core.BaseComponents;
 using Core.Enemies.Components;
 using Core.Enemies.SO;
+using Unity.Collections;
 using UnityEngine;
 
 namespace Core.Enemies
@@ -8,8 +9,8 @@ namespace Core.Enemies
     public class EnemyInstance : MonoBehaviour
     {
         [SerializeField] private EnemyConfig _enemyStats;
-        [SerializeField] private HealthComponent _health;
-        [SerializeField] private EnemyNavMesh _enemyNavMesh;
+        [SerializeField, ReadOnly] private HealthComponent _health;
+        [SerializeField, ReadOnly] private EnemyNavMesh _enemyNavMesh;
 
         public EnemyConfig EnemyStats => _enemyStats;
         

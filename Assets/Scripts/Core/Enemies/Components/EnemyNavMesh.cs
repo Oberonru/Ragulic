@@ -1,4 +1,5 @@
 using Core.Configs.Enemies;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -10,8 +11,8 @@ namespace Core.Enemies.Components
         [Inject] private AIConfig _aiConfig;
         [Inject] private NavMeshAgentConfig _navMeshAgentConfig;
 
-        [SerializeField] private EnemyInstance _enemyInstance;
-        [SerializeField] private NavMeshAgent _agent;
+        [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;
+        [SerializeField, ReadOnly] private NavMeshAgent _agent;
 
         private float _stoppingDistance;
 
