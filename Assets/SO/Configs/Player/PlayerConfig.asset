@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539625f85e3549288647c487e15e1610, type: 3}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _name: 
+  _description: 
   _speed: 5
+  _health: 3
   _rotationSpeed: 4
