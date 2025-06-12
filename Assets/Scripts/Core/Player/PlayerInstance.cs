@@ -1,7 +1,7 @@
 using System;
 using Core.BaseComponents;
-using Core.Configs.Player;
 using Core.Player.Components;
+using Core.Player.SO;
 using Unity.Collections;
 using UnityEngine;
 using Zenject;

@@ -1,7 +1,8 @@
+using Core.Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Core.Configs.Player
+namespace Core.Player.SO
 {
     [CreateAssetMenu(menuName = "Configs/PlayerConfig", fileName = "PlayerConfig")]
     public class PlayerConfig : LifeEntityConfig

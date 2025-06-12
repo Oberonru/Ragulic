@@ -1,5 +1,5 @@
 using Core.BaseComponents;
-using Core.Configs.Player;
+using Core.Player.SO;
 
 namespace Core.Player
 {
