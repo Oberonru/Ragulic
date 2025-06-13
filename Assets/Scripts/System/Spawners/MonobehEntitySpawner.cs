@@ -3,7 +3,7 @@ using Zenject;
 
 namespace System.Spawners
 {
-    public abstract class EntitySpawner<TInterface, TImplementation> : MonoInstaller
+    public abstract class MonobehEntitySpawner<TInterface, TImplementation> : MonoInstaller
         where TImplementation : Component, TInterface
     {
         [SerializeField] private TImplementation _prefab;

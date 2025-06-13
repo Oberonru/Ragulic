@@ -615,7 +615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 1103370513}
+  - {fileID: 1103370514}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -658,7 +658,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1103370512}
-  - component: {fileID: 1103370513}
+  - component: {fileID: 1103370514}
   m_Layer: 0
   m_Name: PlayerSpawner
   m_TagString: Untagged
@@ -681,7 +681,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 918517295}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1103370513
+--- !u!114 &1103370514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -690,11 +690,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1103370511}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 353fbcd856864ba192cd9879651d5915, type: 3}
+  m_Script: {fileID: 11500000, guid: 355b89459efd4514a40f8366a8e3198e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 4758399987441773579, guid: 4346f387cb5584c10a4f723081cffdb9, type: 3}
+  _prefab: {fileID: 7373869427491323475, guid: 4346f387cb5584c10a4f723081cffdb9, type: 3}
   _spawnPoint: {fileID: 1547316925}
+  _isSingle: 1
 --- !u!1 &1231607572
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,7 +881,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1547316925}
   m_Layer: 0
-  m_Name: ' Point'
+  m_Name: Spawn Point
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
