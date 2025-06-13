@@ -71,7 +71,7 @@ namespace Core.Enemies.Components
             _agent.autoRepath = _navMeshAgentConfig.AutoRepath;
         }
 
-        private void Stop()
+        public void Stop()
         {
             if (enabled)
             {

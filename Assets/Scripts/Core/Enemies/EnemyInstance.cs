@@ -12,6 +12,8 @@ namespace Core.Enemies
         [SerializeField, ReadOnly] private HealthComponent _health;
         [SerializeField, ReadOnly] private EnemyNavMesh _enemyNavMesh;
 
+        public EnemyNavMesh EnemyNavMesh => _enemyNavMesh;
+        
         public EnemyConfig EnemyStats => _enemyStats;
         
         private void Awake()
