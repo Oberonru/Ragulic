@@ -4,9 +4,9 @@ namespace Core.BaseComponents
 {
     public interface IHealthComponent
     {
-        bool IsAllive { get;  }
+        bool IsAllive { get; }
         int MaxHealth { get; set; }
-        int CurrentHealth { get; }
+        int CurrentHealth { get; set; }
         ISubject<object> OnHit { get; }
         ISubject<int> OnHealthChanged { get; }
         ISubject<Unit> OnDead { get; }

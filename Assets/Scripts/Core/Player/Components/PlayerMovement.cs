@@ -1,3 +1,4 @@
+using Core.Enemies;
 using UnityEngine;
 
 namespace Core.Player.Components
@@ -27,11 +28,22 @@ namespace Core.Player.Components
         {
             _horizontal = Input.GetAxis("Horizontal");
             _vertical = Input.GetAxis("Vertical");
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                TestAttack();
+            }
         }
 
         private void OnValidate()
         {
             _player ??= GetComponent<PlayerInstance>();
+        }
+
+        private void TestAttack()
+        {
+            var enemy = FindFirstObjectByType<EnemyInstance>();
+            enemy?.HealthComponent.TakeDamage(10);
         }
     }
 }

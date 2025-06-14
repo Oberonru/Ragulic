@@ -12,18 +12,20 @@ namespace Core.Enemies
         [SerializeField, ReadOnly] private HealthComponent _health;
         [SerializeField, ReadOnly] private EnemyNavMesh _enemyNavMesh;
 
+        public HealthComponent HealthComponent => _health;
         public EnemyNavMesh EnemyNavMesh => _enemyNavMesh;
-        
         public EnemyConfig EnemyStats => _enemyStats;
         
         private void Awake()
         {
             _health.MaxHealth = _enemyStats.Health;
+            _health.CurrentHealth = _health.MaxHealth;
         }
 
         private void OnValidate()
         {
             if (_health is null) GetComponent<HealthComponent>();
+            if (_enemyNavMesh is null) GetComponent<EnemyNavMesh>();
         }
     }
 }
