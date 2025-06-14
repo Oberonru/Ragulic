@@ -1,9 +1,8 @@
-using System.UI;
 using Core.BaseComponents;
 using UniRx;
 using UnityEngine;
 
-namespace Core.Enemies.UI
+namespace System.UI
 {
     public class HealthBar : MonoBehaviour
     {
