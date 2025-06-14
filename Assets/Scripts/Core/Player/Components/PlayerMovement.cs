@@ -43,7 +43,7 @@ namespace Core.Player.Components
         private void TestAttack()
         {
             var enemy = FindFirstObjectByType<EnemyInstance>();
-            enemy?.HealthComponent.TakeDamage(10);
+            enemy?.HealthComponent.TakeDamage(1);
         }
     }
 }
