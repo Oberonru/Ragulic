@@ -12,7 +12,7 @@ namespace Core.Player.Components
 
         private void FixedUpdate()
         {
-            var moveDirection = new Vector3(-_vertical, 0, _horizontal);
+            var moveDirection = new Vector3(_horizontal, 0, _vertical);
 
             if (moveDirection.magnitude > 0.1f)
             {

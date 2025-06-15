@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Interfaces;
 using System.Linq;
 using System.StateMachineSystem.SO;
 using UnityEngine;
@@ -9,14 +10,41 @@ namespace System.StateMachineSystem
     {
         [SerializeField] private StateContainer<T> _stateContainer;
 
-        private Dictionary<Type, StateInstance<T>> _states;
+        private Dictionary<Type, StateInstance<T>> _states = new();
         private StateInstance<T> _activeState;
         private T _owner;
-        
+
 
         private void Awake()
         {
             MapInitialize();
+        }
+
+        protected void Start()
+        {
+            SetDefaultState();
+        }
+
+        private void FixedUpdate()
+        {
+            if (_activeState != null)
+            {
+                if (_activeState is IFixedUpdate stateFixedUpdate)
+                {
+                    stateFixedUpdate.FixedUpdate();
+                }
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (_activeState != null)
+            {
+                if (_activeState is IDrawGizmos drawGizmos)
+                {
+                    drawGizmos.DrawGizmos();
+                }
+            }
         }
 
         private void MapInitialize()

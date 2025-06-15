@@ -16,6 +16,7 @@ namespace Core.Player
         [SerializeField, ReadOnly] private PlayerMovement _movement;
         [SerializeField, ReadOnly] private HealthComponent _health;
 
+        public Transform Transform => transform;
         public PlayerConfig Stats => _playerStats;
         public IHealthComponent Health => _health;
 

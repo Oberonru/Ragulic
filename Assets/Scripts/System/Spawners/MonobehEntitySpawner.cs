@@ -1,3 +1,4 @@
+using System.Interfaces;
 using UnityEngine;
 using Zenject;
 
@@ -14,13 +15,13 @@ namespace System.Spawners
         {
             var instance = this.Container.InstantiatePrefabForComponent<TImplementation>(_prefab,
                 _prefab.transform.position,
-                _prefab.transform.rotation, _spawnPoint);
+                _prefab.transform.rotation, _spawnPoint) as TImplementation;
 
             if (_isSingle)
             {
-                this.Container.Bind<TInterface>().FromInstance(instance).AsSingle();
+                this.Container.Bind<TInterface>().To<TImplementation>().FromInstance(instance).AsSingle();
             }
-            else this.Container.Bind<TInterface>().FromInstance(instance);
+            else this.Container.Bind<TInterface>().To<TImplementation>().FromInstance(instance);
         }
     }
 }

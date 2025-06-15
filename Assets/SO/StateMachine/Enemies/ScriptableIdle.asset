@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9cebda6d4cd41cbb5aa5b4fd7e4c229, type: 3}
-  m_Name: AIConfig
+  m_Script: {fileID: 11500000, guid: 6e0ff3885e1044e8952f88f798954010, type: 3}
+  m_Name: ScriptableIdle
   m_EditorClassIdentifier: 
-  _minStoppingDistance: 1.5
-  _maxStoppingDistance: 3
-  _agressiveRadius: 3
-  _detectionRadius: 1

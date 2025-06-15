@@ -14,6 +14,8 @@ namespace Core.Enemies.Components
         [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;
         [SerializeField, ReadOnly] private NavMeshAgent _agent;
 
+        public AIConfig AI => _aiConfig;
+        
         private float _stoppingDistance;
 
         private void Awake()

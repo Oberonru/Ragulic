@@ -1,6 +1,6 @@
 using System.StateMachineSystem;
 
-namespace Core.Enemies.EnemyStateMachine
+namespace Core.Enemies.Components
 {
     public class EnemyStateMachine : StateMachineBase<EnemyInstance> 
     {

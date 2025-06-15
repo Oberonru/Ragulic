@@ -1,8 +1,9 @@
 using Core.BaseComponents;
+using Core.Configs.Enemies;
 using Core.Enemies.Components;
-using Core.Enemies.SO;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Enemies
 {
@@ -10,11 +11,14 @@ namespace Core.Enemies
     {
         [SerializeField] private EnemyConfig _enemyStats;
         [SerializeField, ReadOnly] private HealthComponent _health;
-        [SerializeField, ReadOnly] private EnemyNavMesh _enemyNavMesh;
+        [SerializeField, ReadOnly] private EnemyNavMesh navMesh;
+        [SerializeField, ReadOnly] private EnemyStateMachine _stateMachine;
 
         public HealthComponent HealthComponent => _health;
-        public EnemyNavMesh EnemyNavMesh => _enemyNavMesh;
+        public EnemyNavMesh NavMesh => navMesh;
         public EnemyConfig EnemyStats => _enemyStats;
+        public EnemyStateMachine StateMachine => _stateMachine;
+        public Vector3 Position => transform != null ? transform.position : Vector3.zero;
         
         private void Awake()
         {
@@ -25,7 +29,7 @@ namespace Core.Enemies
         private void OnValidate()
         {
             if (_health is null) GetComponent<HealthComponent>();
-            if (_enemyNavMesh is null) GetComponent<EnemyNavMesh>();
+            if (navMesh is null) GetComponent<EnemyNavMesh>();
         }
     }
 }
