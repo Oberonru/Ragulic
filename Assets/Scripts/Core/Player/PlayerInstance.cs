@@ -25,6 +25,7 @@ namespace Core.Player
             if (_playerStats is null)
                 throw new NullReferenceException($"PlayerConfig is not seted on player {gameObject.name}");
             _health.MaxHealth = Stats.Health;
+            _health.CurrentHealth = _health.MaxHealth;
         }
 
         private void OnValidate()

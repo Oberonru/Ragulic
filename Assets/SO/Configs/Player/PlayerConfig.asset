@@ -16,5 +16,5 @@ MonoBehaviour:
   _name: 
   _description: 
   _speed: 5
-  _health: 3
+  _health: 50
   _rotationSpeed: 4

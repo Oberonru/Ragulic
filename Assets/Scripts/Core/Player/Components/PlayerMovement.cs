@@ -33,6 +33,12 @@ namespace Core.Player.Components
             {
                 TestAttack();
             }
+
+            if (Input.GetKey(KeyCode.LeftAlt))
+            {
+                TestPlayerAttack();
+                Debug.Log("TestPlayerAttack");
+            }
         }
 
         private void OnValidate()
@@ -44,6 +50,11 @@ namespace Core.Player.Components
         {
             var enemy = FindFirstObjectByType<EnemyInstance>();
             enemy?.HealthComponent.TakeDamage(1);
+        }
+
+        private void TestPlayerAttack()
+        {
+            _player.Health.TakeDamage(5);
         }
     }
 }
