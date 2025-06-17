@@ -13,6 +13,7 @@ namespace Core.Enemies.Components
 
         [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;
         [SerializeField, ReadOnly] private NavMeshAgent _agent;
+        private float _nextUpdatedTime;
 
         public AIConfig AI => _aiConfig;
         
@@ -32,6 +33,9 @@ namespace Core.Enemies.Components
 
         public void MoveToTarget(Vector3 target)
         {
+            if (Time.time < _nextUpdatedTime) return;
+            _nextUpdatedTime = Time.time + _aiConfig.UpdatedInterval;
+            
             var randomOffset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
 
             if (ValidDistance(target))

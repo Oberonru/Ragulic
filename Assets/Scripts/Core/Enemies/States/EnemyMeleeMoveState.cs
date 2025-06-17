@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Enemies.States
 {
-    public class EnemyMeleeMoveState : StateInstance<EnemyInstance>, IFixedUpdate
+    public class EnemyMeleeMoveState : StateInstance<EnemyInstance>, IUpdate, IDrawGizmos
     {
         public Transform Target;
 
@@ -18,7 +18,7 @@ namespace Core.Enemies.States
             Owner.NavMesh.Stop();
         }
 
-        public void FixedUpdate()
+        public void Update()
         {
             Move();
         }
@@ -28,15 +28,27 @@ namespace Core.Enemies.States
             if (Target != null)
             {
                 Owner.NavMesh.MoveToTarget(Target.position);
-                if (Vector3.Distance(Owner.Position, Target.position) > Owner.NavMesh.AI.AgressiveRadius)
+                
+                if (Vector3.Distance(Owner.Position, Target.position) > AggroZone())
                 {
-                    Owner.NavMesh.Stop();
+                    Owner.StateMachine.SetIdle();
                 }
             }
             else
             {
-                Owner.NavMesh.Stop();
+                Owner.StateMachine.SetIdle();
             }
+        }
+
+        private float AggroZone()
+        {
+            return Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer;
+        }
+        
+        public void DrawGizmos()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(Owner.Position, Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer);
         }
     }
 }

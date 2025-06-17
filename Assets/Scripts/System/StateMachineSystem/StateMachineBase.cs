@@ -36,6 +36,17 @@ namespace System.StateMachineSystem
             }
         }
 
+        private void Update()
+        {
+            if (_activeState != null)
+            {
+                if (_activeState is IUpdate stateUpdate)
+                {
+                    stateUpdate.Update();
+                }
+            }
+        }
+
         private void OnDrawGizmos()
         {
             if (_activeState != null)

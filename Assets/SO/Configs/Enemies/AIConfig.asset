@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9cebda6d4cd41cbb5aa5b4fd7e4c229, type: 3}
   m_Name: AIConfig
   m_EditorClassIdentifier: 
-  _minStoppingDistance: 1.5
-  _maxStoppingDistance: 3
+  _minStoppingDistance: 0.45
+  _maxStoppingDistance: 1
   _agressiveRadius: 3
+  _agressiveMultiplayer: 4
   _detectionRadius: 1

@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d0fd0b790f429a9fe89ab96e3def76, type: 3}
-  m_Name: EnemyStateContainer
+  m_Script: {fileID: 11500000, guid: e5f574e820844f0aa3da5fcc40c4b64f, type: 3}
+  m_Name: ScriptableMeleeMove
   m_EditorClassIdentifier: 
-  _parentContainer: {fileID: 0}
-  _states:
-  - {fileID: 11400000, guid: 590ff238a492d449aa9cf5e483d103db, type: 2}
-  - {fileID: 11400000, guid: 536dde6b151e5154f880b54ed8517d9c, type: 2}

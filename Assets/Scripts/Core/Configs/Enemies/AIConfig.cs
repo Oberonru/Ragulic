@@ -22,15 +22,27 @@ namespace Core.Configs.Enemies
         [SerializeField]
         private float _agressiveRadius = 0.3f;
 
+        [BoxGroup("Movement")]
+        [MinValue(1), SuffixLabel("koefficient")]
+        [SerializeField]
+        private int _agressiveMultiplayer;
+
+        [BoxGroup("Movement")]
+        [SuffixLabel("sec")]
+        [SerializeField]
+        private float _updatedInterval = 0.3f;
 
         [BoxGroup("Collision")]
         [MinValue(0.1f), SuffixLabel("meters")]
         [SerializeField]
         private float _detectionRadius = 1f;
+        
 
         public float MinStoppingDistance => _minStoppingDistance;
         public float MaxStoppingDistance => _maxStoppingDistance;
         public float AgressiveRadius => _agressiveRadius;
         public float DetectionRadius => _detectionRadius;
+        public int AgressiveMultiplayer => _agressiveMultiplayer;
+        public float UpdatedInterval => _updatedInterval;
     }
 }

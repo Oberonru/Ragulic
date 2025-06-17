@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Core.Enemies.States
 {
-    public class EnemyStateIdle : StateInstance<EnemyInstance>, IFixedUpdate, IDrawGizmos
+    public class EnemyStateIdle : StateInstance<EnemyInstance>, IFixedUpdate
     {
         public override void Enter()
         {
@@ -20,7 +20,7 @@ namespace Core.Enemies.States
         public void FixedUpdate()
         {
             var colliders =
-                Physics.SphereCastAll(Owner.Position, Owner.NavMesh.AI.AgressiveRadius,
+                Physics.SphereCastAll(Owner.Position, Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer,
                     Owner.transform.forward);
 
             var playerHit =
@@ -28,14 +28,8 @@ namespace Core.Enemies.States
 
             if (playerHit.collider != null && playerHit.collider.TryGetComponent(out IPlayerInstance playerInstance))
             {
-                Owner.NavMesh.MoveToTarget(playerHit.transform.position);
+                Owner.StateMachine.SetMeleeMoveToTarget(playerHit.transform);
             }
-        }
-
-        public void DrawGizmos()
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(Owner.Position, Owner.NavMesh.AI.AgressiveRadius);
         }
     }
 }
