@@ -14,8 +14,8 @@ namespace System.Spawners
         public override void InstallBindings()
         {
             var instance = this.Container.InstantiatePrefabForComponent<TImplementation>(_prefab,
-                _prefab.transform.position,
-                _prefab.transform.rotation, _spawnPoint) as TImplementation;
+                _spawnPoint.transform.position,
+                _spawnPoint.transform.rotation, _spawnPoint) as TImplementation;
 
             if (_isSingle)
             {
