@@ -17,5 +17,12 @@ namespace Core.Enemies.Components
             state.Target = target;
             SetState(state);
         }
+
+        public void SetMeleeAttack(Transform target)
+        {
+            var state = GetState<EnemyMeleeAttackState>();
+            state.Target = target;
+            SetState<EnemyMeleeAttackState>();
+        }
     }
 }
