@@ -12,8 +12,13 @@ namespace Core.Configs
 
         [FormerlySerializedAs("_maxHealth")] [BoxGroup("EntityStats")] [SerializeField, LabelText("Max health")]
         private int _health;
+        
+        [BoxGroup("EntityStats")]
+        [SerializeField, LabelText("Damage")]
+        private int _damage;
 
         public float Speed => _speed;
         public int Health => _health;
+        public int Damage => _damage;
     }
 }

@@ -17,4 +17,5 @@ MonoBehaviour:
   _description: 
   _speed: 5
   _health: 50
+  _damage: 2
   _rotationSpeed: 4

@@ -5,28 +5,25 @@ namespace Core.CombatSystem
 {
     public class HitBoxDetector : MonoBehaviour
     {
-        public ISubject<IHitBox> OnDetected => _onDetected;
+        public Subject<IHitBox> OnDetected => _onDetected;
         private Subject<IHitBox> _onDetected = new();
 
-        public ISubject<IHitBox> OnHitBoxExit => _onHitBoxExit;
+        public Subject<IHitBox> OnHitBoxExit => _onHitBoxExit;
         private Subject<IHitBox> _onHitBoxExit = new();
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<IHitBox>(out var hitBox))
+            if (other.TryGetComponent<IHitBox>(out IHitBox hitBox))
             {
-                OnDetected?.OnNext(hitBox);
-                Debug.Log("Trigger enter");
+                _onDetected?.OnNext(hitBox);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent<IHitBox>(out var hitBox))
+            if (other.TryGetComponent<IHitBox>(out IHitBox hitBox))
             {
                 OnHitBoxExit?.OnNext(hitBox);
-                Debug.Log("Trigger exit");
-
             }
         }
     }
