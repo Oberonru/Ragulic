@@ -1,5 +1,6 @@
 using Core.CombatSystem;
 using Core.Player;
+using Core.Player.CombatSystem;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -16,9 +17,15 @@ namespace Core.Enemies.CombatSystem
         private void OnEnable()
         {
             _detector.OnDetected.Subscribe((hitBox) =>
-                _enemyInstance.StateMachine.SetMeleeAttack(hitBox)).AddTo(this);
+                {
+                    if (hitBox is PlayerHitBox playerHitBox)
+                    {
+                        _enemyInstance.StateMachine.SetMeleeAttack(hitBox);
+                    }
+                })
+                .AddTo(this);
 
-            _detector.OnHitBoxExit.Subscribe(hitBox => 
+            _detector.OnHitBoxExit.Subscribe(hitBox =>
                 _enemyInstance.StateMachine.SetMeleeMoveToTarget(_player.Transform)).AddTo(this);
         }
 

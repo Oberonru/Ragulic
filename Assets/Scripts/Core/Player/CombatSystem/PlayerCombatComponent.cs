@@ -10,6 +10,7 @@ namespace Core.Player.CombatSystem
         [SerializeField] private PlayerInstance _player;
         [SerializeField] private HitBoxDetector _detector;
         private IHealthComponent _healthComponent;
+        private bool _canAttack;
 
         private void OnEnable()
         {

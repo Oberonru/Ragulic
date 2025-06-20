@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4a1c7f9b834a13a0f443e0a4e4765e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 7373869427491323475}
   _detector: {fileID: 6925047561206222268}
 --- !u!1 &7003377265159109260
 GameObject:
@@ -423,8 +424,8 @@ GameObject:
   - component: {fileID: 5417546213737672908}
   - component: {fileID: 5191523320161787903}
   - component: {fileID: 6925047561206222268}
-  - component: {fileID: 7761081167407431018}
   - component: {fileID: 2735563003094856803}
+  - component: {fileID: 9167100936278975240}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -480,19 +481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee360dc14cf4a8fab576a4f2762bee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7761081167407431018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099015004222730198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 694a39b8d6aa4d449bbc5cbc5ee70fbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthComponent: {fileID: 3878893790180533895}
 --- !u!54 &2735563003094856803
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -520,3 +508,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &9167100936278975240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8099015004222730198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84aa2ca392734d74bb85a1fdecbf757e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthComponent: {fileID: 0}
+  _healthComponent: {fileID: 3878893790180533895}
