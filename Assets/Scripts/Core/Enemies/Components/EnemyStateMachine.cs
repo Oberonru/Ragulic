@@ -1,4 +1,5 @@
 using System.StateMachineSystem;
+using Core.CombatSystem;
 using Core.Enemies.States;
 using UnityEngine;
 
@@ -18,10 +19,10 @@ namespace Core.Enemies.Components
             SetState(state);
         }
 
-        public void SetMeleeAttack(Transform target)
+        public void SetMeleeAttack(IHitBox hitBox)
         {
             var state = GetState<EnemyMeleeAttackState>();
-            state.Target = target;
+            state.HitBox = hitBox;
             SetState<EnemyMeleeAttackState>();
         }
     }

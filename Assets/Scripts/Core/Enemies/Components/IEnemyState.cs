@@ -1,3 +1,4 @@
+using Core.CombatSystem;
 using UnityEngine;
 
 namespace Core.Enemies.Components
@@ -7,6 +8,6 @@ namespace Core.Enemies.Components
         void SetIdle();
         void SetMeleeMoveToTarget(Transform target);
         //должен быть тот кто реализует интерфейс  IHitBox
-        void SetMeleeAttack(Transform target);
+        void SetMeleeAttack(IHitBox hitBox);
     }
 }

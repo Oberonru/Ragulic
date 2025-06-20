@@ -1,8 +1,8 @@
-using UnityEngine;
+using Core.CombatSystem;
 
 namespace Core.Enemies.CombatSystem
 {
-    public class EnemyHitBoxDetector : MonoBehaviour
+    public class EnemyHitBoxDetector : HitBoxDetector
     {
     }
 }
