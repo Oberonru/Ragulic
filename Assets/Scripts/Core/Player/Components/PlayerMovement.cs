@@ -1,11 +1,12 @@
 using Core.Enemies;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Core.Player.Components
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private PlayerInstance _player;
+        [SerializeField, ReadOnly] private PlayerInstance _player;
         [SerializeField] private CharacterController _controller;
         private float _horizontal;
         private float _vertical;

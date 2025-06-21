@@ -1,5 +1,6 @@
 using Core.BaseComponents;
 using Core.CombatSystem;
+using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
 
@@ -7,8 +8,8 @@ namespace Core.Player.CombatSystem
 {
     public class PlayerCombatComponent : CombatComponent
     {
-        [SerializeField] private PlayerInstance _player;
-        [SerializeField] private HitBoxDetector _detector;
+        [SerializeField, ReadOnly] private PlayerInstance _player;
+        [SerializeField, ReadOnly] private HitBoxDetector _detector;
         private IHealthComponent _healthComponent;
         private bool _canAttack;
         private float _time;
@@ -44,6 +45,7 @@ namespace Core.Player.CombatSystem
         private void OnValidate()
         {
             if (_player is null) _player = GetComponent<PlayerInstance>();
+            if (_detector is null) _detector = GetComponent<HitBoxDetector>();
         }
 
         public override void SetRandomDamage(int damage)

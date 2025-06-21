@@ -2,7 +2,7 @@ using System;
 using Core.BaseComponents;
 using Core.Player.Components;
 using Core.Player.SO;
-using Unity.Collections;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 

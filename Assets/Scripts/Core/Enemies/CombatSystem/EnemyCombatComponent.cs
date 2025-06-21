@@ -1,8 +1,8 @@
 using Core.CombatSystem;
 using Core.Player;
 using Core.Player.CombatSystem;
+using Sirenix.OdinInspector;
 using UniRx;
-using Unity.Collections;
 using UnityEngine;
 using Zenject;
 
