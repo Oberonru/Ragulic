@@ -3,6 +3,7 @@ namespace Core.CombatSystem
     public interface ICombatComponent
     {
         int Damage { get; }
-        void SetDamage(int damage);
+        void SetDefaultDamage(int damage);
+        void SetRandomDamage(int damage);
     }
 }

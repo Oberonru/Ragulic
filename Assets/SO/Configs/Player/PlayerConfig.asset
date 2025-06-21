@@ -18,4 +18,6 @@ MonoBehaviour:
   _speed: 5
   _health: 50
   _damage: 2
+  _attackPerSeconds: 1
+  _damageShift: 0
   _rotationSpeed: 4

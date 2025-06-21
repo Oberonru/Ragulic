@@ -1398,6 +1398,7 @@ MonoBehaviour:
   _health: {fileID: 1231607573}
   navMesh: {fileID: 1231607580}
   _stateMachine: {fileID: 1231607581}
+  _enemyCombat: {fileID: 1231607582}
 --- !u!65 &1231607575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1582,7 +1583,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_LocalScale: {x: 1.2, y: 1, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1231607578}
