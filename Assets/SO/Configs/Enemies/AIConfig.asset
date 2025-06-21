@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AIConfig
   m_EditorClassIdentifier: 
   _minStoppingDistance: 1
-  _maxStoppingDistance: 2.5
+  _maxStoppingDistance: 1.5
   _agressiveRadius: 1
   _agressiveMultiplayer: 5
   _updatedInterval: 0.3

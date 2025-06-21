@@ -18,6 +18,6 @@ MonoBehaviour:
     \u0431\u0435\u0433\u0443\u043D\u043E\u043A"
   _speed: 3
   _health: 100
-  _damage: 1
-  _attackPerSeconds: 1
+  _damage: 2
+  _attackPerSeconds: 0.3
   _damageShift: 1
