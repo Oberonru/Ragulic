@@ -25,5 +25,12 @@ namespace Core.Enemies.Components
             state.HitBox = hitBox;
             SetState<EnemyMeleeAttackState>();
         }
+
+        public void SetMeleeRigidbodyAttack(IHitBox hitBox)
+        {
+            var state = GetState<EnemyMeleeRigidbodyAttackState>();
+            state.HitBox = hitBox;
+            SetState(state);
+        }
     }
 }

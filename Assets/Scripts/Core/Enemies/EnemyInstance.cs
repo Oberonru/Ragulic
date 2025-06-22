@@ -10,7 +10,7 @@ namespace Core.Enemies
     [RequireComponent(typeof(HealthComponent))]
     [RequireComponent(typeof(EnemyNavMesh))]
     [RequireComponent(typeof(EnemyStateMachine))]
-    [RequireComponent(typeof(EnemyCombatComponent))]
+    //[RequireComponent(typeof(EnemyCombatComponent))]
     public class EnemyInstance : MonoBehaviour
     {
         [SerializeField] private EnemyConfig _enemyStats;
@@ -18,6 +18,7 @@ namespace Core.Enemies
         [SerializeField, ReadOnly] private EnemyNavMesh navMesh;
         [SerializeField, ReadOnly] private EnemyStateMachine _stateMachine;
         [SerializeField, ReadOnly] private EnemyCombatComponent _enemyCombat;
+        [SerializeField, ReadOnly] private EnemyColliderCombatComponent _enemyColliderCombat;
 
         public IHealthComponent HealthComponent => _health;
         public EnemyNavMesh NavMesh => navMesh;
@@ -38,6 +39,7 @@ namespace Core.Enemies
             if (_health is null) GetComponent<HealthComponent>();
             if (navMesh is null) GetComponent<EnemyNavMesh>();
             if (_enemyCombat is null) GetComponent<EnemyCombatComponent>();
+            if (_enemyColliderCombat is null) GetComponent<EnemyColliderCombatComponent>();
         }
     }
 }

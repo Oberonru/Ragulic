@@ -7,7 +7,8 @@ namespace Core.Enemies.Components
     {
         void SetIdle();
         void SetMeleeMoveToTarget(Transform target);
-        //должен быть тот кто реализует интерфейс  IHitBox
         void SetMeleeAttack(IHitBox hitBox);
+
+        void SetMeleeRigidbodyAttack(IHitBox hitBox);
     }
 }

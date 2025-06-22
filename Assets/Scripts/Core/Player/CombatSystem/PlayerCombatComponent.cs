@@ -9,7 +9,7 @@ namespace Core.Player.CombatSystem
     public class PlayerCombatComponent : CombatComponent
     {
         [SerializeField, ReadOnly] private PlayerInstance _player;
-        [SerializeField, ReadOnly] private HitBoxDetector _detector;
+        [SerializeField, ReadOnly] private TriggerHitBoxDetector _detector;
         private IHealthComponent _healthComponent;
         private bool _canAttack;
         private float _time;
@@ -45,7 +45,7 @@ namespace Core.Player.CombatSystem
         private void OnValidate()
         {
             if (_player is null) _player = GetComponent<PlayerInstance>();
-            if (_detector is null) _detector = GetComponent<HitBoxDetector>();
+            if (_detector is null) _detector = GetComponent<TriggerHitBoxDetector>();
         }
 
         public override void SetRandomDamage(int damage)

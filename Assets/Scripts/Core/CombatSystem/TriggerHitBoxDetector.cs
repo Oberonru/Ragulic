@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Core.CombatSystem
 {
-    public class HitBoxDetector : MonoBehaviour
+    public class TriggerHitBoxDetector : MonoBehaviour, IHitBoxDetector
     {
-        public Subject<IHitBox> OnDetected => _onDetected;
+        public ISubject<IHitBox> OnDetected => _onDetected;
         private Subject<IHitBox> _onDetected = new();
 
-        public Subject<IHitBox> OnHitBoxExit => _onHitBoxExit;
+        public ISubject<IHitBox> OnHitBoxExit => _onHitBoxExit;
         private Subject<IHitBox> _onHitBoxExit = new();
 
         private void OnTriggerEnter(Collider other)

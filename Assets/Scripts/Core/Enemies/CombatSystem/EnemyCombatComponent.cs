@@ -12,7 +12,7 @@ namespace Core.Enemies.CombatSystem
     {
         [Inject] private IPlayerInstance _player;
         [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;
-        [SerializeField, ReadOnly] private EnemyHitBoxDetector _detector;
+        [SerializeField, ReadOnly] private EnemyTriggerHitBoxDetector _detector;
 
         private void OnEnable()
         {
@@ -37,7 +37,7 @@ namespace Core.Enemies.CombatSystem
         private void OnValidate()
         {
             if (_enemyInstance is null) GetComponent<EnemyInstance>();
-            if (_detector is null) _detector = GetComponent<EnemyHitBoxDetector>();
+            if (_detector is null) _detector = GetComponent<EnemyTriggerHitBoxDetector>();
         }
 
         public override void SetRandomDamage(int damage)

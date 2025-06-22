@@ -2,7 +2,7 @@ using Core.CombatSystem;
 
 namespace Core.Enemies.CombatSystem
 {
-    public class EnemyHitBoxDetector : HitBoxDetector
+    public class EnemyTriggerHitBoxDetector : TriggerHitBoxDetector
     {
     }
 }
