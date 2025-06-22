@@ -9,7 +9,12 @@ namespace Core.Player.SO
     {
         [BoxGroup("PlayerStats")] [SerializeField, LabelText("Rotation speed")]
         private float _rotationSpeed;
+        
+        [BoxGroup("PlayerStats")]
+        [SerializeField, LabelText("Run speed")]
+        private float _runSpeed;
 
         public float RotationSpeed => _rotationSpeed;
+        public float RunSpeed => _runSpeed;
     }
 }

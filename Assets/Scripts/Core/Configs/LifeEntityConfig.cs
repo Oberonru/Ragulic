@@ -8,8 +8,8 @@ namespace Core.Configs
     public class LifeEntityConfig : SrcriptableBaseEntityData
     {
         [BoxGroup("EntityStats")]
-        [SerializeField, LabelText("Movement speed")]
-        private float _speed;
+        [SerializeField, LabelText("Walk speed")]
+        private float _walkSpeed;
 
         [FormerlySerializedAs("_maxHealth")]
         [BoxGroup("EntityStats")] [SerializeField, LabelText("Max health")]
@@ -28,7 +28,7 @@ namespace Core.Configs
         [SerializeField]
         private int _damageShift;
         
-        public float Speed => _speed;
+        public float WalkSpeed => _walkSpeed;
         public int Health => _health;
         public int Damage => _damage;
         public float AttackPerSeconds => _attackPerSeconds;

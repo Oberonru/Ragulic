@@ -10,6 +10,8 @@ namespace Core.Player.Components
         [SerializeField] private CharacterController _controller;
         private float _horizontal;
         private float _vertical;
+        private bool _isRunning;
+        private float _speed;
 
         private void FixedUpdate()
         {
@@ -21,8 +23,12 @@ namespace Core.Player.Components
                 transform.rotation =
                     Quaternion.Slerp(transform.rotation, targetRotation, _player.Stats.RotationSpeed * Time.deltaTime);
             }
+            
+            _isRunning = Input.GetKey(KeyCode.LeftShift);
 
-            _controller.Move(moveDirection * (Time.deltaTime * _player.Stats.Speed));
+            _speed = _isRunning ? _player.Stats.RunSpeed : _player.Stats.WalkSpeed;
+
+            _controller.Move(moveDirection * (Time.deltaTime * _speed));
         }
 
         private void Update()

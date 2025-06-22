@@ -66,7 +66,8 @@ namespace ModularFootstepSystem.Demo
 
             isRunning = Input.GetKey(KeyCode.LeftShift);
 
-            curSpeedX = (isRunning ? runningSpeed : walkSpeed) * Input.GetAxis(MOVE_AXIS_VERTICAL);
+            curSpeedX = (isRunning ? runningSpeed : walkSpeed) *
+                        Input.GetAxis(MOVE_AXIS_VERTICAL);
             curSpeedY = (isRunning ? runningSpeed : walkSpeed) * Input.GetAxis(MOVE_AXIS_HORIZONTAL);
             movementDirectionY = moveDirection.y;
             moveDirection = (transformForward * curSpeedX) + (transformRight * curSpeedY);

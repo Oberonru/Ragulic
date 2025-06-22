@@ -8,11 +8,11 @@ namespace ModularFootstepSystem.Demo
     /// Player movement type provider.
     /// </summary>
     /// <remarks>
-    /// Demo implementation of setting the type of player movement. 
-    /// Used to change the effects of footsteps when speeding up. 
-    /// It can also be used, for example, 
-    /// to change the effects of steps when a player lands on different surfaces 
-    /// or for other types of movement you need.
+    ///Демонстрационная реализация настройки типа движения игрока. 
+    /// Используется для изменения эффекта шагов при ускорении. 
+    /// Также может использоваться, например,
+    /// для изменения эффекта шагов, когда игрок приземляется на разные поверхности 
+    /// или для других необходимых вам типов движений
     /// </remarks>
     public class PlayerMovementTypeProvider : MonoBehaviour
     {

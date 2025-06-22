@@ -6,8 +6,8 @@ namespace ModularFootstepSystem
     using Extensions;
 
     /// <summary>
-    /// Footstep state controller.
-    /// Stores the state type of footsteps and starts installing new data from this type.
+    ///Контроллер состояния шагов.
+    /// Сохраняет тип состояния шагов и запускает установку новых данных из этого тип
     /// </summary>
     public class FootstepsStateController : MonoBehaviour
     {
