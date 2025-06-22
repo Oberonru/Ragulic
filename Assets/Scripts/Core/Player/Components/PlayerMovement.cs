@@ -1,11 +1,13 @@
-using Core.Enemies;
+using Core.Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Player.Components
 {
     public class PlayerMovement : MonoBehaviour
     {
+        [Inject] InputConfig _input;
         [SerializeField, ReadOnly] private PlayerInstance _player;
         [SerializeField] private CharacterController _controller;
         private float _horizontal;
@@ -23,8 +25,8 @@ namespace Core.Player.Components
                 transform.rotation =
                     Quaternion.Slerp(transform.rotation, targetRotation, _player.Stats.RotationSpeed * Time.deltaTime);
             }
-            
-            _isRunning = Input.GetKey(KeyCode.LeftShift);
+
+            _isRunning = Input.GetKey(_input.Acceleration);
 
             _speed = _isRunning ? _player.Stats.RunSpeed : _player.Stats.WalkSpeed;
 
@@ -35,33 +37,11 @@ namespace Core.Player.Components
         {
             _horizontal = Input.GetAxis("Horizontal");
             _vertical = Input.GetAxis("Vertical");
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                TestAttack();
-            }
-
-            if (Input.GetKey(KeyCode.LeftAlt))
-            {
-                TestPlayerAttack();
-                Debug.Log("TestPlayerAttack");
-            }
         }
 
         private void OnValidate()
         {
             _player ??= GetComponent<PlayerInstance>();
-        }
-
-        private void TestAttack()
-        {
-            var enemy = FindFirstObjectByType<EnemyInstance>();
-            enemy?.HealthComponent.TakeDamage(1);
-        }
-
-        private void TestPlayerAttack()
-        {
-            _player.Health.TakeDamage(5);
         }
     }
 }
