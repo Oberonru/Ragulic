@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Core.Enemies.CombatSystem
 {
-    public class EnemyCombatComponent : CombatComponent
+    public class EnemyTriggerCombatComponent : CombatComponent
     {
         [Inject] private IPlayerInstance _player;
         [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;

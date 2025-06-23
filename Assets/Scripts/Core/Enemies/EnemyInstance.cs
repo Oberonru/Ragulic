@@ -4,6 +4,7 @@ using Core.Enemies.CombatSystem;
 using Core.Enemies.Components;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Enemies
 {
@@ -15,17 +16,17 @@ namespace Core.Enemies
     {
         [SerializeField] private EnemyConfig _enemyStats;
         [SerializeField, ReadOnly] private HealthComponent _health;
-        [SerializeField, ReadOnly] private EnemyNavMesh navMesh;
+        [SerializeField, ReadOnly] private EnemyNavMesh _navMesh;
         [SerializeField, ReadOnly] private EnemyStateMachine _stateMachine;
-        [SerializeField, ReadOnly] private EnemyCombatComponent _enemyCombat;
-        [SerializeField, ReadOnly] private EnemyColliderCombatComponent _enemyColliderCombat;
+        [FormerlySerializedAs("_enemyCombat")] [SerializeField, ReadOnly] private EnemyTriggerCombatComponent enemyTriggerCombat;
+        [FormerlySerializedAs("_enemyColliderCombat")] [SerializeField, ReadOnly] private EnemyCollisionCombatComponent enemyCollisionCombat;
 
         public IHealthComponent HealthComponent => _health;
-        public EnemyNavMesh NavMesh => navMesh;
+        public EnemyNavMesh NavMesh => _navMesh;
         public EnemyConfig EnemyStats => _enemyStats;
         public EnemyStateMachine StateMachine => _stateMachine;
 
-        public EnemyCombatComponent EnemyCombat => _enemyCombat;
+        public EnemyTriggerCombatComponent EnemyTriggerCombat => enemyTriggerCombat;
         public Vector3 Position => transform != null ? transform.position : Vector3.zero;
 
         private void Awake()
@@ -36,10 +37,10 @@ namespace Core.Enemies
 
         private void OnValidate()
         {
-            if (_health is null) GetComponent<HealthComponent>();
-            if (navMesh is null) GetComponent<EnemyNavMesh>();
-            if (_enemyCombat is null) GetComponent<EnemyCombatComponent>();
-            if (_enemyColliderCombat is null) GetComponent<EnemyColliderCombatComponent>();
+            if (_health is null) _health = GetComponent<HealthComponent>();
+            if (_navMesh is null) _navMesh = GetComponent<EnemyNavMesh>();
+            if (enemyTriggerCombat is null) enemyTriggerCombat = GetComponent<EnemyTriggerCombatComponent>();
+            if (enemyCollisionCombat is null) enemyCollisionCombat = GetComponent<EnemyCollisionCombatComponent>();
         }
     }
 }

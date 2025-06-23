@@ -1,6 +1,7 @@
 using System.StateMachineSystem;
 using Core.CombatSystem;
 using Core.Enemies.States;
+using Core.Player.CombatSystem;
 using UnityEngine;
 
 namespace Core.Enemies.Components
@@ -26,10 +27,11 @@ namespace Core.Enemies.Components
             SetState<EnemyMeleeAttackState>();
         }
 
-        public void SetMeleeRigidbodyAttack(IHitBox hitBox)
+        public void SetMeleeRigidbodyAttack(IPlayerHitBox hitBox, Collision collision)
         {
             var state = GetState<EnemyMeleeRigidbodyAttackState>();
             state.HitBox = hitBox;
+            state.Collision = collision;
             SetState(state);
         }
     }

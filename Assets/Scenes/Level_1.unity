@@ -1397,10 +1397,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyStats: {fileID: 11400000, guid: e28aa82cb249a4c139d16afcbf6c3712, type: 2}
   _health: {fileID: 1231607573}
-  navMesh: {fileID: 1231607580}
+  _navMesh: {fileID: 1231607580}
   _stateMachine: {fileID: 1231607581}
-  _enemyCombat: {fileID: 1231607582}
-  _enemyColliderCombat: {fileID: 1231607583}
+  enemyTriggerCombat: {fileID: 1231607582}
+  enemyCollisionCombat: {fileID: 1231607583}
 --- !u!65 &1231607575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1568,7 +1568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyInstance: {fileID: 1231607574}
-  _colliderDetector: {fileID: 1304271406}
+  _collisionDetector: {fileID: 1304271406}
 --- !u!1 &1304271398
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,7 +1620,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

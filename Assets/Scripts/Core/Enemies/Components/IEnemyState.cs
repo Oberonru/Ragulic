@@ -1,4 +1,5 @@
 using Core.CombatSystem;
+using Core.Player.CombatSystem;
 using UnityEngine;
 
 namespace Core.Enemies.Components
@@ -9,6 +10,6 @@ namespace Core.Enemies.Components
         void SetMeleeMoveToTarget(Transform target);
         void SetMeleeAttack(IHitBox hitBox);
 
-        void SetMeleeRigidbodyAttack(IHitBox hitBox);
+        void SetMeleeRigidbodyAttack(IPlayerHitBox hitBox, Collision collision);
     }
 }
