@@ -8,8 +8,8 @@ namespace Core.Enemies.Components
     {
         void SetIdle();
         void SetMeleeMoveToTarget(Transform target);
-        void SetMeleeAttack(IHitBox hitBox);
+        void SetMeleeCycleAttack(IHitBox hitBox);
 
-        void SetMeleeRigidbodyAttack(IPlayerHitBox hitBox, Collision collision);
+        void SetMeleeAttack(IPlayerHitBox hitBox, Collision collision);
     }
 }

@@ -20,16 +20,16 @@ namespace Core.Enemies.Components
             SetState(state);
         }
 
-        public void SetMeleeAttack(IHitBox hitBox)
+        public void SetMeleeCycleAttack(IHitBox hitBox)
         {
-            var state = GetState<EnemyMeleeAttackState>();
+            var state = GetState<EnemyCycleMeleeAttackState>();
             state.HitBox = hitBox;
-            SetState<EnemyMeleeAttackState>();
+            SetState<EnemyCycleMeleeAttackState>();
         }
 
-        public void SetMeleeRigidbodyAttack(IPlayerHitBox hitBox, Collision collision)
+        public void SetMeleeAttack(IPlayerHitBox hitBox, Collision collision)
         {
-            var state = GetState<EnemyMeleeRigidbodyAttackState>();
+            var state = GetState<EnemyMeleeAttackState>();
             state.HitBox = hitBox;
             state.Collision = collision;
             SetState(state);

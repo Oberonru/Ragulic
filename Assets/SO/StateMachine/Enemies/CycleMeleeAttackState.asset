@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 072c2b2449854640bf73181cb9d56113, type: 3}
-  m_Name: ScriptableMeleeAttackState
+  m_Name: CycleMeleeAttackState
   m_EditorClassIdentifier: 

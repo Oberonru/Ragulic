@@ -20,7 +20,7 @@ namespace Core.Enemies.CombatSystem
                 {
                     if (hitBox is PlayerHitBox playerHitBox)
                     {
-                        _enemyInstance.StateMachine.SetMeleeAttack(hitBox);
+                        _enemyInstance.StateMachine.SetMeleeCycleAttack(hitBox);
                     }
                 })
                 .AddTo(this);

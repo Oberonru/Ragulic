@@ -8,13 +8,12 @@ using Zenject;
 
 namespace Core.Player
 {
-    [RequireComponent(typeof(PlayerMovement))]
     [RequireComponent(typeof(IHealthComponent))]
     public class PlayerInstance : MonoBehaviour, IPlayerInstance
     {
         [Inject] private PlayerConfig _playerStats;
-        [SerializeField, ReadOnly] private PlayerMovement _movement;
         [SerializeField, ReadOnly] private HealthComponent _health;
+        [SerializeField, ReadOnly] private RigidbodyPlayerMovement _movement;
 
         public Transform Transform => transform;
         public PlayerConfig Stats => _playerStats;
@@ -30,8 +29,9 @@ namespace Core.Player
 
         private void OnValidate()
         {
-            if (_movement is null) GetComponent<PlayerMovement>();
-            if (_health is null) GetComponent<HealthComponent>();
+            //if (_movement is null) GetComponent<PlayerMovement>();
+            if (_health is null) _health = GetComponent<HealthComponent>();
+            if (_movement is null) _movement = GetComponent<RigidbodyPlayerMovement>();
         }
     }
 }

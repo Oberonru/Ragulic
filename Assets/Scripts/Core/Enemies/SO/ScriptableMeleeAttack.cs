@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core.Enemies.SO
 {
-    [CreateAssetMenu(menuName = "StateMachine/ScriptableStates/ScriptableMeleeAttackState", fileName = "ScriptableMeleeAttackState")]
+    [CreateAssetMenu(menuName = "StateMachine/ScriptableStates/MeleeAttack", fileName = "MeleeAttack")]
     public class ScriptableMeleeAttack : ScriptableState<EnemyInstance>
     {
         public override StateInstance<EnemyInstance> GetInstance()
