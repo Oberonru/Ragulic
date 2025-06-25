@@ -12,30 +12,31 @@ namespace Core.Enemies.CombatSystem
     {
         [Inject] private IPlayerInstance _player;
         [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;
-        [SerializeField, ReadOnly] private EnemyCollisionHitBoxDetector _collisionDetector;
+        [SerializeField, ReadOnly] private EnemyCollisionHitBoxDetector _detector;
+        public ISubject<Unit> OnAttack => _onAttack;
+        private Subject<Unit> _onAttack = new();
 
         private void OnEnable()
         {
-            _collisionDetector.OnHitBoxDetected.Subscribe((hitBox =>
+            _detector.OnHitBoxDetected.Subscribe((hitBox =>
             {
                 if (hitBox is IPlayerHitBox playerHitBox)
                 {
                     Attack(playerHitBox);
+                    _onAttack.OnNext(Unit.Default);
                 }
             })).AddTo(this);
 
-            _collisionDetector.OnHitBoxExit.Subscribe((_) =>
+            _detector.OnHitBoxExit.Subscribe((_) =>
                 _enemyInstance.StateMachine.SetMeleeMoveToTarget(_player.Transform)).AddTo(this);
         }
 
         private void Attack(IPlayerHitBox playerHitBox)
         {
-            _collisionDetector.OnCollisionDetected?.Subscribe((collision) =>
+            _detector.OnCollisionDetected?.Subscribe((collision) =>
             {
-                _enemyInstance.StateMachine.SetMeleeRigidbodyAttack(playerHitBox, collision);
+                _enemyInstance.StateMachine.SetMeleeAttack(playerHitBox, collision);
             }).AddTo(this);
-            
-           
         }
 
         public override void SetRandomDamage(int damage)
@@ -45,7 +46,7 @@ namespace Core.Enemies.CombatSystem
         private void OnValidate()
         {
             if (_enemyInstance is null) _enemyInstance = GetComponent<EnemyInstance>();
-            if (_collisionDetector is null) _collisionDetector = GetComponent<EnemyCollisionHitBoxDetector>();
+            if (_detector is null) _detector = GetComponent<EnemyCollisionHitBoxDetector>();
         }
     }
 }

@@ -22,3 +22,4 @@ MonoBehaviour:
   _damageShift: 3
   _rotationSpeed: 4
   _runSpeed: 5
+  _panicSpeed: 8

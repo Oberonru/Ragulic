@@ -7,9 +7,11 @@ namespace Core.Configs
     public class InputConfig : ScriptableConfig
     {
         public KeyCode Interaction => _interaction;
+        [Tooltip("Взаимодействие с предметами")]
         [SerializeField] private KeyCode _interaction = KeyCode.E;
         
         public KeyCode Acceleration => _acceleration;
+        [Tooltip("Ускорение")]
         [SerializeField] private KeyCode _acceleration = KeyCode.LeftShift;
     }
 }
