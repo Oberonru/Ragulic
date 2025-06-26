@@ -36,7 +36,7 @@ namespace Core.Player.CombatSystem
             {
                 _time = 0;
 
-                SetRandomDamage(_player.Stats.Damage);
+                RandomDamage(_player.Stats.Damage);
 
                 _healthComponent.TakeDamage(Damage);
             }
@@ -48,7 +48,7 @@ namespace Core.Player.CombatSystem
             if (_detector is null) _detector = GetComponent<TriggerHitBoxDetector>();
         }
 
-        public override void SetRandomDamage(int damage)
+        public override void RandomDamage(int damage)
         {
             Damage = Random.Range(damage, damage + 3);
         }

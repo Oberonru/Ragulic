@@ -5,43 +5,59 @@ using Zenject;
 
 namespace Core.Player.Components
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour, IPlayerMovement
     {
-        [Inject] InputConfig _input;
-        [SerializeField, ReadOnly] private PlayerInstance _player;
-        [SerializeField] private CharacterController _controller;
-        private float _horizontal;
-        private float _vertical;
+        [Inject] private InputConfig _input;
+        [SerializeField, ReadOnly] private Rigidbody _rigidbody;
+        [SerializeField] private PlayerInstance _player;
+
         private bool _isRunning;
         private float _speed;
+        private float _horizontal;
+        private float _vertical;
 
-        private void FixedUpdate()
+        private void Awake()
         {
-            var moveDirection = new Vector3(_horizontal, 0, _vertical);
-
-            if (moveDirection.magnitude > 0.1f)
-            {
-                var targetRotation = Quaternion.LookRotation(moveDirection);
-                transform.rotation =
-                    Quaternion.Slerp(transform.rotation, targetRotation, _player.Stats.RotationSpeed * Time.deltaTime);
-            }
-
-            _isRunning = Input.GetKey(_input.Acceleration);
-
-            _speed = _isRunning ? _player.Stats.RunSpeed : _player.Stats.WalkSpeed;
-
-            _controller.Move(moveDirection * (Time.deltaTime * _speed));
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         private void Update()
         {
-            _horizontal = Input.GetAxis("Horizontal");
             _vertical = Input.GetAxis("Vertical");
+            _horizontal = Input.GetAxis("Horizontal");
+
+            _isRunning = Input.GetKey(_input.Acceleration);
+        }
+
+        private void FixedUpdate()
+        {
+            _speed = _isRunning ? _player.Stats.RunSpeed : _player.Stats.WalkSpeed;
+
+            var moveDirection = new Vector3(_horizontal, 0, _vertical);
+
+            if (moveDirection != Vector3.zero)
+            {
+                RotateToMovement(moveDirection);
+                Move(moveDirection);
+            }
+        }
+
+        private void RotateToMovement(Vector3 moveDirection)
+        {
+            var rotation = Quaternion.LookRotation(moveDirection);
+
+            transform.rotation =
+                Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * _player.Stats.RotationSpeed);
+        }
+
+        private void Move(Vector3 moveDirection)
+        {
+            _rigidbody.linearVelocity = moveDirection * _speed;
         }
 
         private void OnValidate()
         {
-            _player ??= GetComponent<PlayerInstance>();
+            if (_player is null) _player = GetComponent<PlayerInstance>();
         }
     }
 }

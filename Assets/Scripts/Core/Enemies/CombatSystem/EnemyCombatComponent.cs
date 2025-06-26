@@ -1,6 +1,5 @@
 using Core.CombatSystem;
 using Core.Player;
-using Core.Player.CombatSystem;
 using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
@@ -8,7 +7,7 @@ using Zenject;
 
 namespace Core.Enemies.CombatSystem
 {
-    public class EnemyCollisionCombatComponent : CombatComponent
+    public class EnemyCombatComponent : CombatComponent
     {
         [Inject] private IPlayerInstance _player;
         [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;
@@ -18,29 +17,14 @@ namespace Core.Enemies.CombatSystem
 
         private void OnEnable()
         {
-            _detector.OnHitBoxDetected.Subscribe((hitBox =>
+            _detector.OnDetected.Subscribe(dto =>
             {
-                if (hitBox is IPlayerHitBox playerHitBox)
-                {
-                    Attack(playerHitBox);
-                    _onAttack.OnNext(Unit.Default);
-                }
-            })).AddTo(this);
+                _enemyInstance.StateMachine.SetMeleeAttack(dto.HitBox, dto.Collision);
+                _onAttack?.OnNext(Unit.Default);
+            });
 
             _detector.OnHitBoxExit.Subscribe((_) =>
                 _enemyInstance.StateMachine.SetMeleeMoveToTarget(_player.Transform)).AddTo(this);
-        }
-
-        private void Attack(IPlayerHitBox playerHitBox)
-        {
-            _detector.OnCollisionDetected?.Subscribe((collision) =>
-            {
-                _enemyInstance.StateMachine.SetMeleeAttack(playerHitBox, collision);
-            }).AddTo(this);
-        }
-
-        public override void SetRandomDamage(int damage)
-        {
         }
 
         private void OnValidate()

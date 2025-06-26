@@ -12,11 +12,11 @@ namespace Core.CombatSystem
 
         private int _damage;
 
-        public void SetDefaultDamage(int damage)
+        public void DefaultDamage(int damage)
         {
             _damage = damage;
         }
 
-        public abstract void SetRandomDamage(int damage);
+        public virtual void RandomDamage(int damage) {}
     }
 }

@@ -10,6 +10,6 @@ namespace Core.Enemies.Components
         void SetMeleeMoveToTarget(Transform target);
         void SetMeleeCycleAttack(IHitBox hitBox);
 
-        void SetMeleeAttack(IPlayerHitBox hitBox, Collision collision);
+        void SetMeleeAttack(IHitBox hitBox, Collision collision);
     }
 }

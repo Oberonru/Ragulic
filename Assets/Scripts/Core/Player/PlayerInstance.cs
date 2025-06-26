@@ -13,7 +13,7 @@ namespace Core.Player
     {
         [Inject] private PlayerConfig _playerStats;
         [SerializeField, ReadOnly] private HealthComponent _health;
-        [SerializeField, ReadOnly] private RigidbodyPlayerMovement _movement;
+        [SerializeField, ReadOnly] private PlayerMovement _movement;
 
         public Transform Transform => transform;
         public PlayerConfig Stats => _playerStats;
@@ -31,7 +31,7 @@ namespace Core.Player
         {
             //if (_movement is null) GetComponent<PlayerMovement>();
             if (_health is null) _health = GetComponent<HealthComponent>();
-            if (_movement is null) _movement = GetComponent<RigidbodyPlayerMovement>();
+            if (_movement is null) _movement = GetComponent<PlayerMovement>();
         }
     }
 }

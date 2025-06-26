@@ -8,7 +8,14 @@ namespace Core.CombatSystem
     {
         public IHealthComponent HealthComponent => _healthComponent;
         [SerializeField, ReadOnly] private HealthComponent _healthComponent;
+        public Rigidbody Rigidbody => _rigidbody;
+        [SerializeField] private Rigidbody _rigidbody;
 
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
+        
         private void OnValidate()
         {
             if (_healthComponent is null) _healthComponent = GetComponent<HealthComponent>();

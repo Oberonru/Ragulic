@@ -37,8 +37,8 @@ namespace Core.Enemies.States
                     if (!HitBox.HealthComponent.IsAllive) break;
                     //И нижний код корявый, сначала устанавливается перед атакое значение рандомного урона
                     //а затем уже урон и так каждый раз
-                    Owner.EnemyTriggerCombat.SetRandomDamage(Owner.EnemyTriggerCombat.Damage);
-                    HitBox.HealthComponent.TakeDamage(Owner.EnemyTriggerCombat.Damage);
+                    Owner.EnemyCombatComponent.RandomDamage(Owner.EnemyCombatComponent.Damage);
+                    HitBox.HealthComponent.TakeDamage(Owner.EnemyCombatComponent.Damage);
                     await UniTask.Delay(_spanTimeAttack, cancellationToken: _tokenSource.Token);
                 }
 

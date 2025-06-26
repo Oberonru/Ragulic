@@ -27,7 +27,7 @@ namespace Core.Enemies.Components
             SetState<EnemyCycleMeleeAttackState>();
         }
 
-        public void SetMeleeAttack(IPlayerHitBox hitBox, Collision collision)
+        public void SetMeleeAttack(IHitBox hitBox, Collision collision)
         {
             var state = GetState<EnemyMeleeAttackState>();
             state.HitBox = hitBox;

@@ -21,4 +21,4 @@ MonoBehaviour:
   _damage: 2
   _attackPerSeconds: 0.3
   _damageShift: 1
-  _pushForce: 70
+  _pushForce: 700
