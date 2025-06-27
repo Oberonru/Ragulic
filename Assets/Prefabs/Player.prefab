@@ -123,7 +123,6 @@ GameObject:
   - component: {fileID: 8034267147899895188}
   - component: {fileID: 4662619761549480284}
   - component: {fileID: 7373869427491323475}
-  - component: {fileID: 4451666636382221114}
   - component: {fileID: 3878893790180533895}
   - component: {fileID: 5902377776606228795}
   - component: {fileID: 7987299868501650528}
@@ -286,20 +285,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 3878893790180533895}
   _movement: {fileID: 7987299868501650528}
---- !u!114 &4451666636382221114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4758399987441773579}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a48faba01774d799882b2199dab0dc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 7373869427491323475}
-  _controller: {fileID: 0}
 --- !u!114 &3878893790180533895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,6 +325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 8034267147899895188}
   _player: {fileID: 7373869427491323475}
+  _health: {fileID: 3878893790180533895}
 --- !u!114 &5461763676600401755
 MonoBehaviour:
   m_ObjectHideFlags: 0

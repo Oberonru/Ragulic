@@ -1,9 +1,7 @@
-using Core.Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Core.Player.SO
+namespace Core.Configs.Player
 {
     [CreateAssetMenu(menuName = "Configs/PlayerConfig", fileName = "PlayerConfig")]
     public class PlayerConfig : LifeEntityConfig
@@ -20,9 +18,16 @@ namespace Core.Player.SO
         [ LabelText("Panic speed")]
         [SerializeField]
         private float _panicSpeed;
+        
+        [BoxGroup("PlayerStats")]
+        [PropertyTooltip("Врямя панического бега")]
+        [LabelText("Panic speed time")]
+        [SerializeField]
+        private float _panicTime;
 
         public float RotationSpeed => _rotationSpeed;
         public float RunSpeed => _runSpeed;
         public float PanicSpeed => _panicSpeed;
+        public float PanicTime => _panicTime;
     }
 }

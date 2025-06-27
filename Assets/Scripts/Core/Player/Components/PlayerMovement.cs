@@ -1,5 +1,9 @@
+using System;
+using Core.BaseComponents;
 using Core.Configs;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -10,8 +14,10 @@ namespace Core.Player.Components
         [Inject] private InputConfig _input;
         [SerializeField, ReadOnly] private Rigidbody _rigidbody;
         [SerializeField] private PlayerInstance _player;
+        [SerializeField] private HealthComponent _health;
 
         private bool _isRunning;
+        private bool _isPanic;
         private float _speed;
         private float _horizontal;
         private float _vertical;
@@ -19,6 +25,12 @@ namespace Core.Player.Components
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void OnEnable()
+        {
+            _health?.OnHit.Subscribe((damager) => Panic(_player.Stats.PanicTime))
+                .AddTo(this);
         }
 
         private void Update()
@@ -31,14 +43,43 @@ namespace Core.Player.Components
 
         private void FixedUpdate()
         {
-            _speed = _isRunning ? _player.Stats.RunSpeed : _player.Stats.WalkSpeed;
-
+            SetSpeed();
+            
             var moveDirection = new Vector3(_horizontal, 0, _vertical);
 
             if (moveDirection != Vector3.zero)
             {
                 RotateToMovement(moveDirection);
                 Move(moveDirection);
+            }
+        }
+
+        private void OnValidate()
+        {
+            if (_player is null) _player = GetComponent<PlayerInstance>();
+            if (_health is null) _health = GetComponent<HealthComponent>();
+        }
+
+        private async UniTask Panic(float panicTime)
+        {
+            _isPanic = true;
+            await UniTask.Delay(TimeSpan.FromSeconds(panicTime));
+            _isPanic = false;
+        }
+
+        private void SetSpeed()
+        {
+            if (_isPanic)
+            {
+                _speed = _player.Stats.PanicSpeed;
+            }
+            else if (_isRunning)
+            {
+                _speed = _player.Stats.RunSpeed;
+            }
+            else
+            {
+                _speed = _player.Stats.WalkSpeed;
             }
         }
 
@@ -53,11 +94,6 @@ namespace Core.Player.Components
         private void Move(Vector3 moveDirection)
         {
             _rigidbody.linearVelocity = moveDirection * _speed;
-        }
-
-        private void OnValidate()
-        {
-            if (_player is null) _player = GetComponent<PlayerInstance>();
         }
     }
 }
