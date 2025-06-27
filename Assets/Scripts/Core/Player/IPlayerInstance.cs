@@ -1,5 +1,5 @@
 using Core.BaseComponents;
-using Core.Player.SO;
+using Core.Configs.Player;
 using UnityEngine;
 
 namespace Core.Player

@@ -8,18 +8,12 @@ namespace Core.BaseComponents
     public class HealthComponent : MonoBehaviour, IHealthComponent
     {
         public bool IsAllive => _currentHealth > 0;
-        
+
         [ShowInInspector, ReadOnly]
         public int MaxHealth
         {
-            get
-            { 
-                return _maxHealth;
-            }
-            set
-            {
-                _maxHealth = value;
-            }
+            get { return _maxHealth; }
+            set { _maxHealth = value; }
         }
 
         [ShowInInspector, ReadOnly]
@@ -29,26 +23,28 @@ namespace Core.BaseComponents
             set => _currentHealth = value;
         }
 
-        public ISubject<object> OnHit { get; }
+        public ISubject<object> OnHit => _onHit;
+        private Subject<object> _onHit = new();
         public ISubject<int> OnHealthChanged => _onHealthChanged;
-        public ISubject<Unit> OnDead { get; }
+        private Subject<int> _onHealthChanged = new();
+        public ISubject<Unit> OnDead => _onDead;
+        private Subject<Unit> _onDead = new();
         private int _currentHealth { get; set; }
         private int _maxHealth;
 
-        private Subject<int> _onHealthChanged = new();
 
         public void TakeDamage(int amount, object damager = null)
         {
             if (_currentHealth <= 0) return;
-            
-             _currentHealth = Mathf.Clamp(_currentHealth - amount, 0, _maxHealth);
-            OnHit?.OnNext(damager);
-            OnHealthChanged?.OnNext(amount);
+
+            _currentHealth = Mathf.Clamp(_currentHealth - amount, 0, _maxHealth);
+            _onHit?.OnNext(damager);
+            _onHealthChanged?.OnNext(amount);
 
             if (_currentHealth <= 0)
             {
-                OnDead?.OnNext(Unit.Default);
-                OnDead?.OnCompleted();
+                _onDead?.OnNext(Unit.Default);
+                _onDead?.OnCompleted();
             }
         }
 
