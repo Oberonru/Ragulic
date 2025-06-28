@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace Core.BaseComponents
         private int _maxHealth;
 
 
-        public void TakeDamage(int amount, object damager = null)
+        public void TakeDamage(int amount, [CanBeNull] object damager = null)
         {
             if (_currentHealth <= 0) return;
 

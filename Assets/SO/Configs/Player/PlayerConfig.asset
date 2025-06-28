@@ -23,3 +23,4 @@ MonoBehaviour:
   _rotationSpeed: 4
   _runSpeed: 5
   _panicSpeed: 8
+  _panicTime: 3
