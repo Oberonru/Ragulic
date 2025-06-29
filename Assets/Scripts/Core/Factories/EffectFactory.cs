@@ -18,8 +18,9 @@ namespace Core.Factories
         {
             if (!_pool.TryGetValue(prefab, out PoolMono<EffectInstance> pool))
             {
-                PoolMono<EffectInstance> newPool =
-                    new PoolMono<EffectInstance>(prefab, prefab.transform, _container, Count, true, false);
+                var newPool = new PoolMono<EffectInstance>
+                    (prefab, prefab.transform, _container, Count, true, false);
+                
                 _pool.Add(prefab, newPool);
 
                 //Перед возвратом установить позицию и ротацию элемента, сейчас она в нулевых

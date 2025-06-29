@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 7373869427491323475}
   _detector: {fileID: 95233932479177185}
+  _particalEffect: {fileID: 1544045875991390276, guid: 4038ba5eb6368d84fa3903445c4f1b6d, type: 3}
 --- !u!114 &7987299868501650528
 MonoBehaviour:
   m_ObjectHideFlags: 0
