@@ -12,7 +12,7 @@ namespace Core.Enemies.States
         public IHitBox HitBox;
         private CompositeDisposable _disposable;
         private CancellationTokenSource _tokenSource;
-        private TimeSpan _spanTimeAttack => TimeSpan.FromSeconds(Owner.EnemyStats.AttackPerSeconds);
+        private TimeSpan _spanTimeAttack => TimeSpan.FromSeconds(Owner.Stats.AttackPerSeconds);
 
         public override void Enter()
         {

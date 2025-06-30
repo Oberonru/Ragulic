@@ -8,12 +8,17 @@ namespace System.UI.HUD
     {
         [Inject] private IPlayerInstance _player;
         [SerializeField] private HealthBar _healthBar;
-        //остальные параметры игрока
-
+        [SerializeField] private HeartUI _heart;
 
         private void Start()
         {
             _healthBar.SetData(_player.Health);
+        }
+
+        private void OnValidate()
+        {
+            if (_healthBar is null) _healthBar = GetComponent<HealthBar>();
+            if (_heart is null) _heart = GetComponent<HeartUI>();
         }
     }
 }

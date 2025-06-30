@@ -64,7 +64,7 @@ namespace Core.Enemies.Components
             _agent.agentTypeID = _navMeshAgentConfig.AgentTypeId;
             _agent.baseOffset = _navMeshAgentConfig.BaseOffset;
 
-            _agent.speed = _enemyInstance.EnemyStats.WalkSpeed;
+            _agent.speed = _enemyInstance.Stats.WalkSpeed;
 
             _agent.angularSpeed = _navMeshAgentConfig.AngularSpeed;
             _agent.acceleration = _navMeshAgentConfig.Acceleration;

@@ -25,9 +25,15 @@ namespace Core.Configs.Player
         [SerializeField]
         private float _panicTime;
 
+        [BoxGroup("PlayerStats")]
+        [PropertyTooltip("Радиус в котором отслеживается сердцебиение")]
+        [LabelText("Detected radius")]
+        private float _detectedRadius;
+
         public float RotationSpeed => _rotationSpeed;
         public float RunSpeed => _runSpeed;
         public float PanicSpeed => _panicSpeed;
         public float PanicTime => _panicTime;
+        public float DetectedRadius => _detectedRadius;
     }
 }

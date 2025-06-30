@@ -1,6 +1,5 @@
 using Core.BaseComponents;
 using Core.CombatSystem;
-using Core.Effects;
 using Core.Factories;
 using Sirenix.OdinInspector;
 using UniRx;
@@ -13,24 +12,27 @@ namespace Core.Player.CombatSystem
     {
         [Inject] private IEffectFactory _effectFactory;
         [SerializeField, ReadOnly] private PlayerInstance _player;
-        [SerializeField, ReadOnly] private TriggerHitBoxDetector _detector;
+
+        public IHitBoxDetector HitBoxDetector => hitBoxDetector;
+        [SerializeField, ReadOnly] private TriggerHitBoxDetector hitBoxDetector;
+
         private IHealthComponent _targetAttack;
         private bool _canAttack;
         private float _time;
 
         private void OnEnable()
         {
-            _detector.OnDetected.Subscribe((hitBox) => { _targetAttack = hitBox.HealthComponent; })
+            hitBoxDetector.OnDetected.Subscribe((hitBox) => { _targetAttack = hitBox.HealthComponent; })
                 .AddTo(this);
 
-            _detector.OnHitBoxExit.Subscribe(_ => { _targetAttack = null; })
+            hitBoxDetector.OnHitBoxExit.Subscribe(_ => { _targetAttack = null; })
                 .AddTo(this);
         }
 
         private void OnValidate()
         {
             if (_player is null) _player = GetComponent<PlayerInstance>();
-            if (_detector is null) _detector = GetComponent<TriggerHitBoxDetector>();
+            if (hitBoxDetector is null) hitBoxDetector = GetComponent<TriggerHitBoxDetector>();
         }
 
         private void Update()
@@ -56,7 +58,7 @@ namespace Core.Player.CombatSystem
         {
             Damage = Random.Range(damage, damage + 3);
         }
-
+        
         private bool CanAttack()
         {
             return _time > _player.Stats.AttackPerSeconds;

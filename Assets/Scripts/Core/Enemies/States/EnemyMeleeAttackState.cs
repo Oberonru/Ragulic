@@ -32,8 +32,8 @@ namespace Core.Enemies.States
             if (!HitBox.HealthComponent.IsAllive) return;
 
             var pushDirection = HitBox.Rigidbody.transform.forward;
-            HitBox.Rigidbody.AddForce(pushDirection * Owner.EnemyStats.PushForce, ForceMode.Impulse);
-            HitBox.HealthComponent.TakeDamage(Owner.EnemyStats.Damage);
+            HitBox.Rigidbody.AddForce(pushDirection * Owner.Stats.PushForce, ForceMode.Impulse);
+            HitBox.HealthComponent.TakeDamage(Owner.Stats.Damage);
         }
     }
 }

@@ -4,15 +4,14 @@ using Core.Enemies.CombatSystem;
 using Core.Enemies.Components;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Core.Enemies
 {
     [RequireComponent(typeof(HealthComponent))]
     [RequireComponent(typeof(EnemyNavMesh))]
     [RequireComponent(typeof(EnemyStateMachine))]
-    //[RequireComponent(typeof(EnemyCombatComponent))]
-    public class EnemyInstance : MonoBehaviour
+    [RequireComponent(typeof(EnemyCombatComponent))]
+    public class EnemyInstance : MonoBehaviour, IEnemyInstance
     {
         [SerializeField] private EnemyConfig _enemyStats;
         [SerializeField, ReadOnly] private HealthComponent _health;
@@ -22,7 +21,7 @@ namespace Core.Enemies
 
         public IHealthComponent HealthComponent => _health;
         public EnemyNavMesh NavMesh => _navMesh;
-        public EnemyConfig EnemyStats => _enemyStats;
+        public EnemyConfig Stats => _enemyStats;
         public EnemyStateMachine StateMachine => _stateMachine;
         public EnemyCombatComponent EnemyCombatComponent => _enemyCombat;
 

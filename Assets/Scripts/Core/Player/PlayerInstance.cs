@@ -1,6 +1,7 @@
 using System;
 using Core.BaseComponents;
 using Core.Configs.Player;
+using Core.Player.CombatSystem;
 using Core.Player.Components;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,10 +15,12 @@ namespace Core.Player
         [Inject] private PlayerConfig _playerStats;
         [SerializeField, ReadOnly] private HealthComponent _health;
         [SerializeField, ReadOnly] private PlayerMovement _movement;
+        [SerializeField, ReadOnly] private PlayerCombatComponent _combatComponent;
 
         public Transform Transform => transform;
         public PlayerConfig Stats => _playerStats;
         public IHealthComponent Health => _health;
+        public PlayerCombatComponent CombatComponent => _combatComponent;
 
         private void Awake()
         {
