@@ -11,15 +11,17 @@ namespace Core.Factories
         [Inject] private DiContainer _container;
         private Dictionary<EffectInstance, PoolMono<EffectInstance>> _pool = new();
 
-        private const int Count = 30;
+        private const int Count = 1;
 
         public IEffectInstance Create(EffectInstance prefab, Vector3 position, Quaternion rotation,
             Transform parent = null)
         {
             if (!_pool.TryGetValue(prefab, out PoolMono<EffectInstance> pool))
             {
+                var instance = Object.Instantiate(prefab, position, rotation, parent);
+                
                 var newPool = new PoolMono<EffectInstance>
-                    (prefab, prefab.transform, _container, Count, true, false);
+                    (prefab, instance.transform, _container, Count, true, true);
                 
                 _pool.Add(prefab, newPool);
 

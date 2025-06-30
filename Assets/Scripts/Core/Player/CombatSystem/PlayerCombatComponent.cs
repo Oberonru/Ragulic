@@ -11,10 +11,9 @@ namespace Core.Player.CombatSystem
 {
     public class PlayerCombatComponent : CombatComponent
     {
-      //  [Inject] private IEffectFactory _effectFactory;
+        [Inject] private IEffectFactory _effectFactory;
         [SerializeField, ReadOnly] private PlayerInstance _player;
         [SerializeField, ReadOnly] private TriggerHitBoxDetector _detector;
-        [SerializeField] private EffectInstance _particalEffect;
         private IHealthComponent _targetAttack;
         private bool _canAttack;
         private float _time;
@@ -41,7 +40,6 @@ namespace Core.Player.CombatSystem
             if (Input.GetMouseButton(0))
             {
                 //анимация атаки
-                
             }
 
             if (Input.GetMouseButton(0) && _targetAttack != null && CanAttack())
@@ -51,13 +49,9 @@ namespace Core.Player.CombatSystem
                 RandomDamage(_player.Stats.Damage);
 
                 _targetAttack.TakeDamage(Damage);
-                //эффект крови допустим
-                // _effectFactory.Create(
-                //     _particalEffect, _player.Transform.position, _player.Transform.rotation, _player.Transform);
-
             }
         }
-        
+
         public override void RandomDamage(int damage)
         {
             Damage = Random.Range(damage, damage + 3);

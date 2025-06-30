@@ -1,4 +1,3 @@
-using Core.Enemies.Dto;
 using UniRx;
 
 namespace Core.CombatSystem
@@ -7,6 +6,6 @@ namespace Core.CombatSystem
     {
         ISubject<IHitBox> OnHitBoxExit { get; }
 
-        ISubject<IAttackDto> OnDetected { get; }
+        ISubject<IHitBox> OnDetected { get; }
     }
 }

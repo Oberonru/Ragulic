@@ -18,7 +18,7 @@ MonoBehaviour:
     \u0431\u0435\u0433\u0443\u043D\u043E\u043A"
   _walkSpeed: 4
   _health: 100
-  _damage: 2
-  _attackPerSeconds: 0.3
+  _damage: 10
+  _attackPerSeconds: 1
   _damageShift: 1
   _pushForce: 700

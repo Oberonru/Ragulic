@@ -1,5 +1,8 @@
+using System;
 using Core.CombatSystem;
 using Core.Player;
+using Core.Player.CombatSystem;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
@@ -12,15 +15,16 @@ namespace Core.Enemies.CombatSystem
         [Inject] private IPlayerInstance _player;
         [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;
         [SerializeField, ReadOnly] private EnemyCollisionHitBoxDetector _detector;
-        public ISubject<Unit> OnAttack => _onAttack;
-        private Subject<Unit> _onAttack = new();
+
+        private bool _isAttacking;
 
         private void OnEnable()
         {
-            _detector.OnDetected.Subscribe(dto =>
+            _detector.OnDetected.Subscribe(hitBox =>
             {
-                _enemyInstance.StateMachine.SetMeleeAttack(dto.HitBox, dto.Collision);
-                _onAttack?.OnNext(Unit.Default);
+                if (_isAttacking) return;
+
+                Attack(hitBox);
             });
 
             _detector.OnHitBoxExit.Subscribe((_) =>
@@ -31,6 +35,22 @@ namespace Core.Enemies.CombatSystem
         {
             if (_enemyInstance is null) _enemyInstance = GetComponent<EnemyInstance>();
             if (_detector is null) _detector = GetComponent<EnemyCollisionHitBoxDetector>();
+        }
+
+        private async UniTask Attack(IHitBox hitBox)
+        {
+            if (!(hitBox is IPlayerHitBox) || !hitBox.HealthComponent.IsAllive) return;
+            
+            Debug.Log("Attack");
+            
+            _isAttacking = true;
+            
+            var span = TimeSpan.FromSeconds(_enemyInstance.EnemyStats.AttackPerSeconds);
+            _enemyInstance.StateMachine.SetMeleeAttack(hitBox);
+
+            await UniTask.Delay(span);
+            
+            _isAttacking = false;
         }
     }
 }

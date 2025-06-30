@@ -20,7 +20,7 @@ namespace Core.Configs
         private int _damage;
 
         [BoxGroup("EntityStats")]
-        [SerializeField, LabelText("Attack per seconds"), SuffixLabel("APS")]
+        [SerializeField, LabelText("Attack per seconds"), SuffixLabel("seconds")]
         private float _attackPerSeconds;
 
         [BoxGroup("EntityStats")] 

@@ -1,5 +1,4 @@
 using Core.CombatSystem;
-using Core.Player.CombatSystem;
 using UnityEngine;
 
 namespace Core.Enemies.Components
@@ -10,6 +9,6 @@ namespace Core.Enemies.Components
         void SetMeleeMoveToTarget(Transform target);
         void SetMeleeCycleAttack(IHitBox hitBox);
 
-        void SetMeleeAttack(IHitBox hitBox, Collision collision);
+        void SetMeleeAttack(IHitBox hitBox);
     }
 }
