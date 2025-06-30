@@ -41,14 +41,12 @@ namespace Core.Enemies.CombatSystem
         {
             if (!(hitBox is IPlayerHitBox) || !hitBox.HealthComponent.IsAllive) return;
             
-            Debug.Log("Attack");
-            
             _isAttacking = true;
             
-            var span = TimeSpan.FromSeconds(_enemyInstance.EnemyStats.AttackPerSeconds);
+            var delay = TimeSpan.FromSeconds(_enemyInstance.EnemyStats.AttackPerSeconds);
             _enemyInstance.StateMachine.SetMeleeAttack(hitBox);
 
-            await UniTask.Delay(span);
+            await UniTask.Delay(delay);
             
             _isAttacking = false;
         }

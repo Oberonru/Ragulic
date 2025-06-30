@@ -7,7 +7,7 @@ namespace Core.CombatSystem
     {
         public ISubject<IHitBox> OnDetected => _onDetected;
         private Subject<IHitBox> _onDetected = new();
-        
+
         public ISubject<IHitBox> OnHitBoxExit => _onHitBoxExit;
         private Subject<IHitBox> _onHitBoxExit = new();
 
@@ -18,7 +18,6 @@ namespace Core.CombatSystem
                 _onDetected?.OnNext(hitBox);
             }
         }
-    
         
         private void OnCollisionExit(Collision other)
         {
