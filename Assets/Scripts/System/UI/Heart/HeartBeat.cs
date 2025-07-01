@@ -9,26 +9,25 @@ namespace System.UI.Heart
     {
         [Inject] private IEnemyInstance _enemy;
         public HeartUI Heart => _heart;
+        [SerializeField] private HeartUI _heart;
         private Transform _playerTransform;
         private float _detectedRadius;
-
-        [SerializeField] private HeartUI _heart;
-
+        
         private void Start()
         {
             if (_heart is null) _heart = GetComponent<HeartUI>();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             var distance = DistanceToTarget();
             
             _heart.Beat(distance, _detectedRadius);
         }
 
-        public void SetData(Transform transform, float detectedRadius)
+        public void SetData(Transform playerTransform, float detectedRadius)
         {
-            _playerTransform = transform;
+            _playerTransform = playerTransform;
             _detectedRadius = detectedRadius;
         }
 

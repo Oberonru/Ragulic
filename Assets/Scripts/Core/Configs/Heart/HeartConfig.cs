@@ -37,10 +37,17 @@ namespace Core.Configs.Heart
         [SerializeField]
         private float _detectedRadius;
 
+        [BoxGroup("HeartConfig")]
+        [PropertyTooltip("Звук удара сердца")]
+        [LabelText("Beat")]
+        [SerializeField]
+        private AudioClip _beatSound;
+
         public float Amplitude => _amplitude;
         public float MinPulseSpeed => _minPulseSpeed;
         public float MaxPulseSpeed => _maxPulseSpeed;
         public float SmoothFactor => _smoothFactor;
         public float DetectedRadius => _detectedRadius;
+        public AudioClip BeatSound => _beatSound;
     }
 }

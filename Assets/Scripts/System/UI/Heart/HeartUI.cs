@@ -9,12 +9,15 @@ namespace System.UI.Heart
     {
         [Inject] private HeartConfig _config;
         [SerializeField] private Image _heart;
+        [SerializeField] private AudioSource _audio;
         public float DetectedRadius => _detectedRadius;
         private float _detectedRadius => _config.DetectedRadius;
-        
-        private float _frequency;
+
         private Vector3 _startScale;
+        private float _frequency;
         private float _phase;
+        private float _lastPhase;
+        private bool _canPlayBeat = true;
 
         private void OnEnable()
         {
@@ -34,8 +37,25 @@ namespace System.UI.Heart
 
             if (_phase > 1f) _phase -= 1f;
 
-            var scaleKoef = 1 + _config.Amplitude * Mathf.Sin(_phase * Mathf.PI * 2);
+            var sin = Mathf.Sin(_phase * Mathf.PI * 2);
+            var scaleKoef = 1 + _config.Amplitude * sin;
+
             transform.localScale = _startScale * scaleKoef;
+
+            BeatSound(_phase);
+        }
+
+        private void BeatSound(float phase)
+        {
+            if (_lastPhase < 0.25f && phase >= 0.25f && _canPlayBeat)
+            {
+                _canPlayBeat = false;
+                _audio.pitch = UnityEngine.Random.Range(0.8f, 1.1f);
+                _audio.PlayOneShot(_config.BeatSound);
+            }
+
+            _lastPhase = _phase;
+            _canPlayBeat = true;
         }
     }
 }

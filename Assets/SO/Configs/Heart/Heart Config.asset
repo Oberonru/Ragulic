@@ -17,3 +17,4 @@ MonoBehaviour:
   _maxPulseSpeed: 5
   _smoothFactor: 3
   _detectedRadius: 30
+  _beatSound: {fileID: 8300000, guid: 5ecb840a69fa449b8ab9ecd4e361c231, type: 3}
