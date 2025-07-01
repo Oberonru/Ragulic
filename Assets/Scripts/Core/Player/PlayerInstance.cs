@@ -9,7 +9,9 @@ using Zenject;
 
 namespace Core.Player
 {
-    [RequireComponent(typeof(IHealthComponent))]
+    [RequireComponent(typeof(HealthComponent))]
+    [RequireComponent(typeof(PlayerMovement))]
+    [RequireComponent(typeof(PlayerCombatComponent))]
     public class PlayerInstance : MonoBehaviour, IPlayerInstance
     {
         [Inject] private PlayerConfig _playerStats;
@@ -34,6 +36,7 @@ namespace Core.Player
         {
             if (_health is null) _health = GetComponent<HealthComponent>();
             if (_movement is null) _movement = GetComponent<PlayerMovement>();
+            if (_combatComponent is null) _combatComponent = GetComponent<PlayerCombatComponent>();
         }
     }
 }

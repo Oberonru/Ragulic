@@ -2,7 +2,7 @@ using Core.Camera;
 using UnityEngine;
 using Zenject;
 
-namespace System.UI
+namespace System.UI.Health
 {
     public class HealthBilboard : MonoBehaviour
     {

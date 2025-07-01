@@ -21,6 +21,7 @@ namespace Core.Enemies
 
         public IHealthComponent HealthComponent => _health;
         public EnemyNavMesh NavMesh => _navMesh;
+        public Transform Transform => transform;
         public EnemyConfig Stats => _enemyStats;
         public EnemyStateMachine StateMachine => _stateMachine;
         public EnemyCombatComponent EnemyCombatComponent => _enemyCombat;

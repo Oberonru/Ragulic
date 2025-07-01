@@ -1,8 +1,7 @@
-using System.UI;
 using Core.Enemies;
 using UnityEngine;
 
-namespace Core.UI
+namespace System.UI.Health
 {
     public class EnemyWidgetStatus : MonoBehaviour
     {

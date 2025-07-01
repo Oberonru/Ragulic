@@ -1,3 +1,4 @@
+using System.Interfaces;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,11 @@ namespace System.Spawners
             var instance = this.Container.InstantiatePrefabForComponent<TImplementation>(_prefab,
                 _spawnPoint.transform.position,
                 _spawnPoint.transform.rotation, _spawnPoint) as TImplementation;
+
+            if (instance is IDrawGizmos gizmos)
+            {
+                gizmos.DrawGizmos();
+            }
 
             if (_isSingle)
             {

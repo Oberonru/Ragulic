@@ -2,7 +2,7 @@ using Core.BaseComponents;
 using UniRx;
 using UnityEngine;
 
-namespace System.UI
+namespace System.UI.Health
 {
     public class HealthBar : MonoBehaviour
     {
