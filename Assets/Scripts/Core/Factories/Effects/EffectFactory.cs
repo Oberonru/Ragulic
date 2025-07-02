@@ -4,7 +4,7 @@ using Core.Effects;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Factories
+namespace Core.Factories.Effects
 {
     public class EffectFactory : IEffectFactory
     {
@@ -19,15 +19,15 @@ namespace Core.Factories
             if (!_pool.TryGetValue(prefab, out PoolMono<EffectInstance> pool))
             {
                 var instance = Object.Instantiate(prefab, position, rotation, parent);
-                
+
                 var newPool = new PoolMono<EffectInstance>
                     (prefab, instance.transform, _container, Count, true, true);
-                
+
                 _pool.Add(prefab, newPool);
 
                 //Перед возвратом установить позицию и ротацию элемента, сейчас она в нулевых
                 var freeElement = newPool.GetFreeElement();
-                
+
                 return freeElement;
             }
             else

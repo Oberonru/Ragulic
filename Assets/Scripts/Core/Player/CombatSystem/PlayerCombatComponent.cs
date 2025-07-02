@@ -1,6 +1,7 @@
 using Core.BaseComponents;
 using Core.CombatSystem;
 using Core.Factories;
+using Core.Factories.Effects;
 using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;

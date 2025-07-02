@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace Core.Configs
 {
-    public class LifeEntityConfig : SrcriptableBaseEntityData
+    public class LifeEntityConfig : ScriptableBaseEntityData
     {
         [BoxGroup("EntityStats")]
         [SerializeField, LabelText("Walk speed")]

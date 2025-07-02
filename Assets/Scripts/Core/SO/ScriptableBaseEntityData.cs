@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.SO
 {
-    public class SrcriptableBaseEntityData : ScriptableConfig
+    public class ScriptableBaseEntityData : ScriptableConfig
     {
         [BoxGroup("IconBox", centerLabel: true, Order = -10)]
         [SerializeField, PreviewField(50)]
@@ -12,7 +12,9 @@ namespace Core.SO
         [LabelText("Icon")]
         private Sprite _icon;
 
-        [BoxGroup("IconBox")] [VerticalGroup("IconBox/Horizontal/Vertical")] [LabelText("Entity name")] [SerializeField]
+        [BoxGroup("IconBox")]
+        [VerticalGroup("IconBox/Horizontal/Vertical")]
+        [LabelText("Entity name")] [SerializeField]
         private string _name;
 
         [BoxGroup("IconBox")]

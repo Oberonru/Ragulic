@@ -1,5 +1,6 @@
 using Core.Effects;
 using Core.Factories;
+using Core.Factories.Effects;
 using UniRx;
 using UnityEngine;
 using Zenject;

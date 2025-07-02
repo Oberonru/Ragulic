@@ -1,6 +1,7 @@
 using System;
 using Core.Effects;
 using Core.Factories;
+using Core.Factories.Effects;
 using UnityEngine;
 using Zenject;
 

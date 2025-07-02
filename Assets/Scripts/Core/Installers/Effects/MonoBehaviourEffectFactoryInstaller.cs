@@ -1,7 +1,7 @@
 using System.Installers;
-using Core.Factories;
+using Core.Factories.Effects;
 
-namespace Core.Installers
+namespace Core.Installers.Effects
 {
     public class MonoBehaviourEffectFactoryInstaller : MonoBehaviourFactoryInstaller<IEffectFactory, EffectFactory>
     {
