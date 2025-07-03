@@ -8,9 +8,9 @@ namespace Core.Factories.Items
     {
         [Inject] private DiContainer _container;
 
-        public IItemObject Create(ItemObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
+        public IItemInstance Create(ItemInstance prefab, Vector3 position, Quaternion rotation, Transform parent = null)
         {
-            return _container.InstantiatePrefabForComponent<ItemObject>(prefab, position, rotation, parent);
+            return _container.InstantiatePrefabForComponent<ItemInstance>(prefab, position, rotation, parent);
         }
     }
 }

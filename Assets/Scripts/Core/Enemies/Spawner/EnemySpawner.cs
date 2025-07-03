@@ -1,4 +1,4 @@
-using System.Spawners;
+using Settings.System.Spawners;
 
 namespace Core.Enemies.Spawner
 {

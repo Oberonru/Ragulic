@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core.Items
 {
-    public class ItemObject : MonoBehaviour, IItemObject
+    public class ItemInstance : MonoBehaviour, IItemInstance
     {
         public ScriptableItem Item => _scriptableItem;
         [SerializeField] private ScriptableItem _scriptableItem;

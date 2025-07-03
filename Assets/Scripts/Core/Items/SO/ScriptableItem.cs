@@ -14,5 +14,10 @@ namespace Core.Items.SO
         private ItemType _itemType;
         
         public ItemType ItemType => _itemType;
+
+        public Item CreateItem()
+        {
+            return new Item(this);
+        }
     }
 }

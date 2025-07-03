@@ -2,7 +2,7 @@ using System.Interfaces;
 using UnityEngine;
 using Zenject;
 
-namespace System.Spawners
+namespace Settings.System.Spawners
 {
     public abstract class MonobehEntitySpawner<TInterface, TImplementation> : MonoInstaller
         where TImplementation : Component, TInterface
