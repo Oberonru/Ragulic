@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interaction: 101
   _acceleration: 304
+  _crouch: 306

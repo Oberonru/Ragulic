@@ -13,6 +13,12 @@ namespace Core.Configs.Player
         [BoxGroup("PlayerStats")]
         [SerializeField, LabelText("Run speed")]
         private float _runSpeed;
+        
+        [BoxGroup("PlayerStats")]
+        [PropertyTooltip("Скорость в согнутом положении")]
+        [LabelText("Crouch speed")]
+        [SerializeField]
+        private float _crouchSpeed;
 
         [BoxGroup("PlayerStats")]
         [PropertyTooltip("Паническая скорость при получении урона")]
@@ -28,6 +34,7 @@ namespace Core.Configs.Player
 
         public float RotationSpeed => _rotationSpeed;
         public float RunSpeed => _runSpeed;
+        public float CrouchSpeed => _crouchSpeed;
         public float PanicSpeed => _panicSpeed;
         public float PanicTime => _panicTime;
     }

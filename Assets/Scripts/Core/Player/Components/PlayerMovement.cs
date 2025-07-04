@@ -18,7 +18,8 @@ namespace Core.Player.Components
 
         private bool _isRunning;
         private bool _isPanic;
-        private float _speed;
+        private bool _isCrouch;
+        [ShowInInspector] private float _speed;
         private float _horizontal;
         private float _vertical;
 
@@ -39,12 +40,24 @@ namespace Core.Player.Components
             _horizontal = Input.GetAxis("Horizontal");
 
             _isRunning = Input.GetKey(_input.Acceleration);
+
+            if (_isRunning && _isCrouch)
+            {
+                _isCrouch = false;
+            }
+            
+            if (Input.GetKeyDown(_input.Crouch))
+            {
+                _isCrouch = !_isCrouch;                
+            }
+
+            Debug.Log(_isCrouch + " crouch");
         }
 
         private void FixedUpdate()
         {
             SetSpeed();
-            
+
             var moveDirection = new Vector3(_horizontal, 0, _vertical);
 
             if (moveDirection != Vector3.zero)
@@ -65,6 +78,8 @@ namespace Core.Player.Components
             _isPanic = true;
             await UniTask.Delay(TimeSpan.FromSeconds(panicTime));
             _isPanic = false;
+
+            if (_isCrouch) _isCrouch = false;
         }
 
         private void SetSpeed()
@@ -77,6 +92,12 @@ namespace Core.Player.Components
             {
                 _speed = _player.Stats.RunSpeed;
             }
+            else if (_isCrouch)
+            {
+                _speed = _player.Stats.CrouchSpeed;
+            }
+
+
             else
             {
                 _speed = _player.Stats.WalkSpeed;

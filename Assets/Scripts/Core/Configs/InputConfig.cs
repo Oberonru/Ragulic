@@ -13,5 +13,9 @@ namespace Core.Configs
         public KeyCode Acceleration => _acceleration;
         [Tooltip("Ускорение")]
         [SerializeField] private KeyCode _acceleration = KeyCode.LeftShift;
+        
+        public KeyCode Crouch => _crouch;
+        [Tooltip("Приседение")]
+        [SerializeField] private KeyCode _crouch = KeyCode.LeftControl;
     }
 }
