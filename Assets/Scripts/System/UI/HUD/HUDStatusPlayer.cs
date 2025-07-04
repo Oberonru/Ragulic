@@ -1,6 +1,7 @@
 using System.UI.Health;
 using System.UI.Heart;
 using Core.Player;
+using Settings.System.UI.Heart;
 using UnityEngine;
 using Zenject;
 

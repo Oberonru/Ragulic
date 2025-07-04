@@ -1,7 +1,6 @@
 using Core.Configs;
 using Core.Items;
 using Core.Items.Inventory;
-using Core.Items.SO;
 using UnityEngine;
 using Zenject;
 
@@ -14,15 +13,13 @@ namespace Core.Player.Components
         [Inject] private InputConfig _inputConfig;
         
         private ItemsInventory _inventory;
-        private IItemInstance _item;
-        private ScriptableItem _scriptableItem;
+        private IItemInstance _instance;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out IItemInstance item))
             {
-                _scriptableItem = item.Item;
-                _item = item;
+                _instance = item;
             }
         }
 
@@ -30,18 +27,18 @@ namespace Core.Player.Components
         {
             if (other.TryGetComponent(out IItemInstance item))
             {
-                _item = null;
-                _scriptableItem = null;
+                _instance = null;
             }
         }
 
         private void Update()
         {
-            if (Input.GetKey(_inputConfig.Interaction) && _item != null)
+            if (Input.GetKey(_inputConfig.Interaction) && _instance != null)
             {
-                var item = _scriptableItem.CreateItem();
+                //Как быть с зонами, здесь взаимодействие с ItemInstance, но надо с интерактабл зоной?
+                var item = _instance.ScriptableItem.CreateItem();
                 _inventory.AddItem(item);
-                
+
                 //проверка, если предмет добавлен - удаляем его и обнуляем переменные
             }
         }

@@ -1,9 +1,10 @@
+using System.UI.Heart;
 using Core.Enemies;
 using Core.Player.Components;
 using UnityEngine;
 using Zenject;
 
-namespace System.UI.Heart
+namespace Settings.System.UI.Heart
 {
     public class HeartBeat : MonoBehaviour, IHeartBeatComponent
     {

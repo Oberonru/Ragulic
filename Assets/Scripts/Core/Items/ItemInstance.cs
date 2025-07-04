@@ -5,7 +5,7 @@ namespace Core.Items
 {
     public class ItemInstance : MonoBehaviour, IItemInstance
     {
-        public ScriptableItem Item => _scriptableItem;
+        public ScriptableItem ScriptableItem => _scriptableItem;
         [SerializeField] private ScriptableItem _scriptableItem;
     }
 }

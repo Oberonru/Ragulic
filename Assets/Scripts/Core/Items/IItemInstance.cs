@@ -5,6 +5,6 @@ namespace Core.Items
 {
     public interface IItemInstance : IFactoryObject
     {
-        ScriptableItem Item { get; }
+        ScriptableItem ScriptableItem { get; }
     }
 }
