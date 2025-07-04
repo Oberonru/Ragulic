@@ -1,6 +1,8 @@
 using Core.BaseComponents;
 using Core.Configs.Player;
 using Core.Player.CombatSystem;
+using Core.Player.Components;
+using Core.Player.StateMachine;
 using UnityEngine;
 
 namespace Core.Player
@@ -10,6 +12,8 @@ namespace Core.Player
         Transform Transform { get; }
         PlayerConfig Stats { get; }
         IHealthComponent Health { get; }
+        IPlayerMovement Movement { get; }
         PlayerCombatComponent CombatComponent { get; }
+        PlayerStateMachine StateMachine { get; }
     }
 }
