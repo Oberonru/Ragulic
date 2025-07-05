@@ -1,3 +1,5 @@
+using System.StateMachineSystem;
+
 namespace Core.Player.StateMachine
 {
     public interface IPlayerState

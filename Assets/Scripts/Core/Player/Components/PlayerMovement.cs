@@ -1,7 +1,5 @@
-using System;
 using Core.BaseComponents;
 using Core.Configs;
-using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
@@ -21,13 +19,15 @@ namespace Core.Player.Components
             get => _isRunning;
             set => _isRunning = value;
         }
+
         private bool _isRunning;
-        
+
         public bool IsCrouch
         {
             get => _isCrouch;
             set => _isCrouch = value;
         }
+
         private bool _isCrouch;
 
         public bool IsPanic
@@ -35,8 +35,9 @@ namespace Core.Player.Components
             get => _isPanic;
             set => _isPanic = value;
         }
+
         private bool _isPanic;
-        
+
         public float Speed
         {
             get => _speed;
@@ -59,8 +60,8 @@ namespace Core.Player.Components
 
         private void OnEnable()
         {
-            
-            _health?.OnHit.Subscribe((damager) => Panic(_player.Stats.PanicTime))
+            _health?.OnHit.Subscribe(_ =>
+                    _player.StateMachine.SetPanic(_player.Stats.PanicSpeed))
                 .AddTo(this);
         }
 
@@ -69,35 +70,26 @@ namespace Core.Player.Components
             _vertical = Input.GetAxis("Vertical");
             _horizontal = Input.GetAxis("Horizontal");
 
-            if (Input.GetKey(_input.Acceleration))
+            if (!this.IsPanic)
             {
-                _player.StateMachine.SetRunning(_player.Stats.RunSpeed);
-            }
+                if (Input.GetKey(_input.Acceleration))
+                {
+                    _player.StateMachine.SetRunning(_player.Stats.RunSpeed);
+                }
+                else if (!this.IsCrouch)
+                {
+                    _player.StateMachine.SetWalking(_player.Stats.WalkSpeed);
+                }
 
-            if (Input.GetKey(_input.Crouch))
-            {
-                _player.StateMachine.SetCrouch(_player.Stats.CrouchSpeed);
+                if (Input.GetKey(_input.Crouch))
+                {
+                    _player.StateMachine.SetCrouch(_player.Stats.CrouchSpeed);
+                }
             }
-
-            //_isRunning = Input.GetKey(_input.Acceleration);
-            //
-            // if (_isRunning && _isCrouch)
-            // {
-            //     _isCrouch = false;
-            // }
-            //
-            // if (Input.GetKeyDown(_input.Crouch))
-            // {
-            //     _isCrouch = !_isCrouch;
-            // }
-            //
-            // Debug.Log(_isCrouch + " crouch");
         }
 
         private void FixedUpdate()
         {
-            // SetSpeed();
-            //
             var moveDirection = new Vector3(_horizontal, 0, _vertical);
 
             if (moveDirection != Vector3.zero)
@@ -113,37 +105,6 @@ namespace Core.Player.Components
             if (_health is null) _health = GetComponent<HealthComponent>();
         }
 
-        private async UniTask Panic(float panicTime)
-        {
-            _isPanic = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(panicTime));
-            _isPanic = false;
-
-            if (_isCrouch) _isCrouch = false;
-        }
-
-        private void SetSpeed()
-        {
-            if (_isPanic)
-            {
-                _speed = _player.Stats.PanicSpeed;
-            }
-            else if (_isRunning)
-            {
-                _speed = _player.Stats.RunSpeed;
-            }
-            else if (_isCrouch)
-            {
-                _speed = _player.Stats.CrouchSpeed;
-            }
-
-
-            else
-            {
-                _speed = _player.Stats.WalkSpeed;
-            }
-        }
-
         private void RotateToMovement(Vector3 moveDirection)
         {
             var rotation = Quaternion.LookRotation(moveDirection);
@@ -154,7 +115,7 @@ namespace Core.Player.Components
 
         private void Move(Vector3 moveDirection)
         {
-            _rigidbody.linearVelocity = moveDirection * _speed;
+            _rigidbody.linearVelocity = moveDirection * this.Speed;
         }
     }
 }

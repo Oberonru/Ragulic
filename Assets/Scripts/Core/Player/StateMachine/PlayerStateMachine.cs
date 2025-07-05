@@ -10,7 +10,7 @@ namespace Core.Player.StateMachine
             var state = GetState<PlayerWalkState>();
             state.Speed = speed;
             SetState(state);
-        }
+        }   
 
         public void SetRunning(float speed)
         {
@@ -21,7 +21,7 @@ namespace Core.Player.StateMachine
 
         public void SetCrouch(float speed)
         {
-            var state = GetState<PlayerPanicState>();
+            var state = GetState<PlayerCrouchState>();
             state.Speed = speed;
             SetState(state);
         }
