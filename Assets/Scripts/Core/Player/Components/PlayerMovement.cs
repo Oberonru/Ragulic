@@ -19,15 +19,13 @@ namespace Core.Player.Components
             get => _isRunning;
             set => _isRunning = value;
         }
-
         private bool _isRunning;
-
+        
         public bool IsCrouch
         {
             get => _isCrouch;
             set => _isCrouch = value;
         }
-
         private bool _isCrouch;
 
         public bool IsPanic
@@ -35,9 +33,8 @@ namespace Core.Player.Components
             get => _isPanic;
             set => _isPanic = value;
         }
-
         private bool _isPanic;
-
+        
         public float Speed
         {
             get => _speed;

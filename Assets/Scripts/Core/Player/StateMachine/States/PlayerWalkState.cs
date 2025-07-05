@@ -13,7 +13,7 @@ namespace Core.Player.StateMachine.States
 
         public override void Exit()
         {
-            Owner.Movement.Speed = Owner.Stats.WalkSpeed;
+            Owner.Movement.Speed = 0;
         }
     }
 }
