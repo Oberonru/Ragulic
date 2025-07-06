@@ -25,14 +25,19 @@ namespace Core.Factories.Effects
 
                 _pool.Add(prefab, newPool);
 
-                //Перед возвратом установить позицию и ротацию элемента, сейчас она в нулевых
                 var freeElement = newPool.GetFreeElement();
+                freeElement.transform.position = position;
+                freeElement.transform.rotation = rotation;
 
                 return freeElement;
             }
             else
             {
-                return pool.GetFreeElement();
+                var freeElement =  pool.GetFreeElement();
+                freeElement.transform.position = position;
+                freeElement.transform.rotation = rotation;
+                
+                return freeElement;
             }
         }
     }
