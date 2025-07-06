@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace System.StateMachineSystem
 {
-    public class StateMachineBase<T> : MonoBehaviour, IStateMachine<T> where T : UnityEngine.Component
+    public class StateMachineBase<T> : MonoBehaviour, IStateMachine<T> where T : Component
     {
         [SerializeField] private StateContainer<T> _stateContainer;
 
@@ -63,7 +63,7 @@ namespace System.StateMachineSystem
             _owner = GetComponent<T>();
 
             if (_stateContainer is null)
-                throw new NullReferenceException($"state container {_stateContainer.name} is not found");
+                throw new NullReferenceException($"state container is not found");
 
             IEnumerable<StateInstance<T>> stateInstances = _stateContainer.GetStateInstances();
 
@@ -101,6 +101,11 @@ namespace System.StateMachineSystem
         {
             Type type = typeof(TState);
             SetState(type);
+        }
+
+        public Type GetActiveState()
+        {
+            return _activeState.GetType();
         }
 
         public void SetState(StateInstance<T> instance)

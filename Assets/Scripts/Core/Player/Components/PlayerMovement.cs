@@ -1,5 +1,6 @@
 using Core.BaseComponents;
 using Core.Configs;
+using Core.Player.StateMachine.States;
 using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
@@ -19,13 +20,15 @@ namespace Core.Player.Components
             get => _isRunning;
             set => _isRunning = value;
         }
+
         private bool _isRunning;
-        
+
         public bool IsCrouch
         {
             get => _isCrouch;
             set => _isCrouch = value;
         }
+
         private bool _isCrouch;
 
         public bool IsPanic
@@ -33,8 +36,9 @@ namespace Core.Player.Components
             get => _isPanic;
             set => _isPanic = value;
         }
+
         private bool _isPanic;
-        
+
         public float Speed
         {
             get => _speed;
@@ -67,18 +71,20 @@ namespace Core.Player.Components
             _vertical = Input.GetAxis("Vertical");
             _horizontal = Input.GetAxis("Horizontal");
 
-            if (!this.IsPanic)
+            if (!IsPanic)
             {
-                if (Input.GetKey(_input.Acceleration))
+                if (_player.StateMachine.GetActiveState() != typeof(PlayerRunState) &&
+                    Input.GetKey(_input.Acceleration))
                 {
                     _player.StateMachine.SetRunning(_player.Stats.RunSpeed);
                 }
-                else if (!this.IsCrouch)
+                else if (_player.StateMachine.GetActiveState() != typeof(PlayerWalkState) && !IsCrouch)
                 {
                     _player.StateMachine.SetWalking(_player.Stats.WalkSpeed);
                 }
 
-                if (Input.GetKey(_input.Crouch))
+                if (_player.StateMachine.GetActiveState() != typeof(PlayerCrouchState) &&
+                    Input.GetKey(_input.Crouch))
                 {
                     _player.StateMachine.SetCrouch(_player.Stats.CrouchSpeed);
                 }
