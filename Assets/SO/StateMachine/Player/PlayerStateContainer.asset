@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: PlayerStateContainer
   m_EditorClassIdentifier: 
   _parentContainer: {fileID: 0}
-  _states: []
+  _states:
+  - {fileID: 11400000, guid: 1272c9a7dc4ec8c49a762672fdb8a7cd, type: 2}
+  - {fileID: 11400000, guid: 863042e6ee932ea4eb8b1248ae21b463, type: 2}
+  - {fileID: 11400000, guid: 05a58b09980b6ca42892d0cbaffd678f, type: 2}
+  - {fileID: 11400000, guid: f5ddcd45691bc4043800ad914fc8f124, type: 2}
