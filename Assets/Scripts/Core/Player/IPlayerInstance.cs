@@ -15,5 +15,6 @@ namespace Core.Player
         IPlayerMovement Movement { get; }
         PlayerCombatComponent CombatComponent { get; }
         PlayerStateMachine StateMachine { get; }
+        InventoryPlayerHandler InventoryHandler { get; }
     }
 }

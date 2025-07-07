@@ -14,6 +14,7 @@ namespace Core.Items.Components
         public ISubject<Unit> OnZoneExited => _onZoneExited;
         private Subject<Unit> _onZoneExited = new();
 
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out IPlayerInstance player))

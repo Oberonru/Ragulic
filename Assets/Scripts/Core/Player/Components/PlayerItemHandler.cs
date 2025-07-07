@@ -1,6 +1,5 @@
 using Core.Configs;
 using Core.Items;
-using Core.Items.Inventory;
 using UnityEngine;
 using Zenject;
 
@@ -8,39 +7,39 @@ namespace Core.Player.Components
 {
     public class PlayerItemHandler : MonoBehaviour
     {
-        //инвентарь должен загружаться, нужен сейв лоад сервис
-        //если не загрузился, создается новый
         [Inject] private InputConfig _inputConfig;
-        
-        private ItemsInventory _inventory;
-        private IItemInstance _instance;
+        [SerializeField] private PlayerInstance _player;
+
+        private IInteractableObject _interactableObject;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out IItemInstance item))
+            if (other.TryGetComponent(out IInteractableObject interactableObject))
             {
-                _instance = item;
+                _interactableObject = interactableObject;
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out IItemInstance item))
+            if (other.TryGetComponent(out IInteractableObject interactableObject))
             {
-                _instance = null;
+                _interactableObject = null;
             }
         }
 
         private void Update()
         {
-            if (Input.GetKey(_inputConfig.Interaction) && _instance != null)
+            if (_interactableObject != null && Input.GetKey(_inputConfig.Interaction))
             {
-                //Как быть с зонами, здесь взаимодействие с ItemInstance, но надо с интерактабл зоной?
-                var item = _instance.ScriptableItem.CreateItem();
-                _inventory.AddItem(item);
-
-                //проверка, если предмет добавлен - удаляем его и обнуляем переменные
+                _interactableObject.Interact();
+                _interactableObject = null;
             }
+        }
+
+        private void OnValidate()
+        {
+            if (_player is null) _player = GetComponent<PlayerInstance>();
         }
     }
 }

@@ -11,10 +11,18 @@ namespace Core.Items.SO
         [PropertyTooltip("Тип предмета")]
         [LabelText("Item type")]
         [SerializeField] 
-        private ItemType _itemType;
+        private ItemType _itemType; 
+        
+        [BoxGroup("Item params")]
+        [PropertyTooltip("Цена предмета")]
+        [LabelText("Item price")]
+        [SerializeField] 
+        private int _price;
         
         public ItemType ItemType => _itemType;
 
+        public int Price => _price;
+        
         public Item CreateItem()
         {
             return new Item(this);

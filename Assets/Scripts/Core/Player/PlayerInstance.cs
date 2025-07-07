@@ -13,6 +13,8 @@ namespace Core.Player
     [RequireComponent(typeof(HealthComponent))]
     [RequireComponent(typeof(PlayerMovement))]
     [RequireComponent(typeof(PlayerCombatComponent))]
+    [RequireComponent(typeof(PlayerStateMachine))]
+    [RequireComponent(typeof(InventoryPlayerHandler))]
     public class PlayerInstance : MonoBehaviour, IPlayerInstance
     {
         [Inject] private PlayerConfig _playerStats;
@@ -20,6 +22,7 @@ namespace Core.Player
         [SerializeField, ReadOnly] private PlayerMovement _movement;
         [SerializeField, ReadOnly] private PlayerCombatComponent _combatComponent;
         [SerializeField, ReadOnly] private PlayerStateMachine _stateMachine;
+        [SerializeField, ReadOnly] private InventoryPlayerHandler _inventory;
 
         public Transform Transform => transform;
         public PlayerConfig Stats => _playerStats;
@@ -27,7 +30,7 @@ namespace Core.Player
         public IPlayerMovement Movement => _movement;
         public PlayerCombatComponent CombatComponent => _combatComponent;
         public PlayerStateMachine StateMachine => _stateMachine;
-        
+        public InventoryPlayerHandler InventoryHandler => _inventory;
 
         private void Awake()
         {
@@ -43,6 +46,7 @@ namespace Core.Player
             if (_movement is null) _movement = GetComponent<PlayerMovement>();
             if (_combatComponent is null) _combatComponent = GetComponent<PlayerCombatComponent>();
             if (_stateMachine is null) _stateMachine = GetComponent<PlayerStateMachine>();
+            if (_inventory is null) _inventory = GetComponent<InventoryPlayerHandler>();
         }
     }
 }
