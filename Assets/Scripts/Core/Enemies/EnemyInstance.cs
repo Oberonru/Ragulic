@@ -40,5 +40,13 @@ namespace Core.Enemies
             if (_navMesh is null) _navMesh = GetComponent<EnemyNavMesh>();
             if (_enemyCombat is null) _enemyCombat = GetComponent<EnemyCombatComponent>();
         }
+        private void OnDrawGizmos()
+        {
+            if (this == null) return;
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(this.Position, NavMesh.AI.AgressiveRadius * NavMesh.AI.AgressiveMultiplayer);
+        }
+        
     }
 }

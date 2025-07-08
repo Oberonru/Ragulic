@@ -32,11 +32,17 @@ namespace Core.Configs.Enemies
         [SerializeField]
         private float _updatedInterval = 0.3f;
 
-        [BoxGroup("Collision")]
+        [BoxGroup("Detected")]
+        [PropertyTooltip("Радиус на безусловного обнаружения игрока агентом")]
         [MinValue(0.1f), SuffixLabel("meters")]
         [SerializeField]
         private float _detectionRadius = 1f;
-        
+
+        [BoxGroup("Detected")]
+        [PropertyTooltip("Величина луча на котором видит агент")]
+        [MinValue(0.1f), SuffixLabel("meters")]
+        [SerializeField]
+        private float _seeDistance = 5f;
 
         public float MinStoppingDistance => _minStoppingDistance;
         public float MaxStoppingDistance => _maxStoppingDistance;
@@ -44,5 +50,6 @@ namespace Core.Configs.Enemies
         public float DetectionRadius => _detectionRadius;
         public int AgressiveMultiplayer => _agressiveMultiplayer;
         public float UpdatedInterval => _updatedInterval;
+        public float SeeDistance => _seeDistance;
     }
 }

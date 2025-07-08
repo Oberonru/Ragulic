@@ -30,6 +30,19 @@ namespace Core.Enemies.States
             {
                 Owner.StateMachine.SetMeleeMoveToTarget(playerHit.transform);
             }
+
+            if (IsSeePlayer())
+            {
+                Debug.Log("See player");
+            }
+        }
+
+        private bool IsSeePlayer()
+        {
+            bool hit = Physics.Raycast(Owner.Position, Owner.Transform.forward, out RaycastHit raycast, Owner.NavMesh.AI.SeeDistance);
+            Debug.DrawRay(Owner.Position, raycast.point - Owner.Position, Color.red);
+            
+            return hit;
         }
     }
 }
