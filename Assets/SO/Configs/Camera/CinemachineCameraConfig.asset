@@ -19,7 +19,3 @@ MonoBehaviour:
   _farClipPlane: 1000
   _dutch: 0
   _modeOverride: 0
-  _target:
-    TrackingTarget: {fileID: 0}
-    LookAtTarget: {fileID: 0}
-    CustomLookAtTarget: 0
