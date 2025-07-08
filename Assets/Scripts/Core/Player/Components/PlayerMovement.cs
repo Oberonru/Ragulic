@@ -1,4 +1,5 @@
 using Core.BaseComponents;
+using Core.Camera;
 using Core.Configs;
 using Core.Player.StateMachine.States;
 using Sirenix.OdinInspector;
@@ -11,6 +12,8 @@ namespace Core.Player.Components
     public class PlayerMovement : MonoBehaviour, IPlayerMovement
     {
         [Inject] private InputConfig _input;
+        [Inject] private IGameCamera _camera;
+        
         [SerializeField, ReadOnly] private Rigidbody _rigidbody;
         [SerializeField] private PlayerInstance _player;
         [SerializeField] private HealthComponent _health;
@@ -57,6 +60,7 @@ namespace Core.Player.Components
         private void Start()
         {
             _player.StateMachine.SetWalking(_player.Stats.WalkSpeed);
+            _camera.SetTarget(_player.transform);
         }
 
         private void OnEnable()

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60e202c76a24b919b456e15044882b3, type: 3}
+  m_Name: CinemachineCameraConfig
+  m_EditorClassIdentifier: 
+  _outputChannel: 1
+  _standbyUpdateMode: 0
+  _fieldOfView: 60
+  _nearClipPlane: 0.3
+  _farClipPlane: 1000
+  _dutch: 0
+  _modeOverride: 0
+  _target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
