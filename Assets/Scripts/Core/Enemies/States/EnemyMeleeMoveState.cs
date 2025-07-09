@@ -25,11 +25,11 @@ namespace Core.Enemies.States
 
         private void Move()
         {
-            if (Target != null)
+            if (Target != null || Owner.Stats.IsSee)
             {
                 Owner.NavMesh.MoveToTarget(Target.position);
                 
-                if (Vector3.Distance(Owner.Position, Target.position) > AggroZone())
+                if (!Owner.Stats.IsSee && Vector3.Distance(Owner.Position, Target.position) > AggroZone())
                 {
                     Owner.StateMachine.SetIdle();
                 }

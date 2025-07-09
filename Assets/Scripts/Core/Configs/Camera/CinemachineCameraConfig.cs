@@ -18,7 +18,7 @@ namespace Core.Configs.Camera
         private OutputChannels _outputChannel = OutputChannels.Default;
 
         [BoxGroup("CinemachineCameraConfig")]
-        [LabelText("OutputChannels")]
+        [LabelText("Stand by Update Mode")]
         [PropertyTooltip(" Частота обновления камеры, когда она не активна(Never - когда не активна не обновляется)")]
         [SerializeField]
         private CinemachineVirtualCameraBase.StandbyUpdateMode _standbyUpdateMode =

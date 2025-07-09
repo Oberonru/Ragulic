@@ -19,14 +19,14 @@ namespace Core.Enemies
         [SerializeField, ReadOnly] private EnemyStateMachine _stateMachine;
         [SerializeField, ReadOnly] private EnemyCombatComponent _enemyCombat;
 
+        public Vector3 Position => transform != null ? transform.position : Vector3.zero;
+        public Transform Transform => transform;
+
         public IHealthComponent HealthComponent => _health;
         public EnemyNavMesh NavMesh => _navMesh;
-        public Transform Transform => transform;
         public EnemyConfig Stats => _enemyStats;
         public EnemyStateMachine StateMachine => _stateMachine;
         public EnemyCombatComponent EnemyCombatComponent => _enemyCombat;
-
-        public Vector3 Position => transform != null ? transform.position : Vector3.zero;
 
         private void Awake()
         {
@@ -40,13 +40,14 @@ namespace Core.Enemies
             if (_navMesh is null) _navMesh = GetComponent<EnemyNavMesh>();
             if (_enemyCombat is null) _enemyCombat = GetComponent<EnemyCombatComponent>();
         }
+
         private void OnDrawGizmos()
         {
-            if (this == null) return;
-            
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(this.Position, NavMesh.AI.AgressiveRadius * NavMesh.AI.AgressiveMultiplayer);
+            if (_enemyStats.IsSee)
+            {
+                Debug.DrawRay(Position, Transform.forward * NavMesh.AI.SeeDistance, Color.red);
+            }
+            else Debug.DrawRay(Position, Transform.forward * NavMesh.AI.SeeDistance, Color.green);
         }
-        
     }
 }

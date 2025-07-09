@@ -8,6 +8,8 @@ namespace Core.Enemies.States
 {
     public class EnemyStateIdle : StateInstance<EnemyInstance>, IFixedUpdate
     {
+        private IPlayerInstance _player;
+        
         public override void Enter()
         {
             Owner.NavMesh.Stop();
@@ -18,9 +20,10 @@ namespace Core.Enemies.States
         }
 
         public void FixedUpdate()
-        {
+        { 
             var colliders =
-                Physics.SphereCastAll(Owner.Position, Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer,
+                Physics.SphereCastAll(Owner.Position,
+                    Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer,
                     Owner.transform.forward);
 
             var playerHit =
@@ -33,16 +36,24 @@ namespace Core.Enemies.States
 
             if (IsSeePlayer())
             {
-                Debug.Log("See player");
+                Owner.StateMachine.SetMeleeMoveToTarget(_player.Transform);
             }
         }
 
         private bool IsSeePlayer()
         {
-            bool hit = Physics.Raycast(Owner.Position, Owner.Transform.forward, out RaycastHit raycast, Owner.NavMesh.AI.SeeDistance);
-            Debug.DrawRay(Owner.Position, raycast.point - Owner.Position, Color.red);
+            Physics.Raycast(Owner.Position, Owner.Transform.forward, out RaycastHit hit,
+                Owner.NavMesh.AI.SeeDistance);
+
+            if (hit.collider != null && hit.collider.TryGetComponent(out IPlayerInstance player))
+            {
+                _player = player;
+                Owner.Stats.IsSee = true;
+                return true;
+            }
             
-            return hit;
+            Owner.Stats.IsSee = false;
+            return false;
         }
     }
 }

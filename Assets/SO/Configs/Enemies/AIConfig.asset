@@ -15,6 +15,7 @@ MonoBehaviour:
   _minStoppingDistance: 1
   _maxStoppingDistance: 1.5
   _agressiveRadius: 1
-  _agressiveMultiplayer: 10
+  _agressiveMultiplayer: 3
   _updatedInterval: 0.3
   _detectionRadius: 1
+  _seeDistance: 10
