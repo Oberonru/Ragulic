@@ -10,17 +10,10 @@ namespace Core.Configs.Enemies
         [PropertyTooltip("Сила удара")]
         [SerializeField]
         private float _pushForce;
-
-        [BoxGroup("Enemy stats"), LabelText("Is see")] [PropertyTooltip("Видит ли враг игрока")] [SerializeField]
-        private bool _isSee;
-       
+        
         
         public float PushForce => _pushForce;
 
-        public bool IsSee
-        {
-            get => _isSee;
-            set => _isSee = value;
-        }
+      
     }
 }

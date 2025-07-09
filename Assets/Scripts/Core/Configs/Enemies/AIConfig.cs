@@ -44,6 +44,20 @@ namespace Core.Configs.Enemies
         [SerializeField]
         private float _seeDistance = 5f;
 
+        [BoxGroup("Detected")]
+        [LabelText("Min field of view")]
+        [PropertyTooltip("Минимальный угол обзора")]
+        [SuffixLabel("gradus")]
+        [SerializeField]
+        private float _minFOV = -80f;
+        
+        [BoxGroup("Detected")]
+        [LabelText("Max field of view")]
+        [PropertyTooltip("Максимальный угол обзора")]
+        [SuffixLabel("gradus")]
+        [SerializeField]
+        private float _maxFOV = 80f;
+
         public float MinStoppingDistance => _minStoppingDistance;
         public float MaxStoppingDistance => _maxStoppingDistance;
         public float AgressiveRadius => _agressiveRadius;
@@ -51,5 +65,7 @@ namespace Core.Configs.Enemies
         public int AgressiveMultiplayer => _agressiveMultiplayer;
         public float UpdatedInterval => _updatedInterval;
         public float SeeDistance => _seeDistance;
+        public float MinFOV => _minFOV;
+        public float MaxFOV => _maxFOV;
     }
 }

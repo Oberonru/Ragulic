@@ -9,6 +9,7 @@ namespace Core.Enemies.States
     public class EnemyStateIdle : StateInstance<EnemyInstance>, IFixedUpdate
     {
         private IPlayerInstance _player;
+        private bool _isSee;
         
         public override void Enter()
         {
@@ -33,8 +34,8 @@ namespace Core.Enemies.States
             {
                 Owner.StateMachine.SetMeleeMoveToTarget(playerHit.transform);
             }
-
-            if (IsSeePlayer())
+            
+            if (IsSeePlayer() && InFOV())
             {
                 Owner.StateMachine.SetMeleeMoveToTarget(_player.Transform);
             }
@@ -44,16 +45,28 @@ namespace Core.Enemies.States
         {
             Physics.Raycast(Owner.Position, Owner.Transform.forward, out RaycastHit hit,
                 Owner.NavMesh.AI.SeeDistance);
+            
+            Debug.Log(hit);
 
             if (hit.collider != null && hit.collider.TryGetComponent(out IPlayerInstance player))
             {
                 _player = player;
-                Owner.Stats.IsSee = true;
+                Owner.EnemyData.IsSee = true;
                 return true;
             }
             
-            Owner.Stats.IsSee = false;
+            Owner.EnemyData.IsSee = false;
+            _player = null;
+            
             return false;
+        }
+
+        private bool InFOV()
+        {
+            var direction = _player.Transform.position - Owner.Position;
+            var angle = Vector3.Angle(direction, Owner.Transform.forward);
+            
+            return angle >= Owner.NavMesh.AI.MinFOV && angle <= Owner.NavMesh.AI.MaxFOV;
         }
     }
 }

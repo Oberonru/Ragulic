@@ -15,7 +15,7 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _name: 
   _description: 
-  _walkSpeed: 3
+  _walkSpeed: 9
   _health: 100
   _damage: 1
   _attackPerSeconds: 1

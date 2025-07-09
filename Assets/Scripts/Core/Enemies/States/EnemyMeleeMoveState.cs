@@ -25,11 +25,11 @@ namespace Core.Enemies.States
 
         private void Move()
         {
-            if (Target != null || Owner.Stats.IsSee)
+            if (Target != null || Owner.EnemyData.IsSee)
             {
                 Owner.NavMesh.MoveToTarget(Target.position);
-                
-                if (!Owner.Stats.IsSee && Vector3.Distance(Owner.Position, Target.position) > AggroZone())
+
+                if (!Owner.EnemyData.IsSee && Vector3.Distance(Owner.Position, Target.position) > AggroZone())
                 {
                     Owner.StateMachine.SetIdle();
                 }
@@ -44,11 +44,12 @@ namespace Core.Enemies.States
         {
             return Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer;
         }
-        
+
         public void DrawGizmos()
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(Owner.Position, Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer);
+            Gizmos.DrawWireSphere(Owner.Position,
+                Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer);
         }
     }
 }

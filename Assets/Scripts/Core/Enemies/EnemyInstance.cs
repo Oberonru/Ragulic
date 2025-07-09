@@ -18,6 +18,7 @@ namespace Core.Enemies
         [SerializeField, ReadOnly] private EnemyNavMesh _navMesh;
         [SerializeField, ReadOnly] private EnemyStateMachine _stateMachine;
         [SerializeField, ReadOnly] private EnemyCombatComponent _enemyCombat;
+        [SerializeField, ReadOnly] private RuntimeEnemyData _enemyData;
 
         public Vector3 Position => transform != null ? transform.position : Vector3.zero;
         public Transform Transform => transform;
@@ -27,6 +28,7 @@ namespace Core.Enemies
         public EnemyConfig Stats => _enemyStats;
         public EnemyStateMachine StateMachine => _stateMachine;
         public EnemyCombatComponent EnemyCombatComponent => _enemyCombat;
+        public RuntimeEnemyData EnemyData => _enemyData;
 
         private void Awake()
         {
@@ -34,20 +36,22 @@ namespace Core.Enemies
             _health.CurrentHealth = _health.MaxHealth;
         }
 
+        private void OnDrawGizmos()
+        {
+            if (_enemyData is null) return;
+            
+            Debug.Log(_enemyData.IsSee + " isSee");
+
+            Debug.DrawRay(Position, Transform.forward * NavMesh.AI.SeeDistance,
+                _enemyData.IsSee ? Color.green : Color.red);
+        }
+
         private void OnValidate()
         {
             if (_health is null) _health = GetComponent<HealthComponent>();
             if (_navMesh is null) _navMesh = GetComponent<EnemyNavMesh>();
             if (_enemyCombat is null) _enemyCombat = GetComponent<EnemyCombatComponent>();
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_enemyStats.IsSee)
-            {
-                Debug.DrawRay(Position, Transform.forward * NavMesh.AI.SeeDistance, Color.red);
-            }
-            else Debug.DrawRay(Position, Transform.forward * NavMesh.AI.SeeDistance, Color.green);
+            if (_enemyData is null) _enemyData = GetComponent<RuntimeEnemyData>();
         }
     }
 }

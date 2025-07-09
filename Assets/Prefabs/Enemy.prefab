@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 3129999195271716325}
   - component: {fileID: 5515195023895368512}
   - component: {fileID: 2206514379488651744}
-  - component: {fileID: 8191493873615370394}
+  - component: {fileID: 6967738836951548677}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -491,7 +491,7 @@ MonoBehaviour:
   _navMesh: {fileID: 3129999195271716325}
   _stateMachine: {fileID: 5515195023895368512}
   _enemyCombat: {fileID: 2206514379488651744}
-  _searchComponent: {fileID: 8191493873615370394}
+  _enemyData: {fileID: 0}
 --- !u!114 &5487821686522787026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyInstance: {fileID: 3256140443735767406}
   _detector: {fileID: 3297045630361252319}
---- !u!114 &8191493873615370394
+--- !u!114 &6967738836951548677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -554,10 +554,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3081163526323095926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d3b6f2957d4b73a9be045f063a0e64, type: 3}
+  m_Script: {fileID: 11500000, guid: 214d70108fb24db1842db577fa4b3a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 3256140443735767406}
 --- !u!1 &3785744288755405391
 GameObject:
   m_ObjectHideFlags: 0
