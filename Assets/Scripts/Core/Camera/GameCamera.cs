@@ -26,6 +26,9 @@ namespace Core.Camera
         {
             _target = target;
             _camera.Follow = _target;
+            _camera.LookAt = null;
+
+            //var positionComposer = _camera.GetCinemachineComponent<CinemachinePositionComposer>();
         }
 
         public Vector3 Forward => transform.forward;
