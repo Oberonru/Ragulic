@@ -1,3 +1,4 @@
+using System;
 using Core.BaseComponents;
 using Core.Camera;
 using Core.Configs;
@@ -60,7 +61,11 @@ namespace Core.Player.Components
         private void Start()
         {
             _player.StateMachine.SetWalking(_player.Stats.WalkSpeed);
-            _camera.SetTarget(_player.transform);
+
+            var trackingTarget = _player.GetComponentInChildren<ChinemachineTrackingTarget>();
+            if (trackingTarget is null) throw new NullReferenceException("Tracking target is not found");
+            
+            _camera.SetTarget(trackingTarget.transform);
         }
 
         private void OnEnable()
