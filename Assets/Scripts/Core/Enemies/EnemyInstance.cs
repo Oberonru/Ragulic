@@ -40,10 +40,10 @@ namespace Core.Enemies
         {
             if (_enemyData is null) return;
             
-            Debug.Log(_enemyData.IsSee + " isSee");
-
-            Debug.DrawRay(Position, Transform.forward * NavMesh.AI.SeeDistance,
+            Debug.DrawRay(Position, Transform.forward * NavMesh.AI.SeeDistance * NavMesh.AI.AgressiveMultiplayer,
                 _enemyData.IsSee ? Color.green : Color.red);
+            
+            Debug.Log(StateMachine.GetActiveState() + " :current active state");
         }
 
         private void OnValidate()

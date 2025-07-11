@@ -42,11 +42,11 @@ namespace Core.Enemies.States
                     await UniTask.Delay(_spanTimeAttack, cancellationToken: _tokenSource.Token);
                 }
 
-                Owner.StateMachine.SetIdle();
+                Owner.StateMachine.SetSearchPlayer();
             }
             catch (OperationCanceledException)
             {
-                Owner.StateMachine.SetIdle();
+                Owner.StateMachine.SetSearchPlayer();
             }
         }
     }

@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5f574e820844f0aa3da5fcc40c4b64f, type: 3}
-  m_Name: ScriptableMeleeMove
+  m_Name: MeleeMove
   m_EditorClassIdentifier: 

@@ -491,7 +491,7 @@ MonoBehaviour:
   _navMesh: {fileID: 3129999195271716325}
   _stateMachine: {fileID: 5515195023895368512}
   _enemyCombat: {fileID: 2206514379488651744}
-  _enemyData: {fileID: 0}
+  _enemyData: {fileID: 6967738836951548677}
 --- !u!114 &5487821686522787026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,6 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214d70108fb24db1842db577fa4b3a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waypoints: {fileID: 1011310580606527265, guid: c16b84dbe529cbe42ba8534def685aef, type: 3}
 --- !u!1 &3785744288755405391
 GameObject:
   m_ObjectHideFlags: 0

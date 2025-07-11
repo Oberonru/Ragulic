@@ -1,10 +1,9 @@
-using System.Interfaces;
 using System.StateMachineSystem;
 using UnityEngine;
 
 namespace Core.Enemies.States
 {
-    public class EnemyMeleeMoveState : StateInstance<EnemyInstance>, IUpdate, IDrawGizmos
+    public class EnemyMeleeMoveState : StateInstance<EnemyInstance>, IUpdate
     {
         public Transform Target;
 
@@ -25,31 +24,29 @@ namespace Core.Enemies.States
 
         private void Move()
         {
-            if (Target != null || Owner.EnemyData.IsSee)
+            if (Target != null)
             {
                 Owner.NavMesh.MoveToTarget(Target.position);
 
-                if (!Owner.EnemyData.IsSee && Vector3.Distance(Owner.Position, Target.position) > AggroZone())
-                {
-                    Owner.StateMachine.SetIdle();
-                }
+                //     if (!Owner.EnemyData.IsSee && Vector3.Distance(Owner.Position, Target.position) > AggroZone())
+                //     {
+                //         Owner.StateMachine.SetIdle();
+                //     }
+                // }
+                // else
+                // {
+                //     Owner.StateMachine.SetIdle();
             }
-            else
+
+            else if (Owner.EnemyData.IsSee)
             {
-                Owner.StateMachine.SetIdle();
+                Owner.StateMachine.SetSearchPlayer();
             }
         }
 
         private float AggroZone()
         {
             return Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer;
-        }
-
-        public void DrawGizmos()
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(Owner.Position,
-                Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer);
         }
     }
 }

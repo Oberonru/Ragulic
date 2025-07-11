@@ -7,9 +7,9 @@ namespace Core.Enemies.Components
 {
     public class EnemyStateMachine : StateMachineBase<EnemyInstance>, IEnemyState
     {
-        public void SetIdle()
+        public void SetSearchPlayer()
         {
-            SetState<EnemyStateIdle>();
+            SetState<EnemySearchPlayer>();
         }
 
         public void SetMeleeMoveToTarget(Transform target)
@@ -30,6 +30,12 @@ namespace Core.Enemies.Components
         {
             var state = GetState<EnemyMeleeAttackState>();
             state.HitBox = hitBox;
+            SetState(state);
+        }
+
+        public void SetPatrol()
+        {
+            var state = GetState<EnemyPatrolState>();
             SetState(state);
         }
     }
