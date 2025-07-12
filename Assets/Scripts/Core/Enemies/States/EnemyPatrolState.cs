@@ -7,7 +7,8 @@ namespace Core.Enemies.States
     {
         public override void Enter()
         {
-            Debug.Log("EnemyPatrolState");            
+            Debug.Log("EnemyPatrolState");
+            Patrol();
         }
 
         public override void Exit()
@@ -19,6 +20,9 @@ namespace Core.Enemies.States
         {
             //движение по случайным точкам, ...а как быть с SearchState, или это сделать компонентом, чтобы поиск
             // и луч были не зависимо от состояния врага?
+
+            var rnd = Random.Range(0, Owner.EnemyData.Waypoints.Length);
+            Owner.StateMachine.SetMeleeMoveToTarget(Owner.EnemyData.Waypoints[rnd]);
         }
     }
 }

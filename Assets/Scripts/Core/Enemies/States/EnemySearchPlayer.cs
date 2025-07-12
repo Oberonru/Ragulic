@@ -28,20 +28,14 @@ namespace Core.Enemies.States
 
         public void FixedUpdate()
         {
-            if (AlwaysSearch())
+            if (AlwaysSearch() || (IsSeePlayer() && InFOV()))
             {
                 Owner.StateMachine.SetMeleeMoveToTarget(_player.Transform);
             }
 
-            else if (IsSeePlayer() && InFOV())
+            else
             {
-                Owner.StateMachine.SetMeleeMoveToTarget(_player.Transform);
-            }
-
-            else 
-            {
-                Owner.StateMachine.SetMeleeMoveToTarget(Owner.EnemyData.Waypoints);
-                //Owner.StateMachine.SetPatrol();
+               Owner.StateMachine.SetPatrol();
             }
         }
 

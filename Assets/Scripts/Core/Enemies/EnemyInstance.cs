@@ -2,6 +2,7 @@ using Core.BaseComponents;
 using Core.Configs.Enemies;
 using Core.Enemies.CombatSystem;
 using Core.Enemies.Components;
+using Core.Enemies.Data;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

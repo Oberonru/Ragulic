@@ -27,26 +27,15 @@ namespace Core.Enemies.States
             if (Target != null)
             {
                 Owner.NavMesh.MoveToTarget(Target.position);
-
-                //     if (!Owner.EnemyData.IsSee && Vector3.Distance(Owner.Position, Target.position) > AggroZone())
-                //     {
-                //         Owner.StateMachine.SetIdle();
-                //     }
-                // }
-                // else
-                // {
-                //     Owner.StateMachine.SetIdle();
+                var distance = Vector3.Distance(Owner.NavMesh.transform.position, Target.position);
+                
+                Debug.Log(distance + " distance");
+                if (distance > 15)
+                {
+                    Debug.Log("Idle");
+                    Owner.StateMachine.SetPatrol();
+                }
             }
-
-            else if (Owner.EnemyData.IsSee)
-            {
-                Owner.StateMachine.SetSearchPlayer();
-            }
-        }
-
-        private float AggroZone()
-        {
-            return Owner.NavMesh.AI.AgressiveRadius * Owner.NavMesh.AI.AgressiveMultiplayer;
         }
     }
 }

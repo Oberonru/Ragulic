@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 6168216119880265269}
   - component: {fileID: 6546345991732003754}
   - component: {fileID: 5710933882689811264}
+  - component: {fileID: -4557798456285957560}
   - component: {fileID: 6190725087930644206}
   - component: {fileID: 3256140443735767406}
   - component: {fileID: 5487821686522787026}
@@ -452,6 +453,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-4557798456285957560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081163526323095926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Graph: {fileID: 0}
+  m_BlackboardVariableOverridesList: []
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds: []
 --- !u!195 &6190725087930644206
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -557,7 +577,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214d70108fb24db1842db577fa4b3a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waypoints: {fileID: 1011310580606527265, guid: c16b84dbe529cbe42ba8534def685aef, type: 3}
+  Waypoints:
+  - {fileID: 1011310580606527265, guid: c16b84dbe529cbe42ba8534def685aef, type: 3}
+  - {fileID: 7421343745749827549, guid: 0e0dc538f444dbc40b0e7e1a388698ca, type: 3}
 --- !u!1 &3785744288755405391
 GameObject:
   m_ObjectHideFlags: 0
