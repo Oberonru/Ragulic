@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace Core.Enemies.States
 {
-    public class EnemyPatrolState : StateInstance<EnemyInstance>
+    public class EnemyPatrolState : StateInstance<EnemyInstance>, IUpdate
     {
         public override void Enter()
         {
-            Debug.Log("EnemyPatrolState");
             Patrol();
         }
 
@@ -16,13 +15,15 @@ namespace Core.Enemies.States
             Owner.NavMesh.Stop();
         }
 
+        public void Update()
+        {
+            Patrol();
+        }
+
         private void Patrol()
         {
-            //движение по случайным точкам, ...а как быть с SearchState, или это сделать компонентом, чтобы поиск
-            // и луч были не зависимо от состояния врага?
-
             var rnd = Random.Range(0, Owner.EnemyData.Waypoints.Length);
-            Owner.StateMachine.SetMeleeMoveToTarget(Owner.EnemyData.Waypoints[rnd]);
+            Owner.NavMesh.MoveToTarget(Owner.EnemyData.Waypoints[rnd].position);
         }
     }
 }

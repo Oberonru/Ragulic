@@ -5,6 +5,7 @@ namespace Core.Enemies.Components
 {
     public interface IEnemyState
     {
+        void SetIdle();
         void SetSearchPlayer();
         void SetMeleeMoveToTarget(Transform target);
         void SetMeleeCycleAttack(IHitBox hitBox);

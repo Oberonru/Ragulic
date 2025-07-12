@@ -3,6 +3,7 @@ using Core.Configs.Enemies;
 using Core.Enemies.CombatSystem;
 using Core.Enemies.Components;
 using Core.Enemies.Data;
+using Core.Enemies.States;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ namespace Core.Enemies
         [SerializeField, ReadOnly] private EnemyStateMachine _stateMachine;
         [SerializeField, ReadOnly] private EnemyCombatComponent _enemyCombat;
         [SerializeField, ReadOnly] private RuntimeEnemyData _enemyData;
+        [SerializeField, ReadOnly] private EnemyBehavior _enemyBehavior;
 
         public Vector3 Position => transform != null ? transform.position : Vector3.zero;
         public Transform Transform => transform;
@@ -30,6 +32,7 @@ namespace Core.Enemies
         public EnemyStateMachine StateMachine => _stateMachine;
         public EnemyCombatComponent EnemyCombatComponent => _enemyCombat;
         public RuntimeEnemyData EnemyData => _enemyData;
+        public EnemyBehavior EnemyBehavior => _enemyBehavior;
 
         private void Awake()
         {
@@ -53,6 +56,8 @@ namespace Core.Enemies
             if (_navMesh is null) _navMesh = GetComponent<EnemyNavMesh>();
             if (_enemyCombat is null) _enemyCombat = GetComponent<EnemyCombatComponent>();
             if (_enemyData is null) _enemyData = GetComponent<RuntimeEnemyData>();
+            if (_enemyBehavior is null) _enemyBehavior = GetComponent<EnemyBehavior>();
+
         }
     }
 }

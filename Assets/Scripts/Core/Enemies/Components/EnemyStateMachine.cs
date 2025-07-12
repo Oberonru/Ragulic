@@ -7,6 +7,12 @@ namespace Core.Enemies.Components
 {
     public class EnemyStateMachine : StateMachineBase<EnemyInstance>, IEnemyState
     {
+        public void SetIdle()
+        {
+            var state = GetState<EnemyStateIdle>();
+            SetState(state);
+        }
+
         public void SetSearchPlayer()
         {
             SetState<EnemySearchPlayer>();
