@@ -3,21 +3,19 @@ using UnityEngine;
 namespace Unity.Cinemachine.Samples
 {
     /// <summary>
-    /// This is a behaviour whose job it is to drive animation based on the player's motion.
-    /// It is a sample implementation that you can modify or replace with your own.  As shipped, it is
-    /// hardcoded to work specifically with the sample `CameronSimpleController` Animation controller, which
-    /// is set up with states that the SimplePlayerAnimator knows about.  You can modify
-    /// this class to work with your own animation controller.
+    /// Это поведение, задачей которого является управление анимацией в зависимости от движения игрока.
+    /// Это пример реализации, который вы можете изменить или заменить на свой собственный. В том виде, в котором он поставляется, он
+    /// запрограммирован специально для работы с образцом анимационного контроллера CameronSimpleController, который
+    /// настроен с состояниями, известными SimplePlayerAnimator. Вы можете изменить
+    /// этот класс для работы с вашим собственным анимационным контроллером.
     ///
-    /// SimplePlayerAnimator works with or without a SimplePlayerControllerBase alongside.
-    /// Without one, it monitors the transform's position and drives the animation accordingly.
-    /// You can see it used like this in some of the sample scenes, such as RunningRace or ClearShot.
-    /// In this mode, is it unable to detect the player's grounded state, and so it always
-    /// assumes that the player is grounded.
+    /// SimplePlayerAnimator работает как с SimplePlayerControllerBase, так и без него.
+    /// Без него он отслеживает положение преобразования и соответствующим образом управляет анимацией.
+    /// Вы можете видеть, как это используется в некоторых примерах сцен, таких как RunningRace или ClearShot.
+    /// В этом режиме невозможно определить заземленное состояние игрока, и поэтому он всегда
+    /// предполагает, что игрок заземлен.
     ///
-    /// When a SimplePlayerControllerBase is detected, the SimplePlayerAnimator installs callbacks
-    /// and expects to be driven by the SimplePlayerControllerBase using the STartJump, EndJump,
-    /// and PostUpdate callbacks.
+    /// При обнаружении SimplePlayerControllerBase SimplePlayerAnimator устанавливает обратные вызовы
     /// </summary>
     public class SimplePlayerAnimator : MonoBehaviour
     {
