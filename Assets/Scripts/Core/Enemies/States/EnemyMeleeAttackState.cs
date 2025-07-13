@@ -14,7 +14,6 @@ namespace Core.Enemies.States
 
         public override void Enter()
         {
-            Owner.NavMesh.Stop();
             _disposable = new CompositeDisposable();
             _tokenSource = new CancellationTokenSource();
 

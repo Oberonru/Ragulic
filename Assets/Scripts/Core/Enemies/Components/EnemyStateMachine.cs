@@ -29,7 +29,7 @@ namespace Core.Enemies.Components
         {
             var state = GetState<EnemyCycleMeleeAttackState>();
             state.HitBox = hitBox;
-            SetState<EnemyCycleMeleeAttackState>();
+            SetState(state);
         }
 
         public void SetMeleeAttack(IHitBox hitBox)

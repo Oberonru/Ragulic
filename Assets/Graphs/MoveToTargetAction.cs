@@ -1,4 +1,4 @@
-using Core.Enemies.Components;
+using Core.Enemies;
 using System;
 using Unity.Behavior;
 using UnityEngine;
@@ -6,11 +6,12 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "RangeDetector", story: "Update Range [Detector] and asign [Target]", category: "Action", id: "6c63667ada189ff42af8c9a8e80fc8e0")]
-public partial class RangeDetectorAction : Action
+[NodeDescription(name: "MoveToTarget", story: "[Agent] move to [Target]", category: "Action", id: "077c8c17f8f013c29858617f383e44e2")]
+public partial class MoveToTargetAction : Action
 {
-    [SerializeReference] public BlackboardVariable<RangeDetector> Detector;
+    [SerializeReference] public BlackboardVariable<EnemyInstance> Agent;
     [SerializeReference] public BlackboardVariable<GameObject> Target;
+    
 
     protected override Status OnStart()
     {

@@ -17,5 +17,7 @@ MonoBehaviour:
   _agressiveRadius: 1
   _agressiveMultiplayer: 3
   _updatedInterval: 0.3
-  _detectionRadius: 1
+  _detectionRadius: 10
   _seeDistance: 10
+  _minFOV: -80
+  _maxFOV: 80

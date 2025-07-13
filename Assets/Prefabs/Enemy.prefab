@@ -368,9 +368,10 @@ GameObject:
   - component: {fileID: 6168216119880265269}
   - component: {fileID: 6546345991732003754}
   - component: {fileID: 5710933882689811264}
-  - component: {fileID: -4557798456285957560}
+  - component: {fileID: 2733287468233726625}
   - component: {fileID: 6190725087930644206}
   - component: {fileID: 3256140443735767406}
+  - component: {fileID: 4194991548734940956}
   - component: {fileID: 5487821686522787026}
   - component: {fileID: 3129999195271716325}
   - component: {fileID: 5515195023895368512}
@@ -454,7 +455,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-4557798456285957560
+--- !u!114 &2733287468233726625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -466,13 +467,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: 0}
-  m_BlackboardVariableOverridesList: []
+  m_Graph: {fileID: -2040110717091886650, guid: 0cef4aee4f3aa2040bc883a55e6b2669, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 7093459964943401549
+  - rid: 7093459964943401721
+  - rid: 7093459964943401722
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7093459964943401549
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 3081163526323095926}
+    - rid: 7093459964943401721
+      type: {class: 'BlackboardVariable`1[[Core.Enemies.Components.RangeDetector, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 240267946220465577
+          m_Value1: 9420598887384536904
+        Name: New Range Detector
+        m_Value: {fileID: 4194991548734940956}
+    - rid: 7093459964943401722
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 5027917155686438123
+          m_Value1: 8933257082922512501
+        Name: Target
+        m_Value: {fileID: 4758399987441773579, guid: 4346f387cb5584c10a4f723081cffdb9, type: 3}
 --- !u!195 &6190725087930644206
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -514,6 +542,23 @@ MonoBehaviour:
   _enemyCombat: {fileID: 2206514379488651744}
   _enemyData: {fileID: 6967738836951548677}
   _enemyBehavior: {fileID: 4407387520451352409}
+--- !u!114 &4194991548734940956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081163526323095926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7187eb8ecc55446c896477889116c548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DetectedTarget: {fileID: 0}
+  DetectionMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _enemy: {fileID: 3256140443735767406}
 --- !u!114 &5487821686522787026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,7 +634,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3081163526323095926}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 252c4773dcd24099bf42ff45d1e00658, type: 3}
   m_Name: 

@@ -1,13 +1,13 @@
-using System.Linq;
-using Core.Player;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Core.Enemies.Components
 {
     public class RangeDetector : MonoBehaviour
     {
-        public PlayerInstance Player;
-        [SerializeField] private EnemyInstance _enemy;
+        public GameObject DetectedTarget;
+        public LayerMask DetectionMask;
+        [SerializeField, ReadOnly] private EnemyInstance _enemy;
 
         private float _detectionRadius;
 
@@ -16,20 +16,19 @@ namespace Core.Enemies.Components
             _detectionRadius = _enemy.NavMesh.AI.DetectionRadius * _enemy.NavMesh.AI.AgressiveMultiplayer;
         }
 
-        public IPlayerInstance UpdateDetector()
+        private void OnValidate()
+        {
+            if (_enemy is null) _enemy = GetComponent<EnemyInstance>();
+        }
+
+        public GameObject UpdateDetector()
         {
             var colliders = Physics.OverlapSphere(transform.position,
-                _detectionRadius);
+                _detectionRadius, DetectionMask);
 
-            var result =
-                colliders.FirstOrDefault(collider => collider.TryGetComponent<IPlayerInstance>(out var player));
+            DetectedTarget = colliders.Length > 0 ? colliders[0].gameObject : null;
 
-            if (colliders != null && result.TryGetComponent<IPlayerInstance>(out var player))
-            {
-                return player;
-            }
-
-            return null;
+            return DetectedTarget;
         }
 
         private void OnDrawGizmos()
