@@ -34,7 +34,8 @@ MonoBehaviour:
         Name: Self
         m_Value: {fileID: 0}
     - rid: 7093459964943401672
-      type: {class: 'BlackboardVariable`1[[Core.Enemies.Components.RangeDetector, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[Core.Enemies.Components.RangeDetector,
+          Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 240267946220465577
@@ -86,7 +87,8 @@ MonoBehaviour:
         m_IsShared: 0
         m_Value: {fileID: 0}
     - rid: 7093459964943401670
-      type: {class: 'TypedVariableModel`1[[Core.Enemies.Components.RangeDetector, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[Core.Enemies.Components.RangeDetector,
+          Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 240267946220465577
@@ -126,7 +128,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: -2
-      type: {class: , ns: , asm: }
+      type: {class: '', ns: '', asm: ''}
     - rid: 7093459993176572150
       type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -201,7 +203,8 @@ MonoBehaviour:
         Name: Self
         m_Value: {fileID: 0}
     - rid: 7093459993176572158
-      type: {class: 'BlackboardVariable`1[[Core.Enemies.Components.RangeDetector, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[Core.Enemies.Components.RangeDetector,
+          Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 240267946220465577
@@ -217,7 +220,7 @@ MonoBehaviour:
         Name: Target
         m_Value: {fileID: 0}
     - rid: 7093459993176572160
-      type: {class: DetectedColliderAction, ns: , asm: Assembly-CSharp}
+      type: {class: DetectedColliderAction, ns: '', asm: Assembly-CSharp}
       data:
         ID:
           m_Value0: 17736492246568312286
@@ -231,7 +234,7 @@ MonoBehaviour:
         Target:
           rid: 7093459993176572159
     - rid: 7093459993176572161
-      type: {class: NavigatesToTargetAction, ns: , asm: Assembly-CSharp}
+      type: {class: NavigatesToTargetAction, ns: '', asm: Assembly-CSharp}
       data:
         ID:
           m_Value0: 3114528582080147253
@@ -244,6 +247,25 @@ MonoBehaviour:
           rid: 7093459993176572157
         Target:
           rid: 7093459993176572159
+    - rid: 7093459964943401470
+      type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        AuthoringAssetID:
+          m_Value0: 333893437353553676
+          m_Value1: 7576861477345413131
+        m_DebugInfo: {fileID: 8815274491903435933}
+        BlackboardReference:
+          rid: 7093459964943401471
+        BlackboardGroupReferences: []
+        Root:
+          rid: 7093459964943401472
+        m_ActiveNodes: []
+        m_NodesToTick: []
+        m_NodesToEnd:
+          rid: 7093459964943401473
+        m_EndedNodes:
+          rid: 7093459964943401474
+        m_VersionTimestamp: 638880071191252390
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,6 +286,7 @@ MonoBehaviour:
   - rid: 7093459993176572027
   - rid: 7093459993176572046
   m_VersionTimestamp: 638880769331591738
+  m_VersionTimestamp: 638880071191252390
   m_DebugInfo: {fileID: 8815274491903435933}
   m_RuntimeGraph: {fileID: -2040110717091886650}
   AssetID:
@@ -282,7 +305,7 @@ MonoBehaviour:
     Variables: []
     NamedChildren: []
   - Name: DetectedCollider
-    Story: 'Update [Range] Detector and assign [Target]'
+    Story: Update [Range] Detector and assign [Target]
     RuntimeTypeID:
       m_Value0: 11891561696352689310
       m_Value1: 7929993760347009900
@@ -357,7 +380,7 @@ MonoBehaviour:
     Variables: []
     NamedChildren: []
   - Name: RangeDetector
-    Story: 'Update [Range] Detector and assign [Target]'
+    Story: Update [Range] Detector and assign [Target]
     RuntimeTypeID:
       m_Value0: 17055884542654831585
       m_Value1: 1674895464301477604
@@ -374,7 +397,7 @@ MonoBehaviour:
       Tooltip: 
     NamedChildren: []
   - Name: RangeDetector
-    Story: 'Update Range [Detector] and asign [Target]'
+    Story: Update Range [Detector] and asign [Target]
     RuntimeTypeID:
       m_Value0: 17626834793186878316
       m_Value1: 16197213551776626730
@@ -496,7 +519,8 @@ MonoBehaviour:
         LinkedVariable:
           rid: 7093459964943401701
     - rid: 7093459964943401661
-      type: {class: 'BlackboardVariable`1[[Core.Enemies.Components.RangeDetector, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[Core.Enemies.Components.RangeDetector,
+          Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -512,7 +536,8 @@ MonoBehaviour:
         Name: 
         m_Value: {fileID: 0}
     - rid: 7093459964943401671
-      type: {class: 'TypedVariableModel`1[[Core.Enemies.Components.RangeDetector, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[Core.Enemies.Components.RangeDetector,
+          Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 240267946220465577
@@ -661,6 +686,26 @@ MonoBehaviour:
         m_NodeModel:
           rid: 7093459993176572046
         m_Connections: []
+    - rid: 7093459964943401463
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -463.64993, y: -97.99999}
+        ID:
+          m_Value0: 14097063057101338366
+          m_Value1: 17567787114160447590
+        Parents: []
+        PortModels:
+        - rid: 7093459964943401464
+        - rid: 7093459964943401465
+        NodeType:
+          m_SerializableType: RangeDetectorAction, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 17626834793186878316
+          m_Value1: 16197213551776626730
+        m_FieldValues:
+        - rid: 7093459964943401466
+        - rid: 7093459964943401467
 --- !u!114 &8815274491903435933
 MonoBehaviour:
   m_ObjectHideFlags: 0

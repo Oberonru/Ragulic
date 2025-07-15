@@ -5,28 +5,28 @@ namespace Core.Player.StateMachine
 {
     public class PlayerStateMachine : StateMachineBase<PlayerInstance>, IPlayerState
     {
-        public void SetWalking(float speed)
+        public void SetWalkSpeed(float speed)
         {
             var state = GetState<PlayerWalkState>();
             state.Speed = speed;
             SetState(state);
         }   
 
-        public void SetRunning(float speed)
+        public void SetRunnSpeed(float speed)
         {
             var state = GetState<PlayerRunState>();
             state.Speed = speed;
             SetState(state);
         }
 
-        public void SetCrouch(float speed)
+        public void SetCrouchSpeed(float speed)
         {
             var state = GetState<PlayerCrouchState>();
             state.Speed = speed;
             SetState(state);
         }
 
-        public void SetPanic(float speed)
+        public void SetPanicSpeed(float speed)
         {
             var state = GetState<PlayerPanicState>();
             state.Speed = speed;

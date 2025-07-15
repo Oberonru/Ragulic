@@ -15,13 +15,13 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _name: 
   _description: 
-  _walkSpeed: 9
+  _walkSpeed: 4
   _health: 100
   _damage: 1
   _attackPerSeconds: 1
   _damageShift: 3
   _rotationSpeed: 5
-  _runSpeed: 5
+  _runSpeed: 6
   _crouchSpeed: 1
   _panicSpeed: 8
   _panicTime: 3

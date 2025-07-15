@@ -8,8 +8,10 @@ namespace Core.Camera
     public class GameCamera : MonoBehaviour, IGameCamera
     {
         [Inject] private CinemachineCameraConfig _config;
-
+        public CinemachineCamera MainCamera => _camera;
         [SerializeField] private CinemachineCamera _camera;
+        public Transform Transform => transform;
+
         private Transform _target;
 
         private void Start()
@@ -21,7 +23,7 @@ namespace Core.Camera
             _camera.Lens.FarClipPlane = _config.FarClipPlane;
             _camera.Lens.Dutch = _config.Dutch;
         }
-
+        
         public void SetTarget(Transform target)
         {
             _target = target;

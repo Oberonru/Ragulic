@@ -5,6 +5,7 @@ namespace Core.Camera
 {
     public interface IGameCamera
     {
+        Transform Transform { get; }
         void SetTarget(Transform target);
         Vector3 Forward { get; }
     }

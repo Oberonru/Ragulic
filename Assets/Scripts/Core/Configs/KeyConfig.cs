@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Core.Configs
 {
-    [CreateAssetMenu(menuName = "System/Configs/ScriptableConfig", fileName = "InputConfig")]
-    public class InputConfig : ScriptableConfig
+    [CreateAssetMenu(menuName = "System/Configs/KeyConfig", fileName = "KeyConfig")]
+    public class KeyConfig : ScriptableConfig
     {
         public KeyCode Interaction => _interaction;
         [Tooltip("Взаимодействие с предметами")]

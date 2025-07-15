@@ -169,13 +169,14 @@ GameObject:
   - component: {fileID: 7373869427491323475}
   - component: {fileID: 3878893790180533895}
   - component: {fileID: 5902377776606228795}
-  - component: {fileID: 7987299868501650528}
+  - component: {fileID: 8142104345966983899}
   - component: {fileID: 5461763676600401755}
   - component: {fileID: 95233932479177185}
   - component: {fileID: -4314814778275111245}
   - component: {fileID: -8078315412621029425}
   - component: {fileID: 4115399645291097951}
   - component: {fileID: 7111403774403176009}
+  - component: {fileID: 6260575900127340351}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -333,7 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 3878893790180533895}
-  _movement: {fileID: 7987299868501650528}
+  _playerController: {fileID: 8142104345966983899}
   _combatComponent: {fileID: 5902377776606228795}
   _stateMachine: {fileID: -8078315412621029425}
   _inventory: {fileID: 4115399645291097951}
@@ -363,7 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 7373869427491323475}
   hitBoxDetector: {fileID: 95233932479177185}
---- !u!114 &7987299868501650528
+--- !u!114 &8142104345966983899
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -372,12 +373,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4758399987441773579}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62ac4ecd043948ecbf853148eb467b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 511320c22ced4d7696eb875aed61d7d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 8034267147899895188}
   _player: {fileID: 7373869427491323475}
-  _health: {fileID: 3878893790180533895}
+  _rigidbody: {fileID: 8034267147899895188}
+  _camera: {fileID: 0}
 --- !u!114 &5461763676600401755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,6 +457,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 7373869427491323475}
+--- !u!114 &6260575900127340351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4758399987441773579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89875cdc57c54474a8a74efd9b2a3b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScanRecursively: 1
+  SuppressInputWhileBlending: 1
+  IgnoreTimeScale: 0
+  m_ControllerManager:
+    Controllers:
+    - Name: Horizontal X
+      Owner: {fileID: 8142104345966983899}
+      Enabled: 1
+      Input:
+        InputAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+        Gain: 1
+        LegacyInput: Horizontal
+        LegacyGain: 1
+        CancelDeltaTime: 0
+      InputValue: 0
+      Driver:
+        AccelTime: 0
+        DecelTime: 0
+    - Name: Vertical Z
+      Owner: {fileID: 8142104345966983899}
+      Enabled: 1
+      Input:
+        InputAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+        Gain: 1
+        LegacyInput: Vertical
+        LegacyGain: 1
+        CancelDeltaTime: 0
+      InputValue: 0
+      Driver:
+        AccelTime: 0
+        DecelTime: 0
+    - Name: Acceleration
+      Owner: {fileID: 8142104345966983899}
+      Enabled: 1
+      Input:
+        InputAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+        Gain: 1
+        LegacyInput: 
+        LegacyGain: 1
+        CancelDeltaTime: 0
+      InputValue: 0
+      Driver:
+        AccelTime: 0
+        DecelTime: 0
+    - Name: Crouch
+      Owner: {fileID: 8142104345966983899}
+      Enabled: 1
+      Input:
+        InputAction: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+        Gain: 1
+        LegacyInput: 
+        LegacyGain: 1
+        CancelDeltaTime: 0
+      InputValue: 0
+      Driver:
+        AccelTime: 0
+        DecelTime: 0
+  PlayerIndex: -1
+  AutoEnableInputs: 1
 --- !u!1 &7003377265159109260
 GameObject:
   m_ObjectHideFlags: 0

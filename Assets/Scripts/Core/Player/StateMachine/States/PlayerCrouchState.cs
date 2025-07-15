@@ -8,12 +8,12 @@ namespace Core.Player.StateMachine.States
 
         public override void Enter()
         {
-            Owner.Movement.Speed = Speed;
+            Owner.Controller.Speed = Speed;
         }
 
         public override void Exit()
         {
-            Owner.Movement.Speed = Owner.Stats.WalkSpeed;
+            Owner.Controller.Speed = Owner.Stats.WalkSpeed;
         }
     }
 }

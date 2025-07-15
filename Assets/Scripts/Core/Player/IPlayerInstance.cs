@@ -12,7 +12,7 @@ namespace Core.Player
         Transform Transform { get; }
         PlayerConfig Stats { get; }
         IHealthComponent Health { get; }
-        IPlayerMovement Movement { get; }
+        PlayerController Controller { get; }
         PlayerCombatComponent CombatComponent { get; }
         PlayerStateMachine StateMachine { get; }
         InventoryPlayerHandler InventoryHandler { get; }

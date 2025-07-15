@@ -7,7 +7,7 @@ namespace Core.Player.StateMachine.States
     public class PlayerPanicState : StateInstance<PlayerInstance>
     {
         public float Speed { get; set; }
-        
+
         public override void Enter()
         {
             Panic(Speed);
@@ -15,18 +15,18 @@ namespace Core.Player.StateMachine.States
 
         public override void Exit()
         {
-            Owner.Movement.Speed = Owner.Stats.WalkSpeed;
+            Owner.Controller.Speed = Owner.Stats.WalkSpeed;
         }
-        
+
         private async UniTask Panic(float panicTime)
         {
-            Owner.Movement.Speed = Speed;
-            Owner.Movement.IsPanic = true;
-            
+            Owner.Controller.Speed = Speed;
+            Owner.Controller.IsPanic = true;
+
             await UniTask.Delay(TimeSpan.FromSeconds(panicTime));
-            
-            Owner.Movement.IsPanic = false;
-            if (Owner.Movement.IsCrouch) Owner.Movement.IsCrouch = false;
+
+            Owner.Controller.IsPanic = false;
+            if (Owner.Controller.IsCrouch) Owner.Controller.IsCrouch = false;
         }
     }
 }

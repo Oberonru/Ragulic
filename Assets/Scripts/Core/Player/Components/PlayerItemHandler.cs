@@ -7,7 +7,7 @@ namespace Core.Player.Components
 {
     public class PlayerItemHandler : MonoBehaviour
     {
-        [Inject] private InputConfig _inputConfig;
+        [Inject] private KeyConfig _keyConfig;
         [SerializeField] private PlayerInstance _player;
 
         private IInteractableObject _interactableObject;
@@ -30,7 +30,7 @@ namespace Core.Player.Components
 
         private void Update()
         {
-            if (_interactableObject != null && Input.GetKey(_inputConfig.Interaction))
+            if (_interactableObject != null && Input.GetKey(_keyConfig.Interaction))
             {
                 _interactableObject.Interact();
                 _interactableObject = null;
