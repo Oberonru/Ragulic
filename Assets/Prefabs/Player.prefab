@@ -168,8 +168,8 @@ GameObject:
   - component: {fileID: 4662619761549480284}
   - component: {fileID: 7373869427491323475}
   - component: {fileID: 3878893790180533895}
-  - component: {fileID: 5902377776606228795}
   - component: {fileID: 8142104345966983899}
+  - component: {fileID: 5902377776606228795}
   - component: {fileID: 5461763676600401755}
   - component: {fileID: 95233932479177185}
   - component: {fileID: -4314814778275111245}
@@ -350,20 +350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273c1a94ce714b809bcf21ab6621f65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5902377776606228795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4758399987441773579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e4a1c7f9b834a13a0f443e0a4e4765e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 7373869427491323475}
-  hitBoxDetector: {fileID: 95233932479177185}
 --- !u!114 &8142104345966983899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,6 +365,21 @@ MonoBehaviour:
   _player: {fileID: 7373869427491323475}
   _rigidbody: {fileID: 8034267147899895188}
   _camera: {fileID: 0}
+  _upType: 1
+--- !u!114 &5902377776606228795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4758399987441773579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4a1c7f9b834a13a0f443e0a4e4765e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 7373869427491323475}
+  hitBoxDetector: {fileID: 95233932479177185}
 --- !u!114 &5461763676600401755
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.Camera;
 using Core.Configs.Player;
 using Core.Player.StateMachine.States;
 using Sirenix.OdinInspector;
@@ -13,21 +14,18 @@ namespace Core.Player.Components
     public class PlayerController : MonoBehaviour, IInputAxisOwner
     {
         [Inject] private PlayerControllerConfig _config;
-        //[Inject] private IGameCamera _camera;
+        [Inject] private IGameCamera _gameCamera;
 
         public ISubject<Unit> StartUpdate;
         private Subject<Unit> _startUpdate = new();
 
-        [SerializeField] private PlayerInstance _player;
-        [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField, ReadOnly] private PlayerInstance _player;
+        [SerializeField, ReadOnly] private Rigidbody _rigidbody;
 
-        [ShowInInspector] private InputAxis Horizontal = InputAxis.DefaultMomentary;
-        [ShowInInspector] private InputAxis Vertical = InputAxis.DefaultMomentary;
-        [ShowInInspector] private InputAxis Acceleration = InputAxis.DefaultMomentary;
-        [ShowInInspector] private InputAxis Crouch = InputAxis.DefaultMomentary;
-
-        [SerializeField] private UnityEngine.Camera _camera;
-        public UnityEngine.Camera ProjectCamera => _camera == null ? UnityEngine.Camera.main : _camera;
+        private InputAxis Horizontal = InputAxis.DefaultMomentary;
+        private InputAxis Vertical = InputAxis.DefaultMomentary;
+        private InputAxis Acceleration = InputAxis.DefaultMomentary;
+        private InputAxis Crouch = InputAxis.DefaultMomentary;
 
         private bool _inTopHemisphere = true;
         private float _timeInHemisphere = 100;
@@ -38,7 +36,7 @@ namespace Core.Player.Components
         private Quaternion _upsidedown = Quaternion.AngleAxis(180, Vector3.left);
         private Quaternion _inputFrame;
         private bool _isRunning;
-        
+
         [ShowInInspector] public float Speed { get; set; }
         public bool IsCrouch { get; set; }
         public bool IsPanic { get; set; }
@@ -59,14 +57,18 @@ namespace Core.Player.Components
         public UpType _upType = UpType.World;
         Vector3 UpDirection => _upType == UpType.World ? Vector3.up : transform.up;
 
-
         private ForwardType InputForward = ForwardType.Camera;
 
         private void OnEnable()
         {
             _player.Health.OnHit.Subscribe
-                (_ => _player.StateMachine.SetPanicSpeed(_player.Stats.PanicSpeed)).
-                AddTo(this);
+                (_ => _player.StateMachine.SetPanicSpeed(_player.Stats.PanicSpeed)).AddTo(this);
+
+            var trackingTarget = _player.GetComponentInChildren<ChinemachineTrackingTarget>();
+
+            if (trackingTarget == null) throw new NullReferenceException("Tracking target is not found");
+
+            _gameCamera.SetTarget(trackingTarget.transform);
         }
 
         private void Start()
@@ -103,7 +105,7 @@ namespace Core.Player.Components
                 Name = "Crouch",
             });
         }
-        
+
         public bool IsMoving() => _lastInput.sqrMagnitude > 0.01f;
 
         private void Update()
@@ -193,7 +195,7 @@ namespace Core.Player.Components
             switch (InputForward)
             {
                 case ForwardType.Camera:
-                    frame = ProjectCamera.transform.rotation;
+                    frame = _gameCamera.Transform.rotation;
                     break;
                 case ForwardType.Player:
                     return transform.rotation;
