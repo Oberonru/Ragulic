@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Core.Configs.Player;
 using Core.Player.StateMachine.States;
@@ -34,9 +35,10 @@ namespace Core.Player.Components
         private Vector3 _currentVelocityXY;
         private Vector3 _lastInput;
         Vector3 _lastRawInput;
-        Quaternion _upsidedown = Quaternion.AngleAxis(180, Vector3.left);
+        private Quaternion _upsidedown = Quaternion.AngleAxis(180, Vector3.left);
+        private Quaternion _inputFrame;
         private bool _isRunning;
-
+        
         [ShowInInspector] public float Speed { get; set; }
         public bool IsCrouch { get; set; }
         public bool IsPanic { get; set; }
@@ -47,6 +49,16 @@ namespace Core.Player.Components
             Camera,
             World
         }
+
+        public enum UpType
+        {
+            Player,
+            World,
+        }
+
+        public UpType _upType = UpType.World;
+        Vector3 UpDirection => _upType == UpType.World ? Vector3.up : transform.up;
+
 
         private ForwardType InputForward = ForwardType.Camera;
 
@@ -123,16 +135,21 @@ namespace Core.Player.Components
             Move();
         }
 
+        private void FixedUpdate()
+        {
+            Rotate();
+        }
+
         private void SetVelocity()
         {
             if (_rigidbody is null) return;
 
             var rawInput = new Vector3(Horizontal.Value, 0, Vertical.Value);
 
-            var inputFrame = GetInputFrame(Vector3.Dot(rawInput, _lastRawInput) < 0.8f);
+            _inputFrame = GetInputFrame(Vector3.Dot(rawInput, _lastRawInput) < 0.8f);
             _lastRawInput = rawInput;
 
-            _lastInput = inputFrame * rawInput;
+            _lastInput = _inputFrame * rawInput;
 
             if (_lastInput.sqrMagnitude > 1)
                 _lastInput.Normalize();
@@ -154,6 +171,20 @@ namespace Core.Player.Components
         private void Move()
         {
             _rigidbody.linearVelocity = _currentVelocityXY;
+        }
+
+        private void Rotate()
+        {
+            if (!_isStrafeMoving && _currentVelocityXY.sqrMagnitude > 0.001f)
+            {
+                var fwd = _inputFrame * Vector3.forward;
+                var qA = transform.rotation;
+                var qB = Quaternion.LookRotation(
+                    (InputForward == ForwardType.Player && Vector3.Dot(fwd, _currentVelocityXY) < 0)
+                        ? -_currentVelocityXY
+                        : _currentVelocityXY, UpDirection);
+                transform.rotation = Quaternion.Slerp(qA, qB, Damper.Damp(1, _config.Damping, Time.deltaTime));
+            }
         }
 
         private Quaternion GetInputFrame(bool inputDirectionChanged)
