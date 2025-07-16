@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
-namespace Unity.Cinemachine.Samples
+namespace Core.Player.Components
 {
     /// <summary>
     /// Это дополнение для SimplePlayerController, которое управляет ядром прицеливания игрока.
@@ -21,7 +22,7 @@ namespace Unity.Cinemachine.Samples
     ///
     /// Чтобы реализовать стрельбу игрока, добавьте к этому игровому объекту поведение SimplePlayerShoot.
     /// </summary>
-    public class SimplePlayerAimController : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
+    public class PlayerAimController : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
     {
         public enum CouplingMode
         {

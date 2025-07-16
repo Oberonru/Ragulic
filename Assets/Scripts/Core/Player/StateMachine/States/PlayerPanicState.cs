@@ -15,18 +15,18 @@ namespace Core.Player.StateMachine.States
 
         public override void Exit()
         {
-            Owner.Controller.Speed = Owner.Stats.WalkSpeed;
+            Owner.PlayerController.Speed = Owner.Stats.WalkSpeed;
         }
 
         private async UniTask Panic(float panicTime)
         {
-            Owner.Controller.Speed = Speed;
-            Owner.Controller.IsPanic = true;
+            Owner.PlayerController.Speed = Speed;
+           // Owner.Movement.IsPanic = true;
 
             await UniTask.Delay(TimeSpan.FromSeconds(panicTime));
 
-            Owner.Controller.IsPanic = false;
-            if (Owner.Controller.IsCrouch) Owner.Controller.IsCrouch = false;
+            //Owner.Movement.IsPanic = false;
+            //if (Owner.Movement.IsCrouch) Owner.Movement.IsCrouch = false;
         }
     }
 }

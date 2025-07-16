@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace Unity.Cinemachine.Samples
 {
     /// <summary>
-    /// This is a custom camera manager that selects between an aiming camera child and a
-    /// non-aiming camera child, depending on the value of some user input.
+    /// Это пользовательский менеджер камер, который выбирает между дочерней камерой с прицелом и
+    /// нецелевой дочерней камерой в зависимости от значения некоторых пользовательских данных.
     ///
-    /// The Aiming child is expected to have ThirdPersonFollow and ThirdPersonAim components,
-    /// and to have a player as its Follow target.  The player is expected to have a
-    /// SimplePlayerAimController behaviour on one of its children, to decouple aiminag and
-    /// player rotation.
+    /// Ожидается, что у дочернего объекта Aiming будут компоненты ThirdPersonFollow и ThirdPersonAim,
+    /// а в качестве следующей цели будет игрок. Ожидается, что у игрока будет поведение
+    /// SimplePlayerAimController для одного из его дочерних элементов, чтобы отделить aiminag и
+    /// вращение игрока.
     /// </summary>
     [ExecuteAlways]
     public class AimCameraRig : CinemachineCameraManagerBase, Unity.Cinemachine.IInputAxisOwner

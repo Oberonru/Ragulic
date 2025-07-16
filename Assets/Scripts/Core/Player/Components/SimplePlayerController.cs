@@ -1,9 +1,10 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+using Unity.Cinemachine;
+using UnityEngine;
 using UnityEngine.Events;
 
-namespace Unity.Cinemachine.Samples
+namespace Core.Player.Components
 {
     /// <summary>
     /// Это базовый класс для SimplePlayerController и SimplePlayerController2D.
@@ -133,7 +134,7 @@ namespace Unity.Cinemachine.Samples
 
         [Tooltip(
             "If non-null, take the input frame from this camera instead of Camera.main. Useful for split-screen games.")]
-        public Camera CameraOverride;
+        public UnityEngine.Camera CameraOverride;
 
         [Tooltip("Layers to include in ground detection via Raycasts.")]
         public LayerMask GroundLayers = 1;
@@ -166,7 +167,7 @@ namespace Unity.Cinemachine.Samples
 
         public bool IsSprinting => m_IsSprinting;
         public bool IsJumping => m_IsJumping;
-        public Camera Camera => CameraOverride == null ? Camera.main : CameraOverride;
+        public UnityEngine.Camera Camera => CameraOverride == null ? UnityEngine.Camera.main : CameraOverride;
 
         public bool IsGrounded() => GetDistanceFromGround(transform.position, UpDirection, 10) < 0.01f;
 
