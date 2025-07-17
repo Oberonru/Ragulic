@@ -1,4 +1,5 @@
 using UnityEngine;
+using UniRx;
 
 namespace Core.Player.Components
 {
@@ -19,7 +20,7 @@ namespace Core.Player.Components
         [Tooltip("Масштабный коэффициент для общей скорости анимации прыжка")]
         public float JumpAnimationScale = 0.65f;
 
-        SimplePlayerControllerBase m_Controller;
+        [SerializeField] private PlayerController _controller;
         Vector3 m_PreviousPosition; // used if m_Controller == null or disabled
 
         protected struct AnimationParams
@@ -63,46 +64,13 @@ namespace Core.Player.Components
         protected virtual void Start()
         {
             m_PreviousPosition = transform.position;
-            m_Controller = GetComponentInParent<SimplePlayerControllerBase>();
-            if (m_Controller != null)
-            {
-                // Установите наши обратные вызовы для обработки прыжков и анимации в зависимости от скорости
-                m_Controller.StartJump += () => m_AnimationParams.JumpTriggered = true;
-                m_Controller.EndJump += () => m_AnimationParams.LandTriggered = true;
-                
-                //На вход из плейер контроллера передаётся текущая скорость игрока и по ней обновляется
-                //состояние анимации
-                m_Controller.PostUpdate += (vel, jumpAnimationScale) => UpdateAnimationState(vel, jumpAnimationScale);
-            }
+            _controller = GetComponentInParent<PlayerController>();
+
+            //_controller.PostUpdate += (vel, jumpAnimationScale) => UpdateAnimationState(vel, jumpAnimationScale);
+            _controller.EndUpdate.Subscribe((tuple) => UpdateAnimationState(tuple)).AddTo(this);
         }
 
-        /// <summary>
-        /// Функция LateUpdate используется для того, чтобы не беспокоиться о порядке выполнения скрипта:
-        /// можно предположить, что проигрыватель уже был перемещен.
-        /// </summary>
-        protected virtual void LateUpdate()
-        {
-            // В режиме без контроллера мы отслеживаем движение игрока и создаем соответствующую анимацию.
-            // Прыжки в этом режиме не поддерживаются.
-            if (m_Controller == null || !m_Controller.enabled)
-            {
-                // Получите скорость в локальных координатах игрока
-                var pos = transform.position;
-                //Инверсионный кватернион, те обратный отменяет действие исходного вращения
-                var vel = Quaternion.Inverse(transform.rotation) * (pos - m_PreviousPosition) / Time.deltaTime;
-                m_PreviousPosition = pos;
-                UpdateAnimationState(vel, 1);
-            }
-        }
-
-        /// <summary>
-        /// Обновите анимацию в зависимости от скорости игрока.
-        /// Переопределите это для надлежащего взаимодействия с вашим контроллером анимации.
-        /// </summary>
-        /// <param name="vel">Player's velocity, in player-local coordinates.</param>
-        /// <param name="jumpAnimationScale">Scale factor to apply to the jump animation.
-        /// Его можно использовать для замедления анимации прыжка при выполнении более длинных прыжков.</param>
-        void UpdateAnimationState(Vector3 vel, float jumpAnimationScale)
+        void UpdateAnimationState(Vector3 vel)
         {
             vel.y = 0; //мы не рассматриваем вертикальное перемещение
             var speed = vel.magnitude;
@@ -116,7 +84,6 @@ namespace Core.Player.Components
             // Установите нормализованное направление движения и масштабируйте скорость анимации в соответствии со скоростью движения
             m_AnimationParams.Direction = speed > k_IdleThreshold ? vel / speed : Vector3.zero;
             m_AnimationParams.MotionScale = isWalking ? speed / NormalWalkSpeed : 1;
-            m_AnimationParams.JumpScale = JumpAnimationScale * jumpAnimationScale;
 
             // Мы масштабируем скорость анимации спринта так, чтобы она примерно соответствовала реальной скорости, но мы изменяем
             // на самом высоком уровне, чтобы анимация не выглядела нелепо

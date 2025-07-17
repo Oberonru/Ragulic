@@ -440,14 +440,15 @@ GameObject:
   - component: {fileID: 7619880476495711128}
   - component: {fileID: 4167604035081617490}
   - component: {fileID: 7542966224848622487}
-  - component: {fileID: 8499912411367483343}
-  - component: {fileID: 7137702417685009733}
   - component: {fileID: 6626649246866845561}
+  - component: {fileID: 3920941742337465495}
+  - component: {fileID: 8499912411367483343}
+  - component: {fileID: 1832654369224879933}
   - component: {fileID: 5020247430468699989}
   - component: {fileID: 1949876806836982086}
   - component: {fileID: 7096307830928676970}
-  - component: {fileID: 3920941742337465495}
   - component: {fileID: 1008916882553179073}
+  - component: {fileID: 6721959228812488510}
   m_Layer: 0
   m_Name: PlayerCameron
   m_TagString: Player
@@ -520,86 +521,6 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.455, z: 0}
---- !u!114 &8499912411367483343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4999701976835117113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 273c1a94ce714b809bcf21ab6621f65e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7137702417685009733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4999701976835117113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc3f96e48e9ec81419b3e761889bf625, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 1
-  SprintSpeed: 4
-  JumpSpeed: 4
-  SprintJumpSpeed: 6
-  MoveX:
-    Value: 0
-    Center: 0
-    Range: {x: -1, y: 1}
-    Wrap: 0
-    Recentering:
-      Enabled: 0
-      Wait: 0
-      Time: 0
-    Restrictions: 6
-  MoveZ:
-    Value: 0
-    Center: 0
-    Range: {x: -1, y: 1}
-    Wrap: 0
-    Recentering:
-      Enabled: 0
-      Wait: 0
-      Time: 0
-    Restrictions: 6
-  Jump:
-    Value: 0
-    Center: 0
-    Range: {x: -1, y: 1}
-    Wrap: 0
-    Recentering:
-      Enabled: 0
-      Wait: 0
-      Time: 0
-    Restrictions: 6
-  Sprint:
-    Value: 0
-    Center: 0
-    Range: {x: -1, y: 1}
-    Wrap: 0
-    Recentering:
-      Enabled: 0
-      Wait: 0
-      Time: 0
-    Restrictions: 6
-  Landed:
-    m_PersistentCalls:
-      m_Calls: []
-  Damping: 0.5
-  Strafe: 0
-  InputForward: 0
-  UpMode: 1
-  CameraOverride: {fileID: 0}
-  GroundLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  Gravity: 10
 --- !u!114 &6626649246866845561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,8 +538,8 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   m_ControllerManager:
     Controllers:
-    - Name: Move X
-      Owner: {fileID: 7137702417685009733}
+    - Name: Horizontal X
+      Owner: {fileID: 1832654369224879933}
       Enabled: 1
       Input:
         InputAction: {fileID: -3839087748184487341, guid: a85186da47202a842ab427647c1fd9bb, type: 3}
@@ -630,8 +551,8 @@ MonoBehaviour:
       Driver:
         AccelTime: 0
         DecelTime: 0
-    - Name: Move Z
-      Owner: {fileID: 7137702417685009733}
+    - Name: Vertical Z
+      Owner: {fileID: 1832654369224879933}
       Enabled: 1
       Input:
         InputAction: {fileID: -3839087748184487341, guid: a85186da47202a842ab427647c1fd9bb, type: 3}
@@ -643,8 +564,8 @@ MonoBehaviour:
       Driver:
         AccelTime: 0
         DecelTime: 0
-    - Name: Jump
-      Owner: {fileID: 7137702417685009733}
+    - Name: Acceleration
+      Owner: {fileID: 1832654369224879933}
       Enabled: 1
       Input:
         InputAction: {fileID: 0}
@@ -656,8 +577,8 @@ MonoBehaviour:
       Driver:
         AccelTime: 0
         DecelTime: 0
-    - Name: Sprint
-      Owner: {fileID: 7137702417685009733}
+    - Name: Crouch
+      Owner: {fileID: 1832654369224879933}
       Enabled: 1
       Input:
         InputAction: {fileID: 0}
@@ -673,7 +594,7 @@ MonoBehaviour:
       Owner: {fileID: 5979221503315691712}
       Enabled: 1
       Input:
-        InputAction: {fileID: 0}
+        InputAction: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
         Gain: 1
         LegacyInput: 
         LegacyGain: 1
@@ -697,6 +618,50 @@ MonoBehaviour:
         DecelTime: 0.2
   PlayerIndex: -1
   AutoEnableInputs: 1
+--- !u!114 &3920941742337465495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4999701976835117113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66e54116ebc4503ac9d4a2dbc0648e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 8499912411367483343}
+  _simplePlayerController: {fileID: 1832654369224879933}
+  _combatComponent: {fileID: 5020247430468699989}
+  _stateMachine: {fileID: 1949876806836982086}
+  _inventory: {fileID: 7096307830928676970}
+--- !u!114 &8499912411367483343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4999701976835117113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 273c1a94ce714b809bcf21ab6621f65e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1832654369224879933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4999701976835117113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 511320c22ced4d7696eb875aed61d7d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 3920941742337465495}
+  _camera: {fileID: 0}
+  _upType: 1
 --- !u!114 &5020247430468699989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -736,23 +701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b16ebf78dfe46b7afb854e80c6b1ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3920941742337465495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4999701976835117113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a66e54116ebc4503ac9d4a2dbc0648e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 8499912411367483343}
-  _simplePlayerController: {fileID: 7137702417685009733}
-  _combatComponent: {fileID: 5020247430468699989}
-  _stateMachine: {fileID: 1949876806836982086}
-  _inventory: {fileID: 7096307830928676970}
 --- !u!114 &1008916882553179073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,6 +713,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee360dc14cf4a8fab576a4f2762bee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6721959228812488510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4999701976835117113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4402cbd9bf97e4bb3532a180e0743c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NormalWalkSpeed: 1.7
+  NormalSprintSpeed: 5
+  MaxSprintScale: 1.4
+  JumpAnimationScale: 0.65
+  _controller: {fileID: 0}
 --- !u!1 &5204806794929005351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +989,7 @@ MonoBehaviour:
       Wait: 1
       Time: 2
     Restrictions: 0
+  _controller: {fileID: 0}
 --- !u!1 &7629560083188152427
 GameObject:
   m_ObjectHideFlags: 0

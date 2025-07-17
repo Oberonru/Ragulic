@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UniRx;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -50,15 +51,10 @@ namespace Core.Player.Components
         public InputAxis VerticalLook = new()
             { Range = new Vector2(-70, 70), Recentering = InputAxis.RecenteringSettings.Default };
 
-        SimplePlayerControllerBase m_Controller;
+        [SerializeField] private PlayerController _controller;
         Transform m_ControllerTransform; // cached for efficiency
         Quaternion m_DesiredWorldRotation;
-
-        /// Сообщите о доступных входных осях контроллеру входных осей.
-        /// Мы используем контроллер оси ввода, потому что он работает как с пакетом ввода,
-        /// так и с другим пакетом ввода.
-        /// и устаревшая система ввода. Это пример кода, и мы
-        // я хочу, чтобы это работало везде.
+        
         void IInputAxisOwner.GetInputAxes(List<IInputAxisOwner.AxisDescriptor> axes)
         {
             axes.Add(new()
@@ -83,25 +79,18 @@ namespace Core.Player.Components
 
         void OnEnable()
         {
-            m_Controller = GetComponentInParent<SimplePlayerControllerBase>();
-            if (m_Controller == null)
-                Debug.LogError("SimplePlayerController not found on parent object");
-            else
-            {
-                m_Controller.PreUpdate -= UpdatePlayerRotation;
-                m_Controller.PreUpdate += UpdatePlayerRotation;
-                m_Controller.PostUpdate -= PostUpdate;
-                m_Controller.PostUpdate += PostUpdate;
-                m_ControllerTransform = m_Controller.transform;
-            }
+            _controller = GetComponentInParent<PlayerController>();
+
+            _controller.StartUpdate.Subscribe(_ => UpdatePlayerRotation()).AddTo(this);
+            _controller.EndUpdate.Subscribe(_ => UpdatePlayerRotation()).AddTo(this);
+            
+            m_ControllerTransform = _controller.transform;
         }
 
         void OnDisable()
         {
-            if (m_Controller != null)
+            if (_controller != null)
             {
-                m_Controller.PreUpdate -= UpdatePlayerRotation;
-                m_Controller.PostUpdate -= PostUpdate;
                 m_ControllerTransform = null;
             }
         }
@@ -154,7 +143,7 @@ namespace Core.Player.Components
             {
                 case CouplingMode.Coupled:
                 {
-                    m_Controller.SetStrafeMode(true);
+                    _controller.SetStrafeMode(true);
                     RecenterPlayer();
                     break;
                 }
@@ -162,14 +151,14 @@ namespace Core.Player.Components
                 {
                     // Если проигрыватель движется, поверните его в соответствии с направлением камеры,
                     // В противном случае пусть камера вращается по орбите
-                    m_Controller.SetStrafeMode(true);
-                    if (m_Controller.IsMoving)
-                        RecenterPlayer(RotationDamping);
+                    _controller.SetStrafeMode(true);
+                    // if (m_Controller.IsMoving)
+                    //     RecenterPlayer(RotationDamping);
                     break;
                 }
                 case CouplingMode.Decoupled:
                 {
-                    m_Controller.SetStrafeMode(false);
+                    _controller.SetStrafeMode(false);
                     break;
                 }
             }
@@ -180,7 +169,7 @@ namespace Core.Player.Components
 
         // Обратный вызов для контроллера игрока, чтобы обновить нашу ротацию после того,
         // как он обновит свою собственную.
-        void PostUpdate(Vector3 vel, float speed)
+        void PostUpdate(Vector3 vel)
         {
             if (PlayerRotation == CouplingMode.Decoupled)
             {
