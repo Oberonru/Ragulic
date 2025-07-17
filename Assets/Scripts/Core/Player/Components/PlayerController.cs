@@ -7,7 +7,6 @@ using Sirenix.OdinInspector;
 using UniRx;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Core.Player.Components
@@ -42,7 +41,7 @@ namespace Core.Player.Components
         private bool _inTopHemisphere = true;
         private bool _isRunning;
         private bool _isStrafeMoving;
-        
+
         [ShowInInspector] public float Speed { get; set; }
         public bool IsCrouch { get; set; }
         public bool IsPanic { get; set; }
@@ -67,7 +66,7 @@ namespace Core.Player.Components
 
         private ForwardType InputForward = ForwardType.Camera;
         public bool IsMoving() => _lastInput.sqrMagnitude > 0.01f;
-        
+
         private void OnEnable()
         {
             _player.Health.OnHit.Subscribe
@@ -124,14 +123,12 @@ namespace Core.Player.Components
         public virtual void SetStrafeMode(bool b)
         {
         }
-        
+
         private void Update()
         {
             _startUpdate.OnNext(Unit.Default);
-
             BackToGround();
-           
-
+            
             if (!IsPanic)
             {
                 if (_player.StateMachine.GetActiveState() != typeof(PlayerRunState)
@@ -201,7 +198,7 @@ namespace Core.Player.Components
 
         private void Move()
         {
-            _characterController.Move((_upVelocity +_currentVelocityXZ) * Time.deltaTime);
+            _characterController.Move((_upVelocity + _currentVelocityXZ) * Time.deltaTime);
         }
 
         private void Rotate()
