@@ -23,7 +23,7 @@ namespace Core.Player.Components
     ///
     /// Чтобы реализовать стрельбу игрока, добавьте к этому игровому объекту поведение SimplePlayerShoot.
     /// </summary>
-    public class PlayerAimController : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
+    public class PlayerAim : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
     {
         public enum CouplingMode
         {
