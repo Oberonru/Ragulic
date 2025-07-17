@@ -1423,7 +1423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355b89459efd4514a40f8366a8e3198e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 3920941742337465495, guid: 55574042f8abbd340a79c7063dfdb7a2, type: 3}
+  _prefab: {fileID: -3457500057906582364, guid: fc51dcbcde7029d498cb7871fb9cb69e, type: 3}
   _spawnPoint: {fileID: 4123331920919250942}
   _isSingle: 1
 --- !u!1 &1167805317

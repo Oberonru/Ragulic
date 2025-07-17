@@ -1,5 +1,6 @@
 using System;
 using Core.BaseComponents;
+using Core.CombatSystem;
 using Core.Configs.Player;
 using Core.Player.CombatSystem;
 using Core.Player.Components;
@@ -15,6 +16,8 @@ namespace Core.Player
     [RequireComponent(typeof(PlayerCombatComponent))]
     [RequireComponent(typeof(PlayerStateMachine))]
     [RequireComponent(typeof(InventoryPlayerHandler))]
+    [RequireComponent(typeof(TriggerHitBoxDetector))]
+    [RequireComponent(typeof(PlayerAnimator))]
     public class PlayerInstance : MonoBehaviour, IPlayerInstance
     {
         [Inject] private PlayerConfig _playerStats;
@@ -23,6 +26,8 @@ namespace Core.Player
         [SerializeField, ReadOnly] private PlayerCombatComponent _combatComponent;
         [SerializeField, ReadOnly] private PlayerStateMachine _stateMachine;
         [SerializeField, ReadOnly] private InventoryPlayerHandler _inventory;
+        [SerializeField, ReadOnly] private TriggerHitBoxDetector _triggerHitBoxDetector;
+        [SerializeField, ReadOnly] private PlayerAnimator _animator;
 
         public Transform Transform => transform;
         public PlayerConfig Stats => _playerStats;
@@ -31,6 +36,8 @@ namespace Core.Player
         public PlayerCombatComponent CombatComponent => _combatComponent;
         public PlayerStateMachine StateMachine => _stateMachine;
         public InventoryPlayerHandler InventoryHandler => _inventory;
+        public TriggerHitBoxDetector TriggerHitBoxDetector => _triggerHitBoxDetector;
+        public PlayerAnimator Animator => _animator;
 
         private void Awake()
         {
@@ -47,6 +54,8 @@ namespace Core.Player
             if (_combatComponent is null) _combatComponent = GetComponent<PlayerCombatComponent>();
             if (_stateMachine is null) _stateMachine = GetComponent<PlayerStateMachine>();
             if (_inventory is null) _inventory = GetComponent<InventoryPlayerHandler>();
+            if (_triggerHitBoxDetector is null) _triggerHitBoxDetector = GetComponent<TriggerHitBoxDetector>();
+            if (_animator is null) _animator = GetComponent<PlayerAnimator>();
         }
     }
 }
