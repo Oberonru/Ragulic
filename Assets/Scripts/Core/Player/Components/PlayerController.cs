@@ -25,8 +25,8 @@ namespace Core.Player.Components
         public IObservable<Vector3> EndUpdate => _endUpdate;
         private Subject<Vector3> _endUpdate = new();
 
-        private InputAxis Horizontal = InputAxis.DefaultMomentary;
-        private InputAxis Vertical = InputAxis.DefaultMomentary;
+        private InputAxis DirX = InputAxis.DefaultMomentary;
+        private InputAxis DirZ = InputAxis.DefaultMomentary;
         private InputAxis Acceleration = InputAxis.DefaultMomentary;
         private InputAxis Crouch = InputAxis.DefaultMomentary;
 
@@ -95,14 +95,14 @@ namespace Core.Player.Components
         {
             axes.Add(new IInputAxisOwner.AxisDescriptor()
             {
-                DrivenAxis = () => ref Horizontal,
+                DrivenAxis = () => ref DirX,
                 Name = "Horizontal X",
                 Hint = IInputAxisOwner.AxisDescriptor.Hints.X
             });
 
             axes.Add(new IInputAxisOwner.AxisDescriptor()
             {
-                DrivenAxis = () => ref Vertical,
+                DrivenAxis = () => ref DirZ,
                 Name = "Vertical Z",
                 Hint = IInputAxisOwner.AxisDescriptor.Hints.Y
             });
@@ -138,7 +138,7 @@ namespace Core.Player.Components
                 }
 
                 else if ((_player.StateMachine.GetActiveState() != typeof(PlayerWalkState) &&
-                          (Mathf.Abs(Horizontal.Value) > 0.1 || Mathf.Abs(Vertical.Value) > 0.1f)
+                          (Mathf.Abs(DirX.Value) > 0.1 || Mathf.Abs(DirZ.Value) > 0.1f)
                           && !IsCrouch))
                 {
                     _player.StateMachine.SetWalkSpeed(_player.Stats.WalkSpeed);
@@ -172,7 +172,7 @@ namespace Core.Player.Components
         {
             if (_characterController is null) return;
 
-            var rawInput = new Vector3(Horizontal.Value, 0, Vertical.Value);
+            var rawInput = new Vector3(DirX.Value, 0, DirZ.Value);
 
             _inputFrame = GetInputFrame(Vector3.Dot(rawInput, _lastRawInput) < 0.8f);
             _lastRawInput = rawInput;
