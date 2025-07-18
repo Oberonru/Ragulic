@@ -59,7 +59,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 4f2ad23829b3b964987f922dcef6a822, type: 2}
+      objectReference: {fileID: 9100000, guid: 9ea309a076c286b409508e445965e8bb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -337,7 +337,6 @@ MonoBehaviour:
   NormalWalkSpeed: 1.7
   NormalSprintSpeed: 5
   MaxSprintScale: 1.4
-  JumpAnimationScale: 0.65
   _controller: {fileID: 488379540697132777}
 --- !u!1 &9129632316134837920 stripped
 GameObject:
