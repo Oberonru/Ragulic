@@ -6,29 +6,7 @@ using UnityEngine.Events;
 
 namespace Core.Player.Components
 {
-    /// <summary>
-    /// Это базовый класс для SimplePlayerController и SimplePlayerController2D.
-    /// Вы также можете использовать его в качестве базового класса для своих пользовательских контроллеров.
-    /// Он предоставляет следующие сервисы:
-    ///
-    /// **:**
-    ///
-    /// - 2D оси движения (moveX и MoveZ)
-    /// - Кнопка перехода
-    /// - Кнопка спринта
-    /// - API для режима strafe
-    ///
-    /// **Действия:**
-    ///
-    /// - Предварительное обновление - вызывается в начале `Update()`
-    /// - PostUpdate - вызывается в конце `Update()`
-    /// - StartJump - вызывается, когда игрок начинает прыгать
-    /// - EndJump - вызывается, когда игрок перестает прыгать
-    ///
-    /// **События:**
-    ///
-    /// - Приземлился - вызывается, когда игрок приземляется на землю
-    /// </summary>
+    
     public abstract class SimplePlayerControllerBase : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
     {
         [Tooltip("Ground speed when walking")] public float Speed = 1f;
