@@ -74,7 +74,7 @@ namespace Core.Player.Components
             _player.Health.OnHit.Subscribe
                 (_ => _player.StateMachine.SetPanicSpeed(_player.Stats.PanicSpeed)).AddTo(this);
 
-            var trackingTarget = _player.GetComponentInChildren<PlayerAim>();
+            var trackingTarget = _player.GetComponentInChildren<PlayerCameraRotation>();
 
             if (trackingTarget == null) throw new NullReferenceException("Tracking target is not found");
 
@@ -124,6 +124,7 @@ namespace Core.Player.Components
 
         public virtual void SetStrafeMode(bool b)
         {
+            _isStrafeMoving = b;
         }
 
         private void Update()
