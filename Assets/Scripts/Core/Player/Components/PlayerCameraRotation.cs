@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UniRx;
 using Unity.Cinemachine;
@@ -14,22 +15,13 @@ namespace Core.Player.Components
             Decoupled
         }
 
-        [Tooltip("Как вращение игрока связано с вращением камеры. Доступны три режима:\n"
-                 + "<b>Сопряженный</b>: Игрок вращается вместе с камерой. Движение в сторону приведет к обстрелу.\n"
-                 + "<b>Подключается при перемещении</b>: камера может свободно вращаться вокруг игрока, когда он неподвижен " +
-                 "но когда игрок начнет двигаться, он повернется лицом к камере.\n"
-                 + "<b>Отключено</b>: Вращение проигрывателя не зависит от вращения камеры.")]
         public CouplingMode PlayerRotation;
 
-        [Tooltip("Как быстро игрок поворачивается лицом к камере, когда начинает движение.  " +
-                 "Используется только в том случае, если вращение игрока связано с перемещением.")]
         public float RotationDamping = 0.2f;
 
-        [Tooltip("Horizontal Rotation.  Value is in degrees, with 0 being centered.")]
         public InputAxis HorizontalLook = new()
             { Range = new Vector2(-180, 180), Wrap = true, Recentering = InputAxis.RecenteringSettings.Default };
 
-        [Tooltip("Vertical Rotation.  Value is in degrees, with 0 being centered.")]
         public InputAxis VerticalLook = new()
             { Range = new Vector2(-70, 70), Recentering = InputAxis.RecenteringSettings.Default };
 
@@ -37,50 +29,46 @@ namespace Core.Player.Components
         private Transform _controllerTransform;
         private Quaternion _desiredWorldRotation;
 
+        private IDisposable _endUpdateSubscription;
+
         void IInputAxisOwner.GetInputAxes(List<IInputAxisOwner.AxisDescriptor> axes)
         {
             axes.Add(new()
             {
-                DrivenAxis = () => ref HorizontalLook, Name = "Horizontal Look",
+                DrivenAxis = () => ref HorizontalLook,
+                Name = "Horizontal Look",
                 Hint = IInputAxisOwner.AxisDescriptor.Hints.X
             });
             axes.Add(new()
             {
-                DrivenAxis = () => ref VerticalLook, Name = "Vertical Look",
+                DrivenAxis = () => ref VerticalLook,
+                Name = "Vertical Look",
                 Hint = IInputAxisOwner.AxisDescriptor.Hints.Y
             });
-        }
-
-        private void OnValidate()
-        {
-            HorizontalLook.Validate();
-            VerticalLook.Range.x = Mathf.Clamp(VerticalLook.Range.x, -90, 90);
-            VerticalLook.Range.y = Mathf.Clamp(VerticalLook.Range.y, 12, 20);
-            VerticalLook.Validate();
         }
 
         private void OnEnable()
         {
             _controller = GetComponentInParent<PlayerController>();
 
-            if (_controller is null)
+            if (_controller == null)
             {
-                this.enabled = false;
+                enabled = false;
                 return;
             }
 
             _controller.StartUpdate.Subscribe(_ => UpdatePlayerRotation()).AddTo(this);
-            _controller.EndUpdate.Subscribe(_ => UpdatePlayerRotation()).AddTo(this);
+
+            _endUpdateSubscription?.Dispose();
+            _endUpdateSubscription = _controller.EndUpdate.Subscribe(PostUpdate).AddTo(this);
 
             _controllerTransform = _controller.transform;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
-            if (_controller != null)
-            {
-                _controllerTransform = null;
-            }
+            _endUpdateSubscription?.Dispose();
+            _controllerTransform = null;
         }
 
         private void RecenterPlayer(float damping = 0)
@@ -106,40 +94,37 @@ namespace Core.Player.Components
             var t = transform;
             t.localRotation = Quaternion.Euler(VerticalLook.Value, HorizontalLook.Value, 0);
             _desiredWorldRotation = t.rotation;
+
             switch (PlayerRotation)
             {
                 case CouplingMode.Coupled:
-                {
                     _controller.SetStrafeMode(true);
                     RecenterPlayer();
                     break;
-                }
+
                 case CouplingMode.CoupledWhenMoving:
-                {
                     _controller.SetStrafeMode(true);
                     if (_controller.IsMoving())
                         RecenterPlayer(RotationDamping);
                     break;
-                }
+
                 case CouplingMode.Decoupled:
-                {
                     _controller.SetStrafeMode(false);
                     break;
-                }
             }
 
             VerticalLook.UpdateRecentering(Time.deltaTime, VerticalLook.TrackValueChange());
             HorizontalLook.UpdateRecentering(Time.deltaTime, HorizontalLook.TrackValueChange());
-
-            _controller.EndUpdate.Subscribe(velocity => PostUpdate(velocity));
         }
 
-
-        private void PostUpdate(Vector3 vel)
+        private void PostUpdate(Vector3 velocity)
         {
-            if (PlayerRotation == CouplingMode.Decoupled)
+            if (PlayerRotation == CouplingMode.Decoupled && _controllerTransform != null)
             {
+                // Камера вращается как нужно — по входу мыши, игрок не поворачивается.
                 transform.rotation = _desiredWorldRotation;
+
+                // Обновляем углы внутри InputAxis для корректного поведения UI/логики.
                 var delta = (Quaternion.Inverse(_controllerTransform.rotation) * _desiredWorldRotation).eulerAngles;
                 VerticalLook.Value = NormalizeAngle(delta.x);
                 HorizontalLook.Value = NormalizeAngle(delta.y);

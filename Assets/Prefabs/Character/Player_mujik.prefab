@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &905984119431952545
+--- !u!1 &8231958635459408799
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1850580104341362071}
-  - component: {fileID: 7992898649511418981}
+  - component: {fileID: 4263854992001734084}
+  - component: {fileID: 3956136841572785480}
   m_Layer: 0
-  m_Name: CameraRotationComponent
+  m_Name: PlayerCameraRotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1850580104341362071
+--- !u!4 &4263854992001734084
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905984119431952545}
+  m_GameObject: {fileID: 8231958635459408799}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,22 +32,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8020116807948610012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7992898649511418981
+--- !u!114 &3956136841572785480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905984119431952545}
-  m_Enabled: 0
+  m_GameObject: {fileID: 8231958635459408799}
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f7a480c7e84c874a952d969320e6f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerRotation: 0
+  PlayerRotation: 2
   RotationDamping: 0.2
   HorizontalLook:
-    Value: 0
+    Value: 136.97162
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -122,6 +122,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_mujik
       objectReference: {fileID: 0}
+    - target: {fileID: 1618319468842385559, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
       propertyPath: m_Controller
       value: 
@@ -131,7 +135,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1850580104341362071}
+      addedObject: {fileID: 4263854992001734084}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
       insertIndex: -1
@@ -163,9 +167,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
       insertIndex: -1
       addedObject: {fileID: -2237978727543573193}
-    - targetCorrespondingSourceObject: {fileID: 1618319468842385559, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1789360247365087976}
   m_SourcePrefab: {fileID: 100100000, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
 --- !u!1 &7207726507544474470 stripped
 GameObject:
@@ -242,7 +243,7 @@ MonoBehaviour:
         AccelTime: 0
         DecelTime: 0
     - Name: Horizontal Look
-      Owner: {fileID: 1789360247365087976}
+      Owner: {fileID: 3956136841572785480}
       Enabled: 1
       Input:
         InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
@@ -255,33 +256,7 @@ MonoBehaviour:
         AccelTime: 0.2
         DecelTime: 0.2
     - Name: Vertical Look
-      Owner: {fileID: 1789360247365087976}
-      Enabled: 1
-      Input:
-        InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
-        Gain: -1
-        LegacyInput: 
-        LegacyGain: 1
-        CancelDeltaTime: 0
-      InputValue: 0
-      Driver:
-        AccelTime: 0.2
-        DecelTime: 0.2
-    - Name: Horizontal Look
-      Owner: {fileID: 7992898649511418981}
-      Enabled: 1
-      Input:
-        InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
-        Gain: 1
-        LegacyInput: 
-        LegacyGain: 1
-        CancelDeltaTime: 0
-      InputValue: 0
-      Driver:
-        AccelTime: 0.2
-        DecelTime: 0.2
-    - Name: Vertical Look
-      Owner: {fileID: 7992898649511418981}
+      Owner: {fileID: 3956136841572785480}
       Enabled: 1
       Input:
         InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
@@ -435,42 +410,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
   m_PrefabInstance: {fileID: 7550166869514636855}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9129632316134837920 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1618319468842385559, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
-  m_PrefabInstance: {fileID: 7550166869514636855}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1789360247365087976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9129632316134837920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f7a480c7e84c874a952d969320e6f84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerRotation: 0
-  RotationDamping: 0.2
-  HorizontalLook:
-    Value: 0
-    Center: 0
-    Range: {x: -180, y: 180}
-    Wrap: 1
-    Recentering:
-      Enabled: 0
-      Wait: 1
-      Time: 2
-    Restrictions: 0
-  VerticalLook:
-    Value: 0
-    Center: 0
-    Range: {x: -70, y: 20}
-    Wrap: 0
-    Recentering:
-      Enabled: 0
-      Wait: 1
-      Time: 2
-    Restrictions: 0

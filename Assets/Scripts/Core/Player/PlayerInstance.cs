@@ -6,6 +6,7 @@ using Core.Player.CombatSystem;
 using Core.Player.Components;
 using Core.Player.StateMachine;
 using Sirenix.OdinInspector;
+using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
 
@@ -29,6 +30,8 @@ namespace Core.Player
         [SerializeField, ReadOnly] private TriggerHitBoxDetector _triggerHitBoxDetector;
         [SerializeField, ReadOnly] private PlayerAnimator _animator;
 
+        private CinemachineInputAxisController _inputAxisController;
+
         public Transform Transform => transform;
         public PlayerConfig Stats => _playerStats;
         public IHealthComponent Health => _health;
@@ -45,6 +48,16 @@ namespace Core.Player
                 throw new NullReferenceException($"PlayerConfig is not set on player {gameObject.name}");
             _health.MaxHealth = Stats.Health;
             _health.CurrentHealth = _health.MaxHealth;
+        }
+
+        private void Start()
+        {
+            _inputAxisController = GetComponent<CinemachineInputAxisController>();
+            if (_inputAxisController != null)
+            {
+                _inputAxisController.enabled = false;
+                _inputAxisController.enabled = true;
+            }
         }
 
         private void OnValidate()

@@ -19,6 +19,7 @@ namespace Core.Player.Components
         [SerializeField] private UnityEngine.Camera _camera;
 
         private CharacterController _characterController;
+        private PlayerCameraRotation _cameraRotation;
         public IObservable<Unit> StartUpdate => _startUpdate;
         private Subject<Unit> _startUpdate = new();
 
@@ -85,6 +86,7 @@ namespace Core.Player.Components
         {
             _player.StateMachine.SetWalkSpeed(_player.Stats.WalkSpeed);
             _characterController = GetComponent<CharacterController>();
+            _cameraRotation = GetComponentInChildren<PlayerCameraRotation>();
         }
 
         private void OnValidate()
@@ -212,16 +214,14 @@ namespace Core.Player.Components
         {
             if (!_isStrafeMoving && _currentVelocityXZ.sqrMagnitude > 0.001f)
             {
-                var fwd = _inputFrame * Vector3.forward;
-                var qA = transform.rotation;
+                if (_cameraRotation != null && _cameraRotation.PlayerRotation == PlayerCameraRotation.CouplingMode.Decoupled)
+                    return; // Не поворачивать игрока в режиме Decoupled
 
                 var moveDirection = _currentVelocityXZ.normalized;
                 if (moveDirection.sqrMagnitude > 0.001f)
                 {
                     var qB = Quaternion.LookRotation(moveDirection, _upDirection);
-                    
-                    transform.rotation = Quaternion.Slerp(transform.rotation, qB,
-                        Damper.Damp(1, _config.Damping, Time.deltaTime));
+                    transform.rotation = Quaternion.Slerp(transform.rotation, qB, Damper.Damp(1, _config.Damping, Time.deltaTime));
                 }
             }
         }
