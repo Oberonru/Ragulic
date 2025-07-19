@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Core.Camera;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 namespace Core.Player.Components
 {
-    
     public abstract class SimplePlayerControllerBase : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
     {
         [Tooltip("Ground speed when walking")] public float Speed = 1f;
@@ -60,25 +61,10 @@ namespace Core.Player.Components
         public abstract bool IsMoving { get; }
     }
 
-    /// <summary>
-    /// Это 3D-контроллер персонажей, созданный на основе SimplePlayerControllerBase.
-    /// Он предоставляет следующие сервисы и настройки:
-    ///
-    /// - Демпфирование (применяется к скорости игрока и его вращению)
-    /// - Режим "Стрейф"
-    /// - Гравитация.
-    /// - Входные кадры (какой опорный кадр используется для интерпретации входных данных: камера, окружающий мир или игрок)
-    /// - Определение местности (с помощью радиопередач или делегирование контроллеру персонажа)
-    /// - Переопределение камеры (камера используется только для определения входного кадра)
-    ///
-    /// Это поведение должно быть привязано к корню игрового объекта player. Оно перемещает игровой объект
-    /// transform. Если у игрового объекта также есть компонент контроллера персонажа Unity, то простой игрок
-    /// Контроллер делегирует ему заземленное состояние и перемещение. Если у игрового объекта нет
-    /// Контроллера персонажа, простой игровой контроллер сам управляет движением и запускает лучи
-    /// для проверки заземленного состояния.
-    /// </summary>
     public class SimplePlayerController : SimplePlayerControllerBase
     {
+        [Inject] private IGameCamera _gameCamera;
+
         [Tooltip("Продолжительность перехода (в секундах), когда игрок меняет скорость или вращение.")]
         public float Damping = 0.5f;
 
@@ -128,13 +114,8 @@ namespace Core.Player.Components
         float m_CurrentVelocityY;
         bool m_IsSprinting;
         bool m_IsJumping;
-        UnityEngine.CharacterController m_Controller; // optional
+        CharacterController m_Controller;
 
-        // Это часть стратегии борьбы с блокировкой входного шарнира при управлении плеером
-        // который может свободно перемещаться по поверхностям, перевернутым относительно камеры.
-        // Это используется только в конкретной ситуации, когда персонаж перевернут относительно входного кадра,
-        // и входные инструкции становятся неоднозначными.
-        // Если камера и входной кадр перемещаются вместе с игроком, то они не используются.
         bool m_InTopHemisphere = true;
         float m_TimeInHemisphere = 100;
         Vector3 m_LastRawInput;
@@ -149,8 +130,14 @@ namespace Core.Player.Components
 
         public bool IsGrounded() => GetDistanceFromGround(transform.position, UpDirection, 10) < 0.01f;
 
-        // Обратите внимание, что m_Controller - это необязательный компонент: мы будем использовать его, если он там есть.
-        void Start() => TryGetComponent(out m_Controller);
+        private void Start()
+        {
+            TryGetComponent(out m_Controller);
+            var trackingTarget = GetComponentInChildren<TrackingTarget>();
+            if (trackingTarget is null) throw new NullReferenceException("Tracking target is not found");
+
+            _gameCamera.SetTarget(trackingTarget.transform);
+        }
 
         private void OnEnable()
         {

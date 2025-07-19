@@ -12,8 +12,6 @@ namespace Core.Camera
         [SerializeField] private CinemachineCamera _camera;
         public Transform Transform => transform;
 
-        private Transform _target;
-
         private void Start()
         {
             _camera.OutputChannel = _config.OutputChannel;
@@ -23,14 +21,16 @@ namespace Core.Camera
             _camera.Lens.FarClipPlane = _config.FarClipPlane;
             _camera.Lens.Dutch = _config.Dutch;
         }
-        
+
+        private void OnValidate()
+        {
+            if (_camera is null) _camera = GetComponent<CinemachineCamera>();
+        }
+
         public void SetTarget(Transform target)
         {
-            _target = target;
-            _camera.Follow = _target;
+            _camera.Follow = target;
             _camera.LookAt = null;
-
-            var positionComposer = _camera.GetComponent<CinemachinePositionComposer>();
         }
 
         public Vector3 Forward => transform.forward;
