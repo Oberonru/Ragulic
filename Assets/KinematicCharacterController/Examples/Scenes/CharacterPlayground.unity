@@ -22661,7 +22661,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 6611558534064293502}
-  CharacterCamera: {fileID: 5530455799321397187}
 --- !u!4 &1004713170
 Transform:
   m_ObjectHideFlags: 0

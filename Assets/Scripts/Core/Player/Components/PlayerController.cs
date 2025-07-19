@@ -54,6 +54,7 @@ namespace Core.Player.Components
         }
 
         public PlayerControllerConfig Config => _config;
+
         public enum UpType
         {
             Player,
@@ -128,8 +129,28 @@ namespace Core.Player.Components
         private void Update()
         {
             _startUpdate.OnNext(Unit.Default);
+
             BackToGround();
-            
+            SetSpeed();
+            SetVelocity();
+            Move();
+
+            var velocity = Quaternion.Inverse(transform.rotation) * _currentVelocityXZ;
+            _endUpdate.OnNext(velocity);
+        }
+
+        private void FixedUpdate()
+        {
+            Rotate();
+        }
+        
+        private void BackToGround()
+        {
+            _upVelocity.y = _characterController.isGrounded ? 0 : _upVelocity.y -= Time.deltaTime * _gravity;
+        }
+
+        private void SetSpeed()
+        {
             if (!IsPanic)
             {
                 if (_player.StateMachine.GetActiveState() != typeof(PlayerRunState)
@@ -151,24 +172,8 @@ namespace Core.Player.Components
                     _player.StateMachine.SetCrouchSpeed(_player.Stats.CrouchSpeed);
                 }
             }
-
-            SetVelocity();
-            Move();
-
-            var velocity = Quaternion.Inverse(transform.rotation) * _currentVelocityXZ;
-            _endUpdate.OnNext(velocity);
         }
-
-        private void BackToGround()
-        {
-            _upVelocity.y = _characterController.isGrounded ? 0 : _upVelocity.y -= Time.deltaTime * _gravity;
-        }
-
-        private void FixedUpdate()
-        {
-            Rotate();
-        }
-
+        
         private void SetVelocity()
         {
             if (_characterController is null) return;
@@ -213,9 +218,9 @@ namespace Core.Player.Components
                 if (moveDirection.sqrMagnitude > 0.001f)
                 {
                     var qB = Quaternion.LookRotation(moveDirection, _upDirection);
+                    
                     transform.rotation = Quaternion.Slerp(transform.rotation, qB,
                         Damper.Damp(1, _config.Damping, Time.deltaTime));
-                    transform.rotation = Quaternion.Slerp(qA, qB, Damper.Damp(1, _config.Damping, Time.deltaTime));
                 }
             }
         }
