@@ -53,6 +53,7 @@ namespace Core.Player.Components
             World
         }
 
+        public PlayerControllerConfig Config => _config;
         public enum UpType
         {
             Player,

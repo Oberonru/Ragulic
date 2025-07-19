@@ -5,18 +5,6 @@ namespace Core.Player.Components
 {
     public class PlayerAnimator : MonoBehaviour
     {
-        [Tooltip(
-            "Настройте это в соответствии с анимацией в модели: ноги не должны скользить при ходьбе с такой скоростью")]
-        public float NormalWalkSpeed = 1.7f;
-
-        [Tooltip(
-            "Настройте это в соответствии с анимацией в модели: ноги не должны скользить при беге с такой скоростью")]
-        public float NormalSprintSpeed = 5;
-
-        [Tooltip(
-            "\nНикогда не ускоряйте анимацию спринта больше, чем это необходимо, чтобы избежать абсурдно быстрого движения")]
-        public float MaxSprintScale = 1.4f;
-
         [SerializeField] private PlayerController _controller;
 
         protected struct AnimationParams
@@ -27,9 +15,7 @@ namespace Core.Player.Components
             public float MotionScale;
         }
 
-        AnimationParams m_AnimationParams;
-
-        const float k_IdleThreshold = 0.2f;
+        private AnimationParams _params;
 
         protected virtual void Start()
         {
@@ -42,27 +28,35 @@ namespace Core.Player.Components
             vel.y = 0;
             var speed = vel.magnitude;
 
-            bool isRunning = speed > NormalWalkSpeed * 2 + (m_AnimationParams.IsRunning ? -0.15f : 0.15f);
-            bool isWalking = !isRunning && speed > k_IdleThreshold + (m_AnimationParams.IsWalking ? -0.05f : 0.05f);
-            m_AnimationParams.IsWalking = isWalking;
-            m_AnimationParams.IsRunning = isRunning;
+            bool isRunning = speed > _controller.Config.NormalWalkSpeed * 2 + (_params.IsRunning ? -0.15f : 0.15f);
+            bool isWalking = !isRunning &&
+                             speed > _controller.Config.IdleThreshold + (_params.IsWalking ? -0.05f : 0.05f);
 
-            m_AnimationParams.Direction = speed > k_IdleThreshold ? vel / speed : Vector3.zero;
-            m_AnimationParams.MotionScale = isWalking ? speed / NormalWalkSpeed : 1;
+            _params.IsWalking = isWalking;
+            _params.IsRunning = isRunning;
+
+            _params.Direction = speed > _controller.Config.IdleThreshold ? vel / speed : Vector3.zero;
+            _params.MotionScale = isWalking ? speed / _controller.Config.NormalWalkSpeed : 1;
 
             if (isRunning)
-                m_AnimationParams.MotionScale = (speed < NormalSprintSpeed)
-                    ? speed / NormalSprintSpeed
-                    : Mathf.Min(MaxSprintScale, 1 + (speed - NormalSprintSpeed) / (3 * NormalSprintSpeed));
+            {
+                var motionScale = speed / _controller.Config.NormalRunSpeed;
+                var constraintScale = Mathf.Min(_controller.Config.MaxRunScale,
+                    1 + (speed - _controller.Config.NormalRunSpeed) / (3 * _controller.Config.NormalRunSpeed));
 
-            UpdateAnimation(m_AnimationParams);
+                _params.MotionScale = (speed < _controller.Config.NormalRunSpeed)
+                    ? motionScale
+                    : constraintScale;
+            }
+
+            UpdateAnimation(_params);
         }
 
         protected virtual void UpdateAnimation(AnimationParams animationParams)
         {
             if (!TryGetComponent(out Animator animator))
             {
-                Debug.LogError("SimplePlayerAnimator: An Animator component is required");
+                Debug.LogError("PlayerAnimator: Animator component is required");
                 return;
             }
 
