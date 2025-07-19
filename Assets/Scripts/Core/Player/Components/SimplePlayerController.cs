@@ -1,32 +1,21 @@
 using System;
 using System.Collections.Generic;
 using Core.Camera;
+using Core.Configs.Player;
+using UniRx;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Core.Player.Components
 {
-    public abstract class SimplePlayerControllerBase : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
+    public abstract class SimplePlayerControllerBase : MonoBehaviour, IInputAxisOwner
     {
         [Tooltip("Ground speed when walking")] public float Speed = 1f;
 
         [Tooltip("Ground speed when sprinting")]
         public float SprintSpeed = 4;
-
-        [Tooltip("Initial vertical speed when jumping")]
-        public float JumpSpeed = 4;
-
-        [Tooltip("Initial vertical speed when sprint-jumping")]
-        public float SprintJumpSpeed = 6;
-
-        public Action PreUpdate;
-        public Action<Vector3, float> PostUpdate;
-        public Action StartJump;
-        public Action EndJump;
-
+        
         [Header("Input Axes")] [Tooltip("X Axis movement.  Value is -1..1.  Управляет боковым перемещением")]
         public InputAxis MoveX = InputAxis.DefaultMomentary;
 
@@ -35,13 +24,7 @@ namespace Core.Player.Components
 
         [Tooltip("Sprint movement.  Value is 0 or 1. If 1, затем начинается бег")]
         public InputAxis Sprint = InputAxis.DefaultMomentary;
-
-        [Header("Events")] [Tooltip("This event is sent when the player lands after a jump.")]
-        public UnityEvent Landed = new();
-
-        ///Сообщите о доступных входных осях контроллеру входных осей.
-        /// Мы используем контроллер оси ввода, потому что он работает как с пакетом ввода, так и с другим пакетом ввода.
-        /// и устаревшая система ввода. Это пример кода, и мы хотим, чтобы это работало везде.
+        
         void IInputAxisOwner.GetInputAxes(List<IInputAxisOwner.AxisDescriptor> axes)
         {
             axes.Add(new()
@@ -61,14 +44,15 @@ namespace Core.Player.Components
     public class SimplePlayerController : SimplePlayerControllerBase
     {
         [Inject] private IGameCamera _gameCamera;
+        [Inject] private PlayerControllerConfig _config;
 
-        [Tooltip("Продолжительность перехода (в секундах), когда игрок меняет скорость или вращение.")]
-        public float Damping = 0.5f;
+        public IObservable<Unit> StartUpdate => _startUpdate;
+        private Subject<Unit> _startUpdate = new();
+        public IObservable<Vector3> EndUpdate => _endUpdate;
+        private Subject<Vector3> _endUpdate = new();
+        
 
-        [FormerlySerializedAs("Strafe")]
-        [Tooltip(
-            "Заставляет игрока отклоняться в сторону при движении вбок, в противном случае он поворачивается лицом к направлению движения.")]
-        public bool _isStrafeMoving = false;
+        private bool _isStrafeMoving;
 
         public enum ForwardModes
         {
@@ -107,7 +91,6 @@ namespace Core.Player.Components
         Vector3 m_LastInput;
         float _currentVelocityY;
         bool m_IsSprinting;
-        bool m_IsJumping;
         private CharacterController _characterController;
 
         bool m_InTopHemisphere = true;
@@ -119,7 +102,6 @@ namespace Core.Player.Components
         public override bool IsMoving => m_LastInput.sqrMagnitude > 0.01f;
 
         public bool IsSprinting => m_IsSprinting;
-        public bool IsJumping => m_IsJumping;
         public UnityEngine.Camera Camera => CameraOverride == null ? UnityEngine.Camera.main : CameraOverride;
 
         public bool IsGrounded() => GetDistanceFromGround(transform.position, UpDirection, 10) < 0.01f;
@@ -127,7 +109,7 @@ namespace Core.Player.Components
         private void Start()
         {
             _characterController = GetComponent<CharacterController>();
-            
+
             var trackingTarget = GetComponentInChildren<TrackingTarget>();
             if (trackingTarget is null) throw new NullReferenceException("Tracking target is not found");
 
@@ -137,16 +119,23 @@ namespace Core.Player.Components
         private void OnEnable()
         {
             _currentVelocityY = 0;
-            m_IsSprinting = false;
-            m_IsJumping = false;
         }
 
         void Update()
         {
-            PreUpdate?.Invoke();
-
+            _startUpdate.OnNext(Unit.Default);
+            
             BackToGround();
 
+            var inputFrame = SetVelocity();
+            
+            Moving();
+            Rotation(inputFrame);
+            EndUpdatingSubscribe();
+        }
+
+        private Quaternion SetVelocity()
+        {
             var rawInput = new Vector3(MoveX.Value, 0, MoveZ.Value);
             var inputFrame = GetInputFrame(Vector3.Dot(rawInput, m_LastRawInput) < 0.8f);
             m_LastRawInput = rawInput;
@@ -154,24 +143,25 @@ namespace Core.Player.Components
             m_LastInput = inputFrame * rawInput;
             if (m_LastInput.sqrMagnitude > 1)
                 m_LastInput.Normalize();
+           
+            m_IsSprinting = Sprint.Value > 0.5f;
+            var desiredVelocity = m_LastInput * (m_IsSprinting ? SprintSpeed : Speed);
+            var damping = _config.Damping;
+            if (Vector3.Angle(currentVelocityXZ, desiredVelocity) < 100)
+                currentVelocityXZ = Vector3.Slerp(
+                    currentVelocityXZ, desiredVelocity,
+                    Damper.Damp(1, damping, Time.deltaTime));
+            else
+                currentVelocityXZ += Damper.Damp(
+                    desiredVelocity - currentVelocityXZ, damping, Time.deltaTime);
+            return inputFrame;
+        }
 
-            if (!m_IsJumping)
-            {
-                m_IsSprinting = Sprint.Value > 0.5f;
-                var desiredVelocity = m_LastInput * (m_IsSprinting ? SprintSpeed : Speed);
-                var damping = Damping;
-                if (Vector3.Angle(currentVelocityXZ, desiredVelocity) < 100)
-                    currentVelocityXZ = Vector3.Slerp(
-                        currentVelocityXZ, desiredVelocity,
-                        Damper.Damp(1, damping, Time.deltaTime));
-                else
-                    currentVelocityXZ += Damper.Damp(
-                        desiredVelocity - currentVelocityXZ, damping, Time.deltaTime);
-            }
-
-            Moving();
-
-            Rotation(inputFrame);
+        private void EndUpdatingSubscribe()
+        {
+            var vel = Quaternion.Inverse(transform.rotation) * currentVelocityXZ;
+            vel.y = _currentVelocityY;
+            _endUpdate.OnNext(vel);
         }
 
         private void BackToGround()
@@ -192,20 +182,13 @@ namespace Core.Player.Components
                     (InputForward == ForwardModes.Player && Vector3.Dot(fwd, currentVelocityXZ) < 0)
                         ? -currentVelocityXZ
                         : currentVelocityXZ, UpDirection);
-                var damping = Damping;
+                var damping = _config.Damping;
                 transform.rotation = Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.deltaTime));
-            }
-
-            if (PostUpdate != null)
-            {
-                var vel = Quaternion.Inverse(transform.rotation) * currentVelocityXZ;
-                vel.y = _currentVelocityY;
-                PostUpdate(vel, m_IsSprinting ? JumpSpeed / SprintJumpSpeed : 1);
             }
         }
 
         private Vector3 UpDirection => UpMode == UpModes.World ? Vector3.up : transform.up;
-        
+
         Quaternion GetInputFrame(bool inputDirectionChanged)
         {
             var frame = Quaternion.identity;
@@ -218,7 +201,7 @@ namespace Core.Player.Components
 
             var playerUp = transform.up;
             var up = frame * Vector3.up;
-            
+
             const float BlendTime = 2f;
             m_TimeInHemisphere += Time.deltaTime;
             bool inTopHemisphere = Vector3.Dot(up, playerUp) >= 0;
@@ -249,12 +232,12 @@ namespace Core.Player.Components
 
             if (m_TimeInHemisphere >= BlendTime)
                 return inTopHemisphere ? frameA : frameB;
-            
+
             if (inTopHemisphere)
                 return Quaternion.Slerp(frameB, frameA, m_TimeInHemisphere / BlendTime);
             return Quaternion.Slerp(frameA, frameB, m_TimeInHemisphere / BlendTime);
         }
-        
+
         private void Moving()
         {
             if (_characterController != null)
@@ -264,8 +247,8 @@ namespace Core.Player.Components
         float GetDistanceFromGround(Vector3 pos, Vector3 up, float max)
         {
             float kExtraHeight =
-                _characterController == null ? 2 : 0; 
-            if (UnityEngine.Physics.Raycast(pos + up * kExtraHeight, -up, out var hit,
+                _characterController == null ? 2 : 0;
+            if (Physics.Raycast(pos + up * kExtraHeight, -up, out var hit,
                     max + kExtraHeight, GroundLayers, QueryTriggerInteraction.Ignore))
                 return hit.distance - kExtraHeight;
             return max + 1;

@@ -1,11 +1,14 @@
-using UnityEngine;
+using Core.Configs.Player;
 using UniRx;
+using UnityEngine;
+using Zenject;
 
 namespace Core.Player.Components
 {
     public class PlayerAnimator : MonoBehaviour
     {
-        [SerializeField] private PlayerController _controller;
+        [Inject] private PlayerControllerConfig _config;
+        private SimplePlayerController _controller;
 
         protected struct AnimationParams
         {
@@ -15,48 +18,62 @@ namespace Core.Player.Components
             public float MotionScale;
         }
 
-        private AnimationParams _params;
+        private AnimationParams m_AnimationParams;
+        
+        public enum States
+        {
+            Idle,
+            Walk,
+            Run,
+        }
+
+        public States State
+        {
+            get
+            {
+                if (m_AnimationParams.IsRunning)
+                    return States.Run;
+                return m_AnimationParams.IsWalking ? States.Walk : States.Idle;
+            }
+        }
 
         protected virtual void Start()
         {
-            _controller = GetComponentInParent<PlayerController>();
-            _controller.EndUpdate.Subscribe((tuple) => UpdateAnimationState(tuple)).AddTo(this);
+            _controller = GetComponentInParent<SimplePlayerController>();
+            if (_controller != null)
+            {
+                _controller.EndUpdate.Subscribe(UpdateAnimationState).AddTo(this);
+            }
         }
 
-        void UpdateAnimationState(Vector3 vel)
+        private void UpdateAnimationState(Vector3 vel)
         {
             vel.y = 0;
             var speed = vel.magnitude;
 
-            bool isRunning = speed > _controller.Config.NormalWalkSpeed * 2 + (_params.IsRunning ? -0.15f : 0.15f);
-            bool isWalking = !isRunning &&
-                             speed > _controller.Config.IdleThreshold + (_params.IsWalking ? -0.05f : 0.05f);
+            bool isRunning = speed > _config.NormalWalkSpeed * 2 + (m_AnimationParams.IsRunning ? -0.15f : 0.15f);
+            bool isWalking =
+                !isRunning && speed > _config.IdleThreshold + (m_AnimationParams.IsWalking ? -0.05f : 0.05f);
+            m_AnimationParams.IsWalking = isWalking;
+            m_AnimationParams.IsRunning = isRunning;
 
-            _params.IsWalking = isWalking;
-            _params.IsRunning = isRunning;
-
-            _params.Direction = speed > _controller.Config.IdleThreshold ? vel / speed : Vector3.zero;
-            _params.MotionScale = isWalking ? speed / _controller.Config.NormalWalkSpeed : 1;
+            m_AnimationParams.Direction = speed > _config.IdleThreshold ? vel / speed : Vector3.zero;
+            m_AnimationParams.MotionScale = isWalking ? speed / _config.NormalWalkSpeed : 1;
 
             if (isRunning)
-            {
-                var motionScale = speed / _controller.Config.NormalRunSpeed;
-                var constraintScale = Mathf.Min(_controller.Config.MaxRunScale,
-                    1 + (speed - _controller.Config.NormalRunSpeed) / (3 * _controller.Config.NormalRunSpeed));
+                m_AnimationParams.MotionScale = (speed < _config.NormalRunSpeed)
+                    ? speed / _config.NormalRunSpeed
+                    : Mathf.Min(_config.MaxRunScale,
+                        1 + (speed - _config.NormalRunSpeed) / (3 * _config.NormalRunSpeed));
 
-                _params.MotionScale = (speed < _controller.Config.NormalRunSpeed)
-                    ? motionScale
-                    : constraintScale;
-            }
-
-            UpdateAnimation(_params);
+            UpdateAnimation(m_AnimationParams);
         }
 
         protected virtual void UpdateAnimation(AnimationParams animationParams)
         {
             if (!TryGetComponent(out Animator animator))
             {
-                Debug.LogError("PlayerAnimator: Animator component is required");
+                Debug.LogError("SimplePlayerAnimator: An Animator component is required");
                 return;
             }
 

@@ -40,7 +40,7 @@ namespace Core.Player
         public PlayerStateMachine StateMachine => _stateMachine;
         public InventoryPlayerHandler InventoryHandler => _inventory;
         public TriggerHitBoxDetector TriggerHitBoxDetector => _triggerHitBoxDetector;
-        public PlayerAnimator Animator => _animator;
+        //public PlayerAnimator Animator => _animator;
 
         private void Awake()
         {
