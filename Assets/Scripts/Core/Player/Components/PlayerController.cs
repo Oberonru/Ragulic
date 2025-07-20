@@ -11,145 +11,117 @@ using Zenject;
 
 namespace Core.Player.Components
 {
-    public class PlayerController : MonoBehaviour, IInputAxisOwner
+    public abstract class SimplePlayerControllerBase : MonoBehaviour, IInputAxisOwner
     {
-        [Inject] private PlayerControllerConfig _config;
-        [Inject] private IGameCamera _gameCamera;
-        [SerializeField, ReadOnly] private PlayerInstance _player;
-        [SerializeField] private UnityEngine.Camera _camera;
-
-        private CharacterController _characterController;
-        private PlayerCameraRotation _cameraRotation;
-        public IObservable<Unit> StartUpdate => _startUpdate;
-        private Subject<Unit> _startUpdate = new();
-
-        public IObservable<Vector3> EndUpdate => _endUpdate;
-        private Subject<Vector3> _endUpdate = new();
-
-        private InputAxis DirX = InputAxis.DefaultMomentary;
-        private InputAxis DirZ = InputAxis.DefaultMomentary;
-        private InputAxis Acceleration = InputAxis.DefaultMomentary;
-        private InputAxis Crouch = InputAxis.DefaultMomentary;
-
-        private float _gravity = 10f;
-        private float _timeInHemisphere = 100;
-        private Vector3 _currentVelocityXZ;
-        private Vector3 _upVelocity;
-        private Vector3 _lastInput;
-        private Vector3 _lastRawInput;
-        private Quaternion _upsidedown = Quaternion.AngleAxis(180, Vector3.left);
-        private Quaternion _inputFrame;
-        private bool _inTopHemisphere = true;
-        private bool _isRunning;
-        private bool _isStrafeMoving;
-
-        [ShowInInspector] public float Speed { get; set; }
-        public bool IsCrouch { get; set; }
-        public bool IsPanic { get; set; }
-
-        private enum ForwardType
-        {
-            Player,
-            Camera,
-            World
-        }
-
-        public PlayerControllerConfig Config => _config;
-
-        public enum UpType
-        {
-            Player,
-            World,
-        }
-
-        public UnityEngine.Camera ProjectCamera => _camera == null ? UnityEngine.Camera.main : _camera;
-
-        public UpType UpDirection = UpType.World;
-        private Vector3 _upDirection => UpDirection == UpType.World ? Vector3.up : transform.up;
-
-        private ForwardType InputForward = ForwardType.Camera;
-        public bool IsMoving() => _lastInput.sqrMagnitude > 0.01f;
-
-        private void OnEnable()
-        {
-            _player.Health.OnHit.Subscribe
-                (_ => _player.StateMachine.SetPanicSpeed(_player.Stats.PanicSpeed)).AddTo(this);
-
-            var trackingTarget = _player.GetComponentInChildren<PlayerCameraRotation>();
-
-            if (trackingTarget == null) throw new NullReferenceException("Tracking target is not found");
-
-            _gameCamera.SetTarget(trackingTarget.transform);
-        }
-
-        private void Start()
-        {
-            _player.StateMachine.SetWalkSpeed(_player.Stats.WalkSpeed);
-            _characterController = GetComponent<CharacterController>();
-            _cameraRotation = GetComponentInChildren<PlayerCameraRotation>();
-        }
-
-        private void OnValidate()
-        {
-            if (_player is null) _player = GetComponent<PlayerInstance>();
-            if (_characterController is null) _characterController = GetComponent<CharacterController>();
-        }
+        public InputAxis MoveX = InputAxis.DefaultMomentary;
+        public InputAxis MoveZ = InputAxis.DefaultMomentary;
+        public InputAxis Sprint = InputAxis.DefaultMomentary;
+        public InputAxis Crouch = InputAxis.DefaultMomentary;
 
         void IInputAxisOwner.GetInputAxes(List<IInputAxisOwner.AxisDescriptor> axes)
         {
-            axes.Add(new IInputAxisOwner.AxisDescriptor()
-            {
-                DrivenAxis = () => ref DirX,
-                Name = "Horizontal X",
-                Hint = IInputAxisOwner.AxisDescriptor.Hints.X
-            });
-
-            axes.Add(new IInputAxisOwner.AxisDescriptor()
-            {
-                DrivenAxis = () => ref DirZ,
-                Name = "Vertical Z",
-                Hint = IInputAxisOwner.AxisDescriptor.Hints.Y
-            });
-
-            axes.Add(new IInputAxisOwner.AxisDescriptor()
-            {
-                DrivenAxis = () => ref Acceleration,
-                Name = "Acceleration",
-            });
-
-            axes.Add(new IInputAxisOwner.AxisDescriptor()
-            {
-                DrivenAxis = () => ref Crouch,
-                Name = "Crouch",
-            });
+            axes.Add(new()
+                { DrivenAxis = () => ref MoveX, Name = "Move X", Hint = IInputAxisOwner.AxisDescriptor.Hints.X });
+            axes.Add(new()
+                { DrivenAxis = () => ref MoveZ, Name = "Move Z", Hint = IInputAxisOwner.AxisDescriptor.Hints.Y });
+            axes.Add(new() { DrivenAxis = () => ref Sprint, Name = "Sprint" });
+            axes.Add(new() { DrivenAxis = () => ref Crouch, Name = "Crouch" });
         }
 
         public virtual void SetStrafeMode(bool b)
         {
-            _isStrafeMoving = b;
         }
 
-        private void Update()
+        public abstract bool IsMoving { get; }
+    }
+
+    public class PlayerController : SimplePlayerControllerBase
+    {
+        [Inject] private IGameCamera _gameCamera;
+        [Inject] private PlayerControllerConfig _config;
+
+        [SerializeField] private PlayerInstance _player;
+
+        public IObservable<Unit> StartUpdate => _startUpdate;
+        private Subject<Unit> _startUpdate = new();
+        public IObservable<Vector3> EndUpdate => _endUpdate;
+        private Subject<Vector3> _endUpdate = new();
+        [ShowInInspector] public float Speed { get; set; }
+        public bool IsCrouch { get; set; }
+        public bool IsPanic { get; set; }
+        private bool _isStrafeMoving;
+
+        public enum ForwardModes
+        {
+            Camera,
+            Player,
+            World
+        };
+
+        public enum UpModes
+        {
+            Player,
+            World
+        };
+
+        public ForwardModes InputForward = ForwardModes.Camera;
+        public UpModes UpMode = UpModes.World;
+        public UnityEngine.Camera CameraOverride;
+
+        public LayerMask GroundLayers = 1;
+
+        private float _gravity = 10;
+
+        private Vector3 currentVelocityXZ;
+        Vector3 m_LastInput;
+        float _currentVelocityY;
+        bool m_IsSprinting;
+        private CharacterController _characterController;
+
+        bool m_InTopHemisphere = true;
+        float m_TimeInHemisphere = 100;
+        Vector3 m_LastRawInput;
+        Quaternion m_Upsidedown = Quaternion.AngleAxis(180, Vector3.left);
+
+        public override void SetStrafeMode(bool b) => _isStrafeMoving = b;
+        public override bool IsMoving => m_LastInput.sqrMagnitude > 0.01f;
+
+        public bool IsSprinting => m_IsSprinting;
+        public UnityEngine.Camera Camera => CameraOverride == null ? UnityEngine.Camera.main : CameraOverride;
+
+        public bool IsGrounded() => GetDistanceFromGround(transform.position, UpDirection, 10) < 0.01f;
+
+        private void Start()
+        {
+            _characterController = GetComponent<CharacterController>();
+
+            var trackingTarget = GetComponentInChildren<TrackingTarget>();
+            if (trackingTarget is null) throw new NullReferenceException("Tracking target is not found");
+
+            _gameCamera.SetTarget(trackingTarget.transform);
+
+            _player.StateMachine.SetWalkSpeed(_player.Stats.WalkSpeed);
+        }
+
+        private void OnEnable()
+        {
+            _currentVelocityY = 0;
+        }
+
+        void Update()
         {
             _startUpdate.OnNext(Unit.Default);
-
             BackToGround();
             SetSpeed();
-            SetVelocity();
-            Move();
-
-            var velocity = Quaternion.Inverse(transform.rotation) * _currentVelocityXZ;
-            _endUpdate.OnNext(velocity);
+            var inputFrame = SetVelocity();
+            Moving();
+            Rotation(inputFrame);
+            EndUpdatingSubscribe();
         }
 
-        private void FixedUpdate()
+        private void OnValidate()
         {
-            Rotate();
-        }
-        
-        private void BackToGround()
-        {
-            _upVelocity.y = _characterController.isGrounded ? 0 : _upVelocity.y -= Time.deltaTime * _gravity;
+            _player = GetComponent<PlayerInstance>();
         }
 
         private void SetSpeed()
@@ -157,13 +129,13 @@ namespace Core.Player.Components
             if (!IsPanic)
             {
                 if (_player.StateMachine.GetActiveState() != typeof(PlayerRunState)
-                    && Acceleration.Value > 0.1f)
+                    && Sprint.Value > 0.1f)
                 {
                     _player.StateMachine.SetRunnSpeed(_player.Stats.RunSpeed);
                 }
 
                 else if ((_player.StateMachine.GetActiveState() != typeof(PlayerWalkState) &&
-                          (Mathf.Abs(DirX.Value) > 0.1 || Mathf.Abs(DirZ.Value) > 0.1f)
+                          (Mathf.Abs(MoveX.Value) > 0.1 || Mathf.Abs(MoveZ.Value) > 0.1f)
                           && !IsCrouch))
                 {
                     _player.StateMachine.SetWalkSpeed(_player.Stats.WalkSpeed);
@@ -176,80 +148,83 @@ namespace Core.Player.Components
                 }
             }
         }
-        
-        private void SetVelocity()
+
+
+        private Quaternion SetVelocity()
         {
-            if (_characterController is null) return;
+            var rawInput = new Vector3(MoveX.Value, 0, MoveZ.Value);
+            var inputFrame = GetInputFrame(Vector3.Dot(rawInput, m_LastRawInput) < 0.8f);
+            m_LastRawInput = rawInput;
 
-            var rawInput = new Vector3(DirX.Value, 0, DirZ.Value);
+            m_LastInput = inputFrame * rawInput;
+            if (m_LastInput.sqrMagnitude > 1)
+                m_LastInput.Normalize();
 
-            _inputFrame = GetInputFrame(Vector3.Dot(rawInput, _lastRawInput) < 0.8f);
-            _lastRawInput = rawInput;
-
-            _lastInput = _inputFrame * rawInput;
-
-            if (_lastInput.sqrMagnitude > 1)
-                _lastInput.Normalize();
-
-            var desiredVelocity = _lastInput * Speed;
-
-            if (Vector3.Angle(_currentVelocityXZ, desiredVelocity) < 100)
-            {
-                _currentVelocityXZ = Vector3.Slerp(
-                    _currentVelocityXZ, desiredVelocity,
-                    Damper.Damp(1, _config.Damping, Time.deltaTime));
-            }
-
+            m_IsSprinting = Sprint.Value > 0.5f;
+            var desiredVelocity = m_LastInput * (m_IsSprinting ? _player.Stats.RunSpeed : Speed);
+            var damping = _config.Damping;
+            if (Vector3.Angle(currentVelocityXZ, desiredVelocity) < 100)
+                currentVelocityXZ = Vector3.Slerp(
+                    currentVelocityXZ, desiredVelocity,
+                    Damper.Damp(1, damping, Time.deltaTime));
             else
-                _currentVelocityXZ += Damper.Damp(
-                    desiredVelocity - _currentVelocityXZ, _config.Damping, Time.deltaTime);
+                currentVelocityXZ += Damper.Damp(
+                    desiredVelocity - currentVelocityXZ, damping, Time.deltaTime);
+            return inputFrame;
         }
 
-        private void Move()
+        private void EndUpdatingSubscribe()
         {
-            _characterController.Move((_upVelocity + _currentVelocityXZ) * Time.deltaTime);
+            var vel = Quaternion.Inverse(transform.rotation) * currentVelocityXZ;
+            vel.y = _currentVelocityY;
+            _endUpdate.OnNext(vel);
         }
 
-        private void Rotate()
+        private void BackToGround()
         {
-            if (!_isStrafeMoving && _currentVelocityXZ.sqrMagnitude > 0.001f)
+            if (!IsGrounded())
             {
-                if (_cameraRotation != null && _cameraRotation.PlayerRotation == PlayerCameraRotation.CouplingMode.Decoupled)
-                    return; // Не поворачивать игрока в режиме Decoupled
-
-                var moveDirection = _currentVelocityXZ.normalized;
-                if (moveDirection.sqrMagnitude > 0.001f)
-                {
-                    var qB = Quaternion.LookRotation(moveDirection, _upDirection);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, qB, Damper.Damp(1, _config.Damping, Time.deltaTime));
-                }
+                _currentVelocityY -= _gravity * Time.deltaTime;
             }
         }
 
-        private Quaternion GetInputFrame(bool inputDirectionChanged)
+        private void Rotation(Quaternion inputFrame)
+        {
+            if (!_isStrafeMoving && currentVelocityXZ.sqrMagnitude > 0.001f)
+            {
+                var fwd = inputFrame * Vector3.forward;
+                var qA = transform.rotation;
+                var qB = Quaternion.LookRotation(
+                    (InputForward == ForwardModes.Player && Vector3.Dot(fwd, currentVelocityXZ) < 0)
+                        ? -currentVelocityXZ
+                        : currentVelocityXZ, UpDirection);
+                var damping = _config.Damping;
+                transform.rotation = Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.deltaTime));
+            }
+        }
+
+        private Vector3 UpDirection => UpMode == UpModes.World ? Vector3.up : transform.up;
+
+        Quaternion GetInputFrame(bool inputDirectionChanged)
         {
             var frame = Quaternion.identity;
             switch (InputForward)
             {
-                case ForwardType.Camera:
-                    frame = ProjectCamera.transform.rotation;
-                    break;
-                case ForwardType.Player:
-                    return transform.rotation;
-                case ForwardType.World:
-                    break;
+                case ForwardModes.Camera: frame = Camera.transform.rotation; break;
+                case ForwardModes.Player: return transform.rotation;
+                case ForwardModes.World: break;
             }
 
             var playerUp = transform.up;
             var up = frame * Vector3.up;
 
             const float BlendTime = 2f;
-            _timeInHemisphere += Time.deltaTime;
+            m_TimeInHemisphere += Time.deltaTime;
             bool inTopHemisphere = Vector3.Dot(up, playerUp) >= 0;
-            if (inTopHemisphere != _inTopHemisphere)
+            if (inTopHemisphere != m_InTopHemisphere)
             {
-                _inTopHemisphere = inTopHemisphere;
-                _timeInHemisphere = Mathf.Max(0, BlendTime - _timeInHemisphere);
+                m_InTopHemisphere = inTopHemisphere;
+                m_TimeInHemisphere = Mathf.Max(0, BlendTime - m_TimeInHemisphere);
             }
 
             var axis = Vector3.Cross(up, playerUp);
@@ -259,25 +234,40 @@ namespace Core.Player.Components
             var angle = UnityVectorExtensions.SignedAngle(up, playerUp, axis);
             var frameA = Quaternion.AngleAxis(angle, axis) * frame;
 
-
             Quaternion frameB = frameA;
-            if (!inTopHemisphere || _timeInHemisphere < BlendTime)
+            if (!inTopHemisphere || m_TimeInHemisphere < BlendTime)
             {
-                frameB = frame * _upsidedown;
+                frameB = frame * m_Upsidedown;
                 var axisB = Vector3.Cross(frameB * Vector3.up, playerUp);
                 if (axisB.sqrMagnitude > 0.001f)
                     frameB = Quaternion.AngleAxis(180f - angle, axisB) * frameB;
             }
 
             if (inputDirectionChanged)
-                _timeInHemisphere = BlendTime;
+                m_TimeInHemisphere = BlendTime;
 
-            if (_timeInHemisphere >= BlendTime)
+            if (m_TimeInHemisphere >= BlendTime)
                 return inTopHemisphere ? frameA : frameB;
 
             if (inTopHemisphere)
-                return Quaternion.Slerp(frameB, frameA, _timeInHemisphere / BlendTime);
-            return Quaternion.Slerp(frameA, frameB, _timeInHemisphere / BlendTime);
+                return Quaternion.Slerp(frameB, frameA, m_TimeInHemisphere / BlendTime);
+            return Quaternion.Slerp(frameA, frameB, m_TimeInHemisphere / BlendTime);
+        }
+
+        private void Moving()
+        {
+            if (_characterController != null)
+                _characterController.Move((_currentVelocityY * UpDirection + currentVelocityXZ) * Time.deltaTime);
+        }
+
+        float GetDistanceFromGround(Vector3 pos, Vector3 up, float max)
+        {
+            float kExtraHeight =
+                _characterController == null ? 2 : 0;
+            if (Physics.Raycast(pos + up * kExtraHeight, -up, out var hit,
+                    max + kExtraHeight, GroundLayers, QueryTriggerInteraction.Ignore))
+                return hit.distance - kExtraHeight;
+            return max + 1;
         }
     }
 }

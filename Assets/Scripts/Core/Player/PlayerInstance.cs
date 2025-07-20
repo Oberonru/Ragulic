@@ -8,6 +8,7 @@ using Core.Player.StateMachine;
 using Sirenix.OdinInspector;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Core.Player
@@ -23,7 +24,7 @@ namespace Core.Player
     {
         [Inject] private PlayerConfig _playerStats;
         [SerializeField, ReadOnly] private HealthComponent _health;
-        [SerializeField, ReadOnly] private PlayerController _simplePlayerController;
+        [SerializeField, ReadOnly] private PlayerController playerController;
         [SerializeField, ReadOnly] private PlayerCombatComponent _combatComponent;
         [SerializeField, ReadOnly] private PlayerStateMachine _stateMachine;
         [SerializeField, ReadOnly] private InventoryPlayerHandler _inventory;
@@ -35,12 +36,12 @@ namespace Core.Player
         public Transform Transform => transform;
         public PlayerConfig Stats => _playerStats;
         public IHealthComponent Health => _health;
-        public PlayerController PlayerController => _simplePlayerController;
+        public PlayerController PlayerController => playerController;
         public PlayerCombatComponent CombatComponent => _combatComponent;
         public PlayerStateMachine StateMachine => _stateMachine;
         public InventoryPlayerHandler InventoryHandler => _inventory;
         public TriggerHitBoxDetector TriggerHitBoxDetector => _triggerHitBoxDetector;
-        //public PlayerAnimator Animator => _animator;
+        public PlayerAnimator Animator => _animator;
 
         private void Awake()
         {
@@ -63,7 +64,7 @@ namespace Core.Player
         private void OnValidate()
         {
             if (_health is null) _health = GetComponent<HealthComponent>();
-            if (_simplePlayerController is null) _simplePlayerController = GetComponent<PlayerController>();
+            if (playerController is null) playerController = GetComponent<PlayerController>();
             if (_combatComponent is null) _combatComponent = GetComponent<PlayerCombatComponent>();
             if (_stateMachine is null) _stateMachine = GetComponent<PlayerStateMachine>();
             if (_inventory is null) _inventory = GetComponent<InventoryPlayerHandler>();

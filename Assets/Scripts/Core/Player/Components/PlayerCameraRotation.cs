@@ -33,7 +33,7 @@ namespace Core.Player.Components
         public InputAxis VerticalLook = new()
             { Range = new Vector2(-70, 70), Recentering = InputAxis.RecenteringSettings.Default };
 
-        private SimplePlayerController _controller;
+        private PlayerController _controller;
         private Transform _controllerTransform;
         private Quaternion _desiredWorldRotation;
 
@@ -61,7 +61,7 @@ namespace Core.Player.Components
 
         private void OnEnable()
         {
-            _controller = GetComponentInParent<SimplePlayerController>();
+            _controller = GetComponentInParent<PlayerController>();
             if (_controller == null)
                 Debug.LogError($"PlayerController not found on parent object");
             else

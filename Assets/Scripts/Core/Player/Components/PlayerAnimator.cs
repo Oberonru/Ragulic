@@ -8,7 +8,7 @@ namespace Core.Player.Components
     public class PlayerAnimator : MonoBehaviour
     {
         [Inject] private PlayerControllerConfig _config;
-        private SimplePlayerController _controller;
+        private PlayerController _controller;
 
         protected struct AnimationParams
         {
@@ -39,7 +39,7 @@ namespace Core.Player.Components
 
         protected virtual void Start()
         {
-            _controller = GetComponentInParent<SimplePlayerController>();
+            _controller = GetComponentInParent<PlayerController>();
             if (_controller != null)
             {
                 _controller.EndUpdate.Subscribe(UpdateAnimationState).AddTo(this);
