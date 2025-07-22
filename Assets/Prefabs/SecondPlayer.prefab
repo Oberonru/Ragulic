@@ -881,7 +881,6 @@ GameObject:
   - component: {fileID: 7488294512565939944}
   - component: {fileID: 1419080360650083643}
   - component: {fileID: 8760645321762379429}
-  - component: {fileID: 2377053934620729874}
   - component: {fileID: 4668677743264706473}
   - component: {fileID: 4414924337783832579}
   - component: {fileID: 3224895587385323173}
@@ -1016,47 +1015,8 @@ MonoBehaviour:
       Driver:
         AccelTime: 0
         DecelTime: 0
-    - Name: Horizontal X
-      Owner: {fileID: 2377053934620729874}
-      Enabled: 1
-      Input:
-        InputAction: {fileID: 0}
-        Gain: 1
-        LegacyInput: 
-        LegacyGain: 1
-        CancelDeltaTime: 0
-      InputValue: 0
-      Driver:
-        AccelTime: 0
-        DecelTime: 0
-    - Name: Vertical Z
-      Owner: {fileID: 2377053934620729874}
-      Enabled: 1
-      Input:
-        InputAction: {fileID: 0}
-        Gain: 1
-        LegacyInput: 
-        LegacyGain: 1
-        CancelDeltaTime: 0
-      InputValue: 0
-      Driver:
-        AccelTime: 0
-        DecelTime: 0
-    - Name: Acceleration
-      Owner: {fileID: 2377053934620729874}
-      Enabled: 1
-      Input:
-        InputAction: {fileID: 0}
-        Gain: 1
-        LegacyInput: 
-        LegacyGain: 1
-        CancelDeltaTime: 0
-      InputValue: 0
-      Driver:
-        AccelTime: 0
-        DecelTime: 0
     - Name: Crouch
-      Owner: {fileID: 2377053934620729874}
+      Owner: {fileID: 1419080360650083643}
       Enabled: 1
       Input:
         InputAction: {fileID: 0}
@@ -1109,7 +1069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 8760645321762379429}
-  _simplePlayerController: {fileID: 2377053934620729874}
+  playerController: {fileID: 1419080360650083643}
   _combatComponent: {fileID: 4668677743264706473}
   _stateMachine: {fileID: 4414924337783832579}
   _inventory: {fileID: 3224895587385323173}
@@ -1139,10 +1099,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1259cbbb7ee9d34d84ea5b1b1ed704c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
-  SprintSpeed: 4
-  JumpSpeed: 4
-  SprintJumpSpeed: 6
   MoveX:
     Value: 0
     Center: 0
@@ -1173,11 +1129,17 @@ MonoBehaviour:
       Wait: 0
       Time: 0
     Restrictions: 6
-  Landed:
-    m_PersistentCalls:
-      m_Calls: []
-  Damping: 0.5
-  _isStrafeMoving: 0
+  Crouch:
+    Value: 0
+    Center: 0
+    Range: {x: -1, y: 1}
+    Wrap: 0
+    Recentering:
+      Enabled: 0
+      Wait: 0
+      Time: 0
+    Restrictions: 6
+  _player: {fileID: 221270097419316759}
   InputForward: 0
   UpMode: 1
   CameraOverride: {fileID: 0}
@@ -1196,21 +1158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273c1a94ce714b809bcf21ab6621f65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2377053934620729874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3930792629831616095}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 511320c22ced4d7696eb875aed61d7d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 221270097419316759}
-  _camera: {fileID: 0}
-  UpDirection: 1
 --- !u!114 &4668677743264706473
 MonoBehaviour:
   m_ObjectHideFlags: 0
