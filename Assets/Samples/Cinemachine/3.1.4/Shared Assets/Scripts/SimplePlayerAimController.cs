@@ -4,79 +4,62 @@ using UnityEngine;
 namespace Unity.Cinemachine.Samples
 {
     /// <summary>
-    /// Это дополнение для SimplePlayerController, которое управляет ядром прицеливания игрока.
+    /// This is an add-on for SimplePlayerController that controls the player's Aiming Core.
     ///
-    /// Предполагается, что этот компонент будет находиться в дочернем объекте игрока,
-    /// у которого есть SimplePlayerController
-    /// behavior. Он тесно связан с этим компонентом.
+    /// This component expects to be in a child object of a player that has a SimplePlayerController
+    /// behaviour.  It works intimately with that component.
     //
-    /// Цель ядра прицеливания - отделить вращение камеры от вращения игрока.
-    /// Вращение камеры определяется вращением игрового объекта player core, и это поведение
-    /// предоставляет входные оси для управления им. Когда ядро игрока используется в качестве мишени для
-    /// в кинокамере CinemachineCamera с компонентом ThirdPersonFollow камера будет смотреть вдоль оси ядра
-    /// вперед и поворачиваться вокруг начала координат ядра.
+    /// The purpose of the aiming core is to decouple the camera rotation from the player rotation.
+    /// Camera rotation is determined by the rotation of the player core GameObject, and this behaviour
+    /// provides input axes for controlling it.  When the player core is used as the target for
+    /// a CinemachineCamera with a ThirdPersonFollow component, the camera will look along the core's
+    /// forward axis, and pivot around the core's origin.
     ///
-    /// Ядро прицеливания также используется для определения начала и направления стрельбы игрока, если игрок
-    /// обладает такой способностью.
+    /// The aiming core is also used to define the origin and direction of player shooting, if player
+    /// has that ability.
     ///
-    /// Чтобы реализовать стрельбу игрока, добавьте к этому игровому объекту поведение SimplePlayerShoot.
+    /// To implement player shooting, add a SimplePlayerShoot behaviour to this GameObject.
     /// </summary>
     public class SimplePlayerAimController : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
     {
-        public enum CouplingMode
-        {
-            Coupled,
-            CoupledWhenMoving,
-            Decoupled
-        }
+        public enum CouplingMode { Coupled, CoupledWhenMoving, Decoupled }
 
-        [Tooltip("Как вращение игрока связано с вращением камеры. Доступны три режима:\n"
-                 + "<b>Сопряженный</b>: Игрок вращается вместе с камерой. Движение в сторону приведет к обстрелу.\n"
-                 + "<b>Подключается при перемещении</b>: камера может свободно вращаться вокруг игрока, когда он неподвижен " +
-                 "но когда игрок начнет двигаться, он повернется лицом к камере.\n"
-                 + "<b>Отключено</b>: Вращение проигрывателя не зависит от вращения камеры.")]
+        [Tooltip("How the player's rotation is coupled to the camera's rotation.  Three modes are available:\n"
+            + "<b>Coupled</b>: The player rotates with the camera.  Sideways movement will result in strafing.\n"
+            + "<b>Coupled When Moving</b>: Camera can rotate freely around the player when the player is stationary, "
+                + "but the player will rotate to face camera forward when it starts moving.\n"
+            + "<b>Decoupled</b>: The player's rotation is independent of the camera's rotation.")]
         public CouplingMode PlayerRotation;
 
-        [Tooltip("Как быстро игрок поворачивается лицом к камере, когда начинает движение.  " +
-                 "Используется только в том случае, если вращение игрока связано с перемещением.")]
+        [Tooltip("How fast the player rotates to face the camera direction when the player starts moving.  "
+            + "Only used when Player Rotation is Coupled When Moving.")]
         public float RotationDamping = 0.2f;
 
         [Tooltip("Horizontal Rotation.  Value is in degrees, with 0 being centered.")]
-        public InputAxis HorizontalLook = new()
-            { Range = new Vector2(-180, 180), Wrap = true, Recentering = InputAxis.RecenteringSettings.Default };
+        public InputAxis HorizontalLook = new () { Range = new Vector2(-180, 180), Wrap = true, Recentering = InputAxis.RecenteringSettings.Default };
 
         [Tooltip("Vertical Rotation.  Value is in degrees, with 0 being centered.")]
-        public InputAxis VerticalLook = new()
-            { Range = new Vector2(-70, 70), Recentering = InputAxis.RecenteringSettings.Default };
+        public InputAxis VerticalLook = new () { Range = new Vector2(-70, 70), Recentering = InputAxis.RecenteringSettings.Default };
 
         SimplePlayerControllerBase m_Controller;
-        Transform m_ControllerTransform; // cached for efficiency
+        Transform m_ControllerTransform;    // cached for efficiency
         Quaternion m_DesiredWorldRotation;
 
-        /// Сообщите о доступных входных осях контроллеру входных осей.
-        /// Мы используем контроллер оси ввода, потому что он работает как с пакетом ввода,
-        /// так и с другим пакетом ввода.
-        /// и устаревшая система ввода. Это пример кода, и мы
-        // я хочу, чтобы это работало везде.
+        /// Report the available input axes to the input axis controller.
+        /// We use the Input Axis Controller because it works with both the Input package
+        /// and the Legacy input system.  This is sample code and we
+        /// want it to work everywhere.
         void IInputAxisOwner.GetInputAxes(List<IInputAxisOwner.AxisDescriptor> axes)
         {
-            axes.Add(new()
-            {
-                DrivenAxis = () => ref HorizontalLook, Name = "Horizontal Look",
-                Hint = IInputAxisOwner.AxisDescriptor.Hints.X
-            });
-            axes.Add(new()
-            {
-                DrivenAxis = () => ref VerticalLook, Name = "Vertical Look",
-                Hint = IInputAxisOwner.AxisDescriptor.Hints.Y
-            });
+            axes.Add(new () { DrivenAxis = () => ref HorizontalLook, Name = "Horizontal Look", Hint = IInputAxisOwner.AxisDescriptor.Hints.X });
+            axes.Add(new () { DrivenAxis = () => ref VerticalLook, Name = "Vertical Look", Hint = IInputAxisOwner.AxisDescriptor.Hints.Y });
         }
 
         void OnValidate()
         {
             HorizontalLook.Validate();
             VerticalLook.Range.x = Mathf.Clamp(VerticalLook.Range.x, -90, 90);
-            VerticalLook.Range.y = Mathf.Clamp(VerticalLook.Range.y, 12, 20);
+            VerticalLook.Range.y = Mathf.Clamp(VerticalLook.Range.y, -90, 90);
             VerticalLook.Validate();
         }
 
@@ -105,8 +88,8 @@ namespace Unity.Cinemachine.Samples
             }
         }
 
-        /// <summary>Перенастраивает игрока в соответствии с моей ротацией</summary>
-        /// <param name="демпфирование">Сколько времени должно занять повторное центрирование</param>
+        /// <summary>Recenters the player to match my rotation</summary>
+        /// <param name="damping">How long the recentering should take</param>
         public void RecenterPlayer(float damping = 0)
         {
             if (m_ControllerTransform == null)
@@ -138,7 +121,7 @@ namespace Unity.Cinemachine.Samples
             if (m_ControllerTransform == null)
                 return;
             var rot = (Quaternion.Inverse(m_ControllerTransform.rotation)
-                       * Quaternion.LookRotation(worldspaceDirection, m_ControllerTransform.up)).eulerAngles;
+                * Quaternion.LookRotation(worldspaceDirection, m_ControllerTransform.up)).eulerAngles;
             HorizontalLook.Value = HorizontalLook.ClampValue(rot.y);
             VerticalLook.Value = VerticalLook.ClampValue(NormalizeAngle(rot.x));
         }
@@ -159,8 +142,8 @@ namespace Unity.Cinemachine.Samples
                 }
                 case CouplingMode.CoupledWhenMoving:
                 {
-                    // Если проигрыватель движется, поверните его в соответствии с направлением камеры,
-                    // В противном случае пусть камера вращается по орбите
+                    // If the player is moving, rotate its yaw to match the camera direction,
+                    // otherwise let the camera orbit
                     m_Controller.SetStrafeMode(true);
                     if (m_Controller.IsMoving)
                         RecenterPlayer(RotationDamping);
@@ -172,19 +155,17 @@ namespace Unity.Cinemachine.Samples
                     break;
                 }
             }
-
             VerticalLook.UpdateRecentering(Time.deltaTime, VerticalLook.TrackValueChange());
             HorizontalLook.UpdateRecentering(Time.deltaTime, HorizontalLook.TrackValueChange());
         }
 
-        // Обратный вызов для контроллера игрока, чтобы обновить нашу ротацию после того,
-        // как он обновит свою собственную.
+        // Callback for player controller to update our rotation after it has updated its own.
         void PostUpdate(Vector3 vel, float speed)
         {
             if (PlayerRotation == CouplingMode.Decoupled)
             {
-                // После того, как игрок был повернут, мы вычитаем любое изменение вращения
-                // из нашего собственного преобразования, чтобы сохранить вращение нашего мира
+                // After player has been rotated, we subtract any rotation change
+                // from our own transform, to maintain our world rotation
                 transform.rotation = m_DesiredWorldRotation;
                 var delta = (Quaternion.Inverse(m_ControllerTransform.rotation) * m_DesiredWorldRotation).eulerAngles;
                 VerticalLook.Value = NormalizeAngle(delta.x);

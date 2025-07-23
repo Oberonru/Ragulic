@@ -3,35 +3,34 @@ using UnityEngine;
 namespace Unity.Cinemachine.Samples
 {
     /// <summary>
-    /// Это поведение, задачей которого является управление анимацией в зависимости от движения игрока.
-    /// Это пример реализации, который вы можете изменить или заменить на свой собственный. В том виде, в котором он поставляется, он
-    /// запрограммирован специально для работы с образцом анимационного контроллера CameronSimpleController, который
-    /// настроен с состояниями, известными SimplePlayerAnimator. Вы можете изменить
-    /// этот класс для работы с вашим собственным анимационным контроллером.
+    /// This is a behaviour whose job it is to drive animation based on the player's motion.
+    /// It is a sample implementation that you can modify or replace with your own.  As shipped, it is
+    /// hardcoded to work specifically with the sample `CameronSimpleController` Animation controller, which
+    /// is set up with states that the SimplePlayerAnimator knows about.  You can modify
+    /// this class to work with your own animation controller.
     ///
-    /// SimplePlayerAnimator работает как с SimplePlayerControllerBase, так и без него.
-    /// Без него он отслеживает положение преобразования и соответствующим образом управляет анимацией.
-    /// Вы можете видеть, как это используется в некоторых примерах сцен, таких как RunningRace или ClearShot.
-    /// В этом режиме невозможно определить заземленное состояние игрока, и поэтому он всегда
-    /// предполагает, что игрок заземлен.
+    /// SimplePlayerAnimator works with or without a SimplePlayerControllerBase alongside.
+    /// Without one, it monitors the transform's position and drives the animation accordingly.
+    /// You can see it used like this in some of the sample scenes, such as RunningRace or ClearShot.
+    /// In this mode, is it unable to detect the player's grounded state, and so it always
+    /// assumes that the player is grounded.
     ///
-    /// При обнаружении SimplePlayerControllerBase SimplePlayerAnimator устанавливает обратные вызовы
+    /// When a SimplePlayerControllerBase is detected, the SimplePlayerAnimator installs callbacks
+    /// and expects to be driven by the SimplePlayerControllerBase using the STartJump, EndJump,
+    /// and PostUpdate callbacks.
     /// </summary>
     public class SimplePlayerAnimator : MonoBehaviour
     {
-        [Tooltip(
-            "Настройте это в соответствии с анимацией в модели: ноги не должны скользить при ходьбе с такой скоростью")]
+        [Tooltip("Tune this to the animation in the model: feet should not slide when walking at this speed")]
         public float NormalWalkSpeed = 1.7f;
 
-        [Tooltip(
-            "Настройте это в соответствии с анимацией в модели: ноги не должны скользить при беге с такой скоростью")]
+        [Tooltip("Tune this to the animation in the model: feet should not slide when sprinting at this speed")]
         public float NormalSprintSpeed = 5;
 
-        [Tooltip(
-            "\nНикогда не ускоряйте анимацию спринта больше, чем это необходимо, чтобы избежать абсурдно быстрого движения")]
+        [Tooltip("Never speed up the sprint animation more than this, to avoid absurdly fast movement")]
         public float MaxSprintScale = 1.4f;
 
-        [Tooltip("Масштабный коэффициент для общей скорости анимации прыжка")]
+        [Tooltip("Scale factor for the overall speed of the jump animation")]
         public float JumpAnimationScale = 0.65f;
 
         SimplePlayerControllerBase m_Controller;
@@ -48,21 +47,13 @@ namespace Unity.Cinemachine.Samples
             public float MotionScale; // scale factor for the animation speed
             public float JumpScale; // scale factor for the jump animation
         }
-
         AnimationParams m_AnimationParams;
 
         const float k_IdleThreshold = 0.2f;
 
-        public enum States
-        {
-            Idle,
-            Walk,
-            Run,
-            Jump,
-            RunJump
-        }
+        public enum States { Idle, Walk, Run, Jump, RunJump }
 
-        /// <summary>Текущее состояние игрока</summary>
+        /// <summary>Current state of the player</summary>
         public States State
         {
             get
@@ -81,29 +72,25 @@ namespace Unity.Cinemachine.Samples
             m_Controller = GetComponentInParent<SimplePlayerControllerBase>();
             if (m_Controller != null)
             {
-                // Установите наши обратные вызовы для обработки прыжков и анимации в зависимости от скорости
+                // Install our callbacks to handle jump and animation based on velocity
                 m_Controller.StartJump += () => m_AnimationParams.JumpTriggered = true;
                 m_Controller.EndJump += () => m_AnimationParams.LandTriggered = true;
-                
-                //На вход из плейер контроллера передаётся текущая скорость игрока и по ней обновляется
-                //состояние анимации
                 m_Controller.PostUpdate += (vel, jumpAnimationScale) => UpdateAnimationState(vel, jumpAnimationScale);
             }
         }
 
         /// <summary>
-        /// Функция LateUpdate используется для того, чтобы не беспокоиться о порядке выполнения скрипта:
-        /// можно предположить, что проигрыватель уже был перемещен.
+        /// LateUpdate is used to avoid having to worry about script execution order:
+        /// it can be assumed that the player has already been moved.
         /// </summary>
         protected virtual void LateUpdate()
         {
-            // В режиме без контроллера мы отслеживаем движение игрока и создаем соответствующую анимацию.
-            // Прыжки в этом режиме не поддерживаются.
+            // In no-controller mode, we monitor the player's motion and deduce the appropriate animation.
+            // We don't support jumping in this mode.
             if (m_Controller == null || !m_Controller.enabled)
             {
-                // Получите скорость в локальных координатах игрока
+                // Get velocity in player-local coords
                 var pos = transform.position;
-                //Инверсионный кватернион, те обратный отменяет действие исходного вращения
                 var vel = Quaternion.Inverse(transform.rotation) * (pos - m_PreviousPosition) / Time.deltaTime;
                 m_PreviousPosition = pos;
                 UpdateAnimationState(vel, 1);
@@ -111,30 +98,30 @@ namespace Unity.Cinemachine.Samples
         }
 
         /// <summary>
-        /// Обновите анимацию в зависимости от скорости игрока.
-        /// Переопределите это для надлежащего взаимодействия с вашим контроллером анимации.
+        /// Update the animation based on the player's velocity.
+        /// Override this to interact appropriately with your animation controller.
         /// </summary>
         /// <param name="vel">Player's velocity, in player-local coordinates.</param>
         /// <param name="jumpAnimationScale">Scale factor to apply to the jump animation.
-        /// Его можно использовать для замедления анимации прыжка при выполнении более длинных прыжков.</param>
+        /// It can be used to slow down the jump animation for longer jumps.</param>
         void UpdateAnimationState(Vector3 vel, float jumpAnimationScale)
         {
-            vel.y = 0; //мы не рассматриваем вертикальное перемещение
+            vel.y = 0; // we don't consider vertical movement
             var speed = vel.magnitude;
 
-            // Уменьшение гистерезиса
+            // Hysteresis reduction
             bool isRunning = speed > NormalWalkSpeed * 2 + (m_AnimationParams.IsRunning ? -0.15f : 0.15f);
             bool isWalking = !isRunning && speed > k_IdleThreshold + (m_AnimationParams.IsWalking ? -0.05f : 0.05f);
             m_AnimationParams.IsWalking = isWalking;
             m_AnimationParams.IsRunning = isRunning;
 
-            // Установите нормализованное направление движения и масштабируйте скорость анимации в соответствии со скоростью движения
+            // Set the normalized direction of motion and scale the animation speed to match motion speed
             m_AnimationParams.Direction = speed > k_IdleThreshold ? vel / speed : Vector3.zero;
             m_AnimationParams.MotionScale = isWalking ? speed / NormalWalkSpeed : 1;
             m_AnimationParams.JumpScale = JumpAnimationScale * jumpAnimationScale;
 
-            // Мы масштабируем скорость анимации спринта так, чтобы она примерно соответствовала реальной скорости, но мы изменяем
-            // на самом высоком уровне, чтобы анимация не выглядела нелепо
+            // We scale the sprint animation speed to loosely match the actual speed, but we cheat
+            // at the high end to avoid making the animation look ridiculous
             if (isRunning)
                 m_AnimationParams.MotionScale = (speed < NormalSprintSpeed)
                     ? speed / NormalSprintSpeed
@@ -152,8 +139,8 @@ namespace Unity.Cinemachine.Samples
         }
 
         /// <summary>
-        /// Измените анимацию в зависимости от состояния игрока.
-        /// Переопределите это для надлежащего взаимодействия с вашим контроллером анимации.
+        /// Update the animation based on the player's state.
+        /// Override this to interact appropriately with your animation controller.
         /// </summary>
         protected virtual void UpdateAnimation(AnimationParams animationParams)
         {
@@ -162,7 +149,6 @@ namespace Unity.Cinemachine.Samples
                 Debug.LogError("SimplePlayerAnimator: An Animator component is required");
                 return;
             }
-
             animator.SetFloat("DirX", animationParams.Direction.x);
             animator.SetFloat("DirZ", animationParams.Direction.z);
             animator.SetFloat("MotionScale", animationParams.MotionScale);
