@@ -105,7 +105,7 @@ namespace System.StateMachineSystem
 
         public Type GetActiveState()
         {
-            return _activeState.GetType();
+                return _activeState.GetType();
         }
 
         public void SetState(StateInstance<T> instance)

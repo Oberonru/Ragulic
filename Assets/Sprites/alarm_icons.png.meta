@@ -1,0 +1,479 @@
+fileFormatVersion: 2
+guid: 433d7e770f6d57f49a9ee7ab78d01be1
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: alarm_icons_1
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 228
+        width: 104
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc10d185617c6b24ca4bf222b38856d4
+      internalID: 689406882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 228
+        width: 116
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ed2414fd0a2ef846872c8d01242ab73
+      internalID: 1674708488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_5
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 251
+        width: 128
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcc784442baa5dc46bc6204236cd22b5
+      internalID: -1542456404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_7
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 244
+        width: 106
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43387058c41c51842acb1bfc91b149c5
+      internalID: 425357947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_20
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 111
+        width: 106
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1760117c0fefea547a285a1c4a3bc49b
+      internalID: 2009732434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_21
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 143
+        width: 93
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c2155191d4cc694f9b34ba2f20d5a12
+      internalID: 907251583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_27
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 113
+        width: 112
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a514d881996e5b478587e0808a7c825
+      internalID: 1245298191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_31
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 105
+        width: 132
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f803b3b997db148b13392dfef00945
+      internalID: -1463804444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_45
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 23
+        width: 112
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0b7d4b29548d4d4ba05cd8c89a225f7
+      internalID: 79600880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_57
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 13
+        width: 114
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec7cf2f5ba103a746a8fd678a5c73899
+      internalID: -205970103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_58
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 9
+        width: 107
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 704667164f82fd649b3e6d477e41dad0
+      internalID: 833271925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: alarm_icons_61
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 30
+        width: 138
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7524b64e807c0e47a41a8cec94b84e9
+      internalID: 806829875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 81f903d49c9625c4ebfff07be678d43c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      alarm_icons_0: -302406833
+      alarm_icons_1: 689406882
+      alarm_icons_10: 1637015193
+      alarm_icons_11: -169983609
+      alarm_icons_12: 83423401
+      alarm_icons_13: 542206960
+      alarm_icons_14: 315207613
+      alarm_icons_15: 546533810
+      alarm_icons_16: -83482403
+      alarm_icons_17: -490821290
+      alarm_icons_18: 1975814531
+      alarm_icons_19: 1971869621
+      alarm_icons_2: 2134204487
+      alarm_icons_20: 2009732434
+      alarm_icons_21: 907251583
+      alarm_icons_22: -557048688
+      alarm_icons_23: -1295072025
+      alarm_icons_24: -1279517290
+      alarm_icons_25: -1466009556
+      alarm_icons_26: 1678442184
+      alarm_icons_27: 1245298191
+      alarm_icons_28: 1227397466
+      alarm_icons_29: 1832635277
+      alarm_icons_3: 1674708488
+      alarm_icons_30: -1339994204
+      alarm_icons_31: -1463804444
+      alarm_icons_32: 714944254
+      alarm_icons_33: 212588205
+      alarm_icons_34: 1787372188
+      alarm_icons_35: 1552076661
+      alarm_icons_36: -274020067
+      alarm_icons_37: -1155278811
+      alarm_icons_38: 623397343
+      alarm_icons_39: 1713355759
+      alarm_icons_4: -1265785204
+      alarm_icons_40: 1237372241
+      alarm_icons_41: -233675926
+      alarm_icons_42: -741576144
+      alarm_icons_43: 217103033
+      alarm_icons_44: -1959511063
+      alarm_icons_45: 79600880
+      alarm_icons_46: 645660666
+      alarm_icons_47: 27470061
+      alarm_icons_48: -2140690297
+      alarm_icons_49: 667053464
+      alarm_icons_5: -1542456404
+      alarm_icons_50: 161671882
+      alarm_icons_51: 311203747
+      alarm_icons_52: 1856792937
+      alarm_icons_53: 1455889140
+      alarm_icons_54: -281847652
+      alarm_icons_55: 1570155682
+      alarm_icons_56: -253885571
+      alarm_icons_57: -205970103
+      alarm_icons_58: 833271925
+      alarm_icons_59: 1405665385
+      alarm_icons_6: -538123557
+      alarm_icons_60: -854624901
+      alarm_icons_61: 806829875
+      alarm_icons_62: -990089691
+      alarm_icons_63: -567384094
+      alarm_icons_64: -1664047601
+      alarm_icons_65: -182373216
+      alarm_icons_66: -693966233
+      alarm_icons_67: -1777810296
+      alarm_icons_68: -1990190958
+      alarm_icons_69: 2016211869
+      alarm_icons_7: 425357947
+      alarm_icons_70: -972427471
+      alarm_icons_71: -2134390428
+      alarm_icons_8: -385731663
+      alarm_icons_9: 1188783920
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

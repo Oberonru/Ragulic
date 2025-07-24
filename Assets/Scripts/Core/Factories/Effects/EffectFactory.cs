@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Pool;
 using Core.Effects;
+using UniRx;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Core.Factories.Effects
 {
@@ -12,6 +15,8 @@ namespace Core.Factories.Effects
         private Dictionary<EffectInstance, PoolMono<EffectInstance>> _pool = new();
 
         private const int Count = 1;
+        public IObservable<IEffectInstance> OnSpawn => _onSpawn;
+        private Subject<IEffectInstance> _onSpawn = new();
 
         public IEffectInstance Create(EffectInstance prefab, Vector3 position, Quaternion rotation,
             Transform parent = null)
@@ -29,14 +34,18 @@ namespace Core.Factories.Effects
                 freeElement.transform.position = position;
                 freeElement.transform.rotation = rotation;
 
+                _onSpawn.OnNext(freeElement);
+
                 return freeElement;
             }
             else
             {
-                var freeElement =  pool.GetFreeElement();
+                var freeElement = pool.GetFreeElement();
                 freeElement.transform.position = position;
                 freeElement.transform.rotation = rotation;
-                
+
+                _onSpawn.OnNext(freeElement);
+
                 return freeElement;
             }
         }
