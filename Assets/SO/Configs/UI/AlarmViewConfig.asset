@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d480273eb94849a69253a3d4cd0c7b, type: 3}
   m_Name: AlarmViewConfig
   m_EditorClassIdentifier: 
-  _prefab: {fileID: -3966717234529495398, guid: db488afcc9b9dfb449f49ca30b77e447, type: 3}
+  _prefab: {fileID: 4527231669194653494, guid: b1b57397a083e2743a177f0f393a561a, type: 3}
   _poolSize: 20
