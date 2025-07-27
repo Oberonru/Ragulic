@@ -14,11 +14,12 @@ namespace Core.Player.Components
         {
             public bool IsWalking;
             public bool IsRunning;
+            public bool IsPanic;
             public Vector3 Direction;
             public float MotionScale;
         }
 
-        private AnimationParams m_AnimationParams;
+        private AnimationParams _animationParams;
         
         public enum States
         {
@@ -31,9 +32,9 @@ namespace Core.Player.Components
         {
             get
             {
-                if (m_AnimationParams.IsRunning)
+                if (_animationParams.IsRunning)
                     return States.Run;
-                return m_AnimationParams.IsWalking ? States.Walk : States.Idle;
+                return _animationParams.IsWalking ? States.Walk : States.Idle;
             }
         }
 
@@ -46,27 +47,30 @@ namespace Core.Player.Components
             }
         }
 
-        private void UpdateAnimationState(Vector3 vel)
+        private void UpdateAnimationState(Vector3 velocity)
         {
-            vel.y = 0;
-            var speed = vel.magnitude;
+            velocity.y = 0;
+            var speed = velocity.magnitude;
 
-            bool isRunning = speed > _config.NormalWalkSpeed * 2 + (m_AnimationParams.IsRunning ? -0.15f : 0.15f);
+            bool isRunning = speed > _config.NormalWalkSpeed * 2 + (_animationParams.IsRunning ? -0.15f : 0.15f);
             bool isWalking =
-                !isRunning && speed > _config.IdleThreshold + (m_AnimationParams.IsWalking ? -0.05f : 0.05f);
-            m_AnimationParams.IsWalking = isWalking;
-            m_AnimationParams.IsRunning = isRunning;
+                !isRunning && speed > _config.IdleThreshold + (_animationParams.IsWalking ? -0.05f : 0.05f);
+            bool isPanic = speed > _config.NormalRunSpeed * 2 + (_animationParams.IsPanic ? -0.15f : 0.15f);
+            
+            _animationParams.IsWalking = isWalking;
+            _animationParams.IsRunning = isRunning;
+            _animationParams.IsPanic = isPanic;
 
-            m_AnimationParams.Direction = speed > _config.IdleThreshold ? vel / speed : Vector3.zero;
-            m_AnimationParams.MotionScale = isWalking ? speed / _config.NormalWalkSpeed : 1;
+            _animationParams.Direction = speed > _config.IdleThreshold ? velocity / speed : Vector3.zero;
+            _animationParams.MotionScale = isWalking ? speed / _config.NormalWalkSpeed : 1;
 
             if (isRunning)
-                m_AnimationParams.MotionScale = (speed < _config.NormalRunSpeed)
+                _animationParams.MotionScale = (speed < _config.NormalRunSpeed)
                     ? speed / _config.NormalRunSpeed
                     : Mathf.Min(_config.MaxRunScale,
                         1 + (speed - _config.NormalRunSpeed) / (3 * _config.NormalRunSpeed));
 
-            UpdateAnimation(m_AnimationParams);
+            UpdateAnimation(_animationParams);
         }
 
         protected virtual void UpdateAnimation(AnimationParams animationParams)
@@ -80,8 +84,10 @@ namespace Core.Player.Components
             animator.SetFloat("DirX", animationParams.Direction.x);
             animator.SetFloat("DirZ", animationParams.Direction.z);
             animator.SetFloat("MotionScale", animationParams.MotionScale);
+            
             animator.SetBool("Walking", animationParams.IsWalking);
             animator.SetBool("Running", animationParams.IsRunning);
+            animator.SetBool("Panic", animationParams.IsPanic);
         }
     }
 }

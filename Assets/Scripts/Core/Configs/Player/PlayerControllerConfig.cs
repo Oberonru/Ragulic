@@ -27,7 +27,7 @@ namespace Core.Configs.Player
         [LabelText("Normal Run Speed")]
         [PropertyTooltip("Также как и Normal Walk Speed")]
         [SerializeField]
-        private float _normalRunSpeed = 5f;
+        private float _normalRunSpeed = 2.5f;
         
         [BoxGroup("PlayerAnimatorStats")]
         [LabelText("Max Run Scale")]

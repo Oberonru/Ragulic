@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fe3bfdc9e46458aabb174efa7f2fabe, type: 3}
   m_Name: PlayerControllerConfig
   m_EditorClassIdentifier: 
+  _damping: 0.5
+  _normalWalkSpeed: 1.7
+  _normalRunSpeed: 3
+  _maxRunScale: 1.4
+  k_IdleThreshold: 0.2
