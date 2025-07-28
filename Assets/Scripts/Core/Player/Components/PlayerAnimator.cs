@@ -8,6 +8,7 @@ namespace Core.Player.Components
     public class PlayerAnimator : MonoBehaviour
     {
         [Inject] private PlayerControllerConfig _config;
+        [Inject] private PlayerConfig _playerConfig;
         private PlayerController _controller;
 
         protected struct AnimationParams
@@ -52,10 +53,10 @@ namespace Core.Player.Components
             velocity.y = 0;
             var speed = velocity.magnitude;
 
-            bool isRunning = speed > _config.NormalWalkSpeed * 2 + (_animationParams.IsRunning ? -0.15f : 0.15f);
+            bool isRunning = speed > _playerConfig.WalkSpeed + (_animationParams.IsRunning ? -0.15f : 0.15f);
             bool isWalking =
                 !isRunning && speed > _config.IdleThreshold + (_animationParams.IsWalking ? -0.05f : 0.05f);
-            bool isPanic = speed > _config.NormalRunSpeed * 2 + (_animationParams.IsPanic ? -0.15f : 0.15f);
+            bool isPanic = speed > _playerConfig.RunSpeed + (_animationParams.IsPanic ? -0.15f : 0.15f);
             
             _animationParams.IsWalking = isWalking;
             _animationParams.IsRunning = isRunning;

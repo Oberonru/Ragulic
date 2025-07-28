@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 6672689546823178400}
   - component: {fileID: 754018277193283373}
   m_Layer: 0
-  m_Name: Player Aiming Core
+  m_Name: PlayerCameraRotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -885,6 +885,8 @@ GameObject:
   - component: {fileID: 4414924337783832579}
   - component: {fileID: 3224895587385323173}
   - component: {fileID: 5314243412952426518}
+  - component: {fileID: 741179246671892166}
+  - component: {fileID: 4968598909794518585}
   m_Layer: 0
   m_Name: SecondPlayer
   m_TagString: Player
@@ -1209,6 +1211,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee360dc14cf4a8fab576a4f2762bee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &741179246671892166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3930792629831616095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84aa2ca392734d74bb85a1fdecbf757e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 4968598909794518585}
+  _healthComponent: {fileID: 8760645321762379429}
+--- !u!54 &4968598909794518585
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3930792629831616095}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4200736188549127226
 GameObject:
   m_ObjectHideFlags: 0

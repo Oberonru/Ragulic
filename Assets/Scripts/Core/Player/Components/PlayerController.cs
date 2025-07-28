@@ -147,6 +147,10 @@ namespace Core.Player.Components
                     _player.StateMachine.SetCrouchSpeed(_player.Stats.CrouchSpeed);
                 }
             }
+            else
+            {
+                _player.StateMachine.SetPanicSpeed(_player.Stats.PanicSpeed);
+            }
         }
 
 

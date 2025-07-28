@@ -8,7 +8,6 @@ using Core.Player.StateMachine;
 using Sirenix.OdinInspector;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Core.Player
@@ -29,7 +28,8 @@ namespace Core.Player
         [SerializeField, ReadOnly] private PlayerStateMachine _stateMachine;
         [SerializeField, ReadOnly] private InventoryPlayerHandler _inventory;
         [SerializeField, ReadOnly] private TriggerHitBoxDetector _triggerHitBoxDetector;
-        [SerializeField, ReadOnly] private PlayerAnimator _animator;
+        [SerializeField, ReadOnly] private PlayerAnimator _playerAnimator;
+        private Animator _animator;
 
         private CinemachineInputAxisController _inputAxisController;
 
@@ -41,10 +41,13 @@ namespace Core.Player
         public PlayerStateMachine StateMachine => _stateMachine;
         public InventoryPlayerHandler InventoryHandler => _inventory;
         public TriggerHitBoxDetector TriggerHitBoxDetector => _triggerHitBoxDetector;
-        public PlayerAnimator Animator => _animator;
+        public PlayerAnimator PlayerAnimator => _playerAnimator;
+        public Animator Animator => _animator;
 
         private void Awake()
         {
+            _animator = GetComponent<Animator>();
+            
             if (_playerStats is null)
                 throw new NullReferenceException($"PlayerConfig is not set on player {gameObject.name}");
             _health.MaxHealth = Stats.Health;
@@ -69,7 +72,7 @@ namespace Core.Player
             if (_stateMachine is null) _stateMachine = GetComponent<PlayerStateMachine>();
             if (_inventory is null) _inventory = GetComponent<InventoryPlayerHandler>();
             if (_triggerHitBoxDetector is null) _triggerHitBoxDetector = GetComponent<TriggerHitBoxDetector>();
-            if (_animator is null) _animator = GetComponent<PlayerAnimator>();
+            if (_playerAnimator is null) _playerAnimator = GetComponent<PlayerAnimator>();
         }
     }
 }

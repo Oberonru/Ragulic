@@ -43,6 +43,8 @@ namespace Core.Enemies.CombatSystem
             
             _isAttacking = true;
             
+            Debug.Log("Attacking...");
+            
             var delay = TimeSpan.FromSeconds(_enemyInstance.Stats.AttackPerSeconds);
             _enemyInstance.StateMachine.SetMeleeAttack(hitBox);
 
