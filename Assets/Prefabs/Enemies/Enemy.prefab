@@ -564,7 +564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyInstance: {fileID: 3256140443735767406}
-  _detector: {fileID: 3297045630361252319}
+  _detector: {fileID: 7794031449801144166}
 --- !u!114 &6967738836951548677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,7 +694,7 @@ GameObject:
   - component: {fileID: 2979935456330680009}
   - component: {fileID: 5513116100209530872}
   - component: {fileID: 6449328932372366153}
-  - component: {fileID: 3297045630361252319}
+  - component: {fileID: 7794031449801144166}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -779,7 +779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthComponent: {fileID: 5487821686522787026}
   _rigidbody: {fileID: 5513116100209530872}
---- !u!114 &3297045630361252319
+--- !u!114 &7794031449801144166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -788,7 +788,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3925295207551641005}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177278fc03e449639b5cc31b814b60cc, type: 3}
+  m_Script: {fileID: 11500000, guid: a6666100fdd04abc8138b305f4281fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4305601423851574908

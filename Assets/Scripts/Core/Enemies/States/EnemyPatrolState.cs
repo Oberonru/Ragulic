@@ -28,8 +28,8 @@ namespace Core.Enemies.States
 
         private void Patrol()
         {
-            var rnd = Random.Range(0, Owner.EnemyData.Waypoints.Length);
-            Owner.NavMesh.MoveToTarget(Owner.EnemyData.Waypoints[rnd].position);
+            //var rnd = Random.Range(0, Owner.EnemyData.Waypoints.Length);
+            //Owner.NavMesh.MoveToTarget(Owner.EnemyData.Waypoints[rnd].position);
 
             if (_isDetectedPlayer)
             {
@@ -65,11 +65,11 @@ namespace Core.Enemies.States
             if (hit.collider != null && hit.collider.TryGetComponent(out IPlayerInstance player))
             {
                 _player = player;
-                Owner.EnemyData.IsSee = true;
+                //Owner.EnemyData.IsSee = true;
                 return true;
             }
 
-            Owner.EnemyData.IsSee = false;
+            //Owner.EnemyData.IsSee = false;
             _player = null;
 
             return false;

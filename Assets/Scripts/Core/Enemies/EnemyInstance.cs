@@ -20,8 +20,8 @@ namespace Core.Enemies
         [SerializeField, ReadOnly] private EnemyNavMesh _navMesh;
         [SerializeField, ReadOnly] private EnemyStateMachine _stateMachine;
         [SerializeField, ReadOnly] private EnemyCombatComponent _enemyCombat;
-        [SerializeField, ReadOnly] private RuntimeEnemyData _enemyData;
-        [SerializeField, ReadOnly] private EnemyBehavior _enemyBehavior;
+        //[SerializeField, ReadOnly] private RuntimeEnemyData _enemyData;
+        //[SerializeField, ReadOnly] private EnemyBehavior _enemyBehavior;
 
         public Vector3 Position => transform != null ? transform.position : Vector3.zero;
         public Transform Transform => transform;
@@ -31,8 +31,8 @@ namespace Core.Enemies
         public EnemyConfig Stats => _enemyStats;
         public EnemyStateMachine StateMachine => _stateMachine;
         public EnemyCombatComponent EnemyCombatComponent => _enemyCombat;
-        public RuntimeEnemyData EnemyData => _enemyData;
-        public EnemyBehavior EnemyBehavior => _enemyBehavior;
+        //public RuntimeEnemyData EnemyData => _enemyData;
+        //public EnemyBehavior EnemyBehavior => _enemyBehavior;
 
         private void Awake()
         {
@@ -40,23 +40,23 @@ namespace Core.Enemies
             _health.CurrentHealth = _health.MaxHealth;
         }
 
-        private void OnDrawGizmos()
-        {
-            if (_enemyData is null) return;
-            
-            Debug.DrawRay(Position, Transform.forward * NavMesh.AI.SeeDistance * NavMesh.AI.AgressiveMultiplayer,
-                _enemyData.IsSee ? Color.green : Color.red);
-            
-            Debug.Log(StateMachine.GetActiveState() + " :current active state");
-        }
+        // private void OnDrawGizmos()
+        // {
+        //     if (_enemyData is null) return;
+        //     
+        //     Debug.DrawRay(Position, Transform.forward * NavMesh.AI.SeeDistance * NavMesh.AI.AgressiveMultiplayer,
+        //         _enemyData.IsSee ? Color.green : Color.red);
+        //     
+        //     Debug.Log(StateMachine.GetActiveState() + " :current active state");
+        // }
 
         private void OnValidate()
         {
             if (_health is null) _health = GetComponent<HealthComponent>();
             if (_navMesh is null) _navMesh = GetComponent<EnemyNavMesh>();
             if (_enemyCombat is null) _enemyCombat = GetComponent<EnemyCombatComponent>();
-            if (_enemyData is null) _enemyData = GetComponent<RuntimeEnemyData>();
-            if (_enemyBehavior is null) _enemyBehavior = GetComponent<EnemyBehavior>();
+            //if (_enemyData is null) _enemyData = GetComponent<RuntimeEnemyData>();
+            //if (_enemyBehavior is null) _enemyBehavior = GetComponent<EnemyBehavior>();
 
         }
     }

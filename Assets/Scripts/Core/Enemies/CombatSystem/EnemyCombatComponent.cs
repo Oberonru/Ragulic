@@ -14,7 +14,7 @@ namespace Core.Enemies.CombatSystem
     {
         [Inject] private IPlayerInstance _player;
         [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;
-        [SerializeField, ReadOnly] private EnemyCollisionHitBoxDetector _detector;
+        [SerializeField] private EnemyTriggerHitBoxDetector _detector;
 
         private bool _isAttacking;
 
@@ -22,7 +22,8 @@ namespace Core.Enemies.CombatSystem
         {
             _detector.OnDetected.Subscribe(hitBox =>
             {
-                if (_isAttacking) return;
+                if (!(hitBox is IPlayerHitBox)) return;
+                if (_isAttacking ) return;
 
                 Attack(hitBox);
             });
@@ -34,7 +35,7 @@ namespace Core.Enemies.CombatSystem
         private void OnValidate()
         {
             if (_enemyInstance is null) _enemyInstance = GetComponent<EnemyInstance>();
-            if (_detector is null) _detector = GetComponent<EnemyCollisionHitBoxDetector>();
+            if (_detector is null) _detector = GetComponent<EnemyTriggerHitBoxDetector>();
         }
 
         private async UniTask Attack(IHitBox hitBox)

@@ -32,7 +32,8 @@ namespace Core.Enemies.States
 
         public bool PlayerIsDetected()
         {
-            return AlwaysSearch() || (IsSeePlayer() && InFOV());
+           // return AlwaysSearch() || (IsSeePlayer() && InFOV());
+           return false;
         }
 
         private bool AlwaysSearch()
@@ -50,22 +51,22 @@ namespace Core.Enemies.States
             return false;
         }
 
-        private bool IsSeePlayer()
-        {
-            Physics.Raycast(_enemy.Position, _enemy.Transform.forward, out RaycastHit hit, _maxSeedDistance);
-
-            if (hit.collider != null && hit.collider.TryGetComponent(out IPlayerInstance player))
-            {
-                Player = player;
-                _enemy.EnemyData.IsSee = true;
-                return true;
-            }
-
-            _enemy.EnemyData.IsSee = false;
-            Player = null;
-
-            return false;
-        }
+        // private bool IsSeePlayer()
+        // {
+        //     Physics.Raycast(_enemy.Position, _enemy.Transform.forward, out RaycastHit hit, _maxSeedDistance);
+        //
+        //     if (hit.collider != null && hit.collider.TryGetComponent(out IPlayerInstance player))
+        //     {
+        //         Player = player;
+        //         _enemy.EnemyData.IsSee = true;
+        //         return true;
+        //     }
+        //
+        //     _enemy.EnemyData.IsSee = false;
+        //     Player = null;
+        //
+        //     return false;
+        // }
 
         private bool InFOV()
         {

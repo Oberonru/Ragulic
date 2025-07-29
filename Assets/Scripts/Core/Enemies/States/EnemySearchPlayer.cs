@@ -22,7 +22,7 @@ namespace Core.Enemies.States
         public override void Exit()
         {
             _player = null;
-            Owner.EnemyData.IsSee = false;
+            //Owner.EnemyData.IsSee = false;
             Owner.NavMesh.Stop();
         }
 
@@ -61,11 +61,11 @@ namespace Core.Enemies.States
             if (hit.collider != null && hit.collider.TryGetComponent(out IPlayerInstance player))
             {
                 _player = player;
-                Owner.EnemyData.IsSee = true;
+                //Owner.EnemyData.IsSee = true;
                 return true;
             }
 
-            Owner.EnemyData.IsSee = false;
+            //Owner.EnemyData.IsSee = false;
             _player = null;
 
             return false;
