@@ -21,7 +21,16 @@ namespace Core.BaseComponents
         public int CurrentHealth
         {
             get => _currentHealth;
-            set => _currentHealth = value;
+            set
+            {
+                _currentHealth = value;
+                if (_currentHealth <= 0)
+                {
+                    _onDead?.OnNext(Unit.Default);
+                    _onDead?.OnNext(Unit.Default);
+                    _onDead?.OnCompleted();
+                }
+            }
         }
 
         public ISubject<object> OnHit => _onHit;
@@ -41,12 +50,6 @@ namespace Core.BaseComponents
             _currentHealth = Mathf.Clamp(_currentHealth - amount, 0, _maxHealth);
             _onHit?.OnNext(damager);
             _onHealthChanged?.OnNext(amount);
-
-            if (_currentHealth <= 0)
-            {
-                _onDead?.OnNext(Unit.Default);
-                _onDead?.OnCompleted();
-            }
         }
 
         public void Regeneration(int amount)

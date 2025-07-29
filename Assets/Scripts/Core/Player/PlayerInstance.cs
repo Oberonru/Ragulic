@@ -2,6 +2,7 @@ using System;
 using Core.BaseComponents;
 using Core.CombatSystem;
 using Core.Configs.Player;
+using Core.Handlers;
 using Core.Player.CombatSystem;
 using Core.Player.Components;
 using Core.Player.StateMachine;
@@ -19,6 +20,8 @@ namespace Core.Player
     [RequireComponent(typeof(InventoryPlayerHandler))]
     [RequireComponent(typeof(TriggerHitBoxDetector))]
     [RequireComponent(typeof(PlayerAnimator))]
+    
+    [RequireComponent(typeof(DisableComponentAfterDeathHandler))]
     public class PlayerInstance : MonoBehaviour, IPlayerInstance
     {
         [Inject] private PlayerConfig _playerStats;

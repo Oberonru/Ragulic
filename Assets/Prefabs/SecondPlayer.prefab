@@ -887,6 +887,8 @@ GameObject:
   - component: {fileID: 5314243412952426518}
   - component: {fileID: 741179246671892166}
   - component: {fileID: 4968598909794518585}
+  - component: {fileID: 4219778027324162630}
+  - component: {fileID: 4086349560685980582}
   m_Layer: 0
   m_Name: SecondPlayer
   m_TagString: Player
@@ -1076,7 +1078,7 @@ MonoBehaviour:
   _stateMachine: {fileID: 4414924337783832579}
   _inventory: {fileID: 3224895587385323173}
   _triggerHitBoxDetector: {fileID: 5314243412952426518}
-  _animator: {fileID: 7488294512565939944}
+  _playerAnimator: {fileID: 7488294512565939944}
 --- !u!114 &7488294512565939944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1252,6 +1254,32 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4219778027324162630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3930792629831616095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7bbf1b36086427e8d5a2a3ecab88175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 8760645321762379429}
+  _stateHandler: {fileID: 4086349560685980582}
+--- !u!114 &4086349560685980582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3930792629831616095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3af87bd30b43af8629ce0f43cc8724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4200736188549127226
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,5 +17,10 @@ namespace Core.Player.CombatSystem
             if (_healthComponent is null) _healthComponent = GetComponent<HealthComponent>();
             if (_rigidbody is null) _rigidbody = GetComponent<Rigidbody>();
         }
+
+        public void Disable()
+        {
+            if (_rigidbody) _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 }
