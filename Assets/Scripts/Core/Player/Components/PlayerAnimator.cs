@@ -1,4 +1,5 @@
 using Core.Configs.Player;
+using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -9,7 +10,8 @@ namespace Core.Player.Components
     {
         [Inject] private PlayerControllerConfig _config;
         [Inject] private PlayerConfig _playerConfig;
-        private PlayerController _controller;
+        [SerializeField] private PlayerController _controller;
+        [SerializeField] private Animator _animator;
 
         protected struct AnimationParams
         {
@@ -41,6 +43,8 @@ namespace Core.Player.Components
 
         protected virtual void Start()
         {
+            _animator = GetComponent<Animator>();
+            
             _controller = GetComponentInParent<PlayerController>();
             if (_controller != null)
             {
@@ -76,19 +80,19 @@ namespace Core.Player.Components
 
         protected virtual void UpdateAnimation(AnimationParams animationParams)
         {
-            if (!TryGetComponent(out Animator animator))
+            if (_animator is null)
             {
                 Debug.LogError("SimplePlayerAnimator: An Animator component is required");
                 return;
             }
 
-            animator.SetFloat("DirX", animationParams.Direction.x);
-            animator.SetFloat("DirZ", animationParams.Direction.z);
-            animator.SetFloat("MotionScale", animationParams.MotionScale);
+            _animator.SetFloat("DirX", animationParams.Direction.x);
+            _animator.SetFloat("DirZ", animationParams.Direction.z);
+            _animator.SetFloat("MotionScale", animationParams.MotionScale);
             
-            animator.SetBool("Walking", animationParams.IsWalking);
-            animator.SetBool("Running", animationParams.IsRunning);
-            animator.SetBool("Panic", animationParams.IsPanic);
+            _animator.SetBool("Walking", animationParams.IsWalking);
+            _animator.SetBool("Running", animationParams.IsRunning);
+            _animator.SetBool("Panic", animationParams.IsPanic);
         }
     }
 }
