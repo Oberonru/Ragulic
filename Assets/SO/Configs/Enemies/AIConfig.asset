@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minStoppingDistance: 1
   _maxStoppingDistance: 1.5
-  _agressiveRadius: 1
+  _agressiveRadius: 10
   _agressiveMultiplayer: 3
   _updatedInterval: 0.3
   _detectionRadius: 10

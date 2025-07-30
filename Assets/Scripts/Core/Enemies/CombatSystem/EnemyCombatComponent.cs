@@ -23,13 +23,10 @@ namespace Core.Enemies.CombatSystem
             _detector.OnDetected.Subscribe(hitBox =>
             {
                 if (!(hitBox is IPlayerHitBox)) return;
-                if (_isAttacking ) return;
+                if (_isAttacking) return;
 
                 Attack(hitBox);
             });
-
-            _detector.OnHitBoxExit.Subscribe((_) =>
-                _enemyInstance.StateMachine.SetMeleeMoveToTarget(_player.Transform)).AddTo(this);
         }
 
         private void OnValidate()
@@ -43,15 +40,6 @@ namespace Core.Enemies.CombatSystem
             if (!(hitBox is IPlayerHitBox) || !hitBox.HealthComponent.IsAllive) return;
             
             _isAttacking = true;
-            
-            Debug.Log("Attacking...");
-            
-            var delay = TimeSpan.FromSeconds(_enemyInstance.Stats.AttackPerSeconds);
-            _enemyInstance.StateMachine.SetMeleeAttack(hitBox);
-
-            await UniTask.Delay(delay);
-            
-            _isAttacking = false;
         }
     }
 }

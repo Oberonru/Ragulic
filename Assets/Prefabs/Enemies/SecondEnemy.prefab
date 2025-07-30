@@ -218,11 +218,11 @@ GameObject:
   - component: {fileID: 6023441931222555132}
   - component: {fileID: 5809101239225800188}
   - component: {fileID: 7014506564444905757}
+  - component: {fileID: 8166425795175391494}
   - component: {fileID: 8874743612575806379}
   - component: {fileID: 3789527925575373513}
   - component: {fileID: 4516174178434495017}
   - component: {fileID: 6748336302608333051}
-  - component: {fileID: 3946039969288268538}
   - component: {fileID: 317320377890453796}
   m_Layer: 0
   m_Name: SecondEnemy
@@ -322,6 +322,43 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8166425795175391494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4178527278608200241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Graph: {fileID: 6945423623503342402, guid: 7e130a09ea20f4b3eac775f9a476a8f9, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 7927978682325664038
+  - rid: 7927978682325664168
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 7927978682325664038
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 4178527278608200241}
+    - rid: 7927978682325664168
+      type: {class: 'BlackboardVariable`1[[Core.Enemies.States.EnemyStateType, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 13668495111620161888
+          m_Value1: 5056161633772303412
+        Name: State
+        m_Value: 1
 --- !u!195 &8874743612575806379
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -359,7 +396,6 @@ MonoBehaviour:
   _enemyStats: {fileID: 11400000, guid: e28aa82cb249a4c139d16afcbf6c3712, type: 2}
   _health: {fileID: 6748336302608333051}
   _navMesh: {fileID: 4516174178434495017}
-  _stateMachine: {fileID: 3946039969288268538}
   _enemyCombat: {fileID: 317320377890453796}
 --- !u!114 &4516174178434495017
 MonoBehaviour:
@@ -375,6 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyInstance: {fileID: 3789527925575373513}
   _agent: {fileID: 8874743612575806379}
+  _agentGraph: {fileID: 8166425795175391494}
 --- !u!114 &6748336302608333051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,19 +424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273c1a94ce714b809bcf21ab6621f65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3946039969288268538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4178527278608200241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3abad7a14714712b0e661052c4e279d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateContainer: {fileID: 11400000, guid: 1bf75f2f42e2447f79609d2a58088b84, type: 2}
 --- !u!114 &317320377890453796
 MonoBehaviour:
   m_ObjectHideFlags: 0

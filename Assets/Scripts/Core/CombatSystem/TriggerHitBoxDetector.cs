@@ -15,6 +15,7 @@ namespace Core.CombatSystem
         {
             if (other.TryGetComponent<IHitBox>(out IHitBox hitBox))
             {
+                Debug.Log("Detected");
                 _onDetected?.OnNext(hitBox);
             }
         }
@@ -23,6 +24,8 @@ namespace Core.CombatSystem
         {
             if (other.TryGetComponent<IHitBox>(out IHitBox hitBox))
             {
+                Debug.Log("Detected exit");
+
                 OnHitBoxExit?.OnNext(hitBox);
             }
         }

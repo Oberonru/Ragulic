@@ -32,7 +32,6 @@ namespace Core.Enemies.States
 
                 if (Vector3.Distance(Owner.Position, Target.position) > Owner.NavMesh.AI.SeeDistance)
                 {
-                    Owner.StateMachine.SetPatrol();
                 }
             }
         }
