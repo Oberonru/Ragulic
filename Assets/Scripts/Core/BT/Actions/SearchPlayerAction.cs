@@ -1,10 +1,12 @@
 using System;
 using Core.BaseComponents;
+using Core.Configs.Enemies;
 using Core.Enemies;
 using Core.Player.CombatSystem;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
+using Zenject;
 using Action = Unity.Behavior.Action;
 
 [Serializable, GeneratePropertyBag]
@@ -12,8 +14,8 @@ using Action = Unity.Behavior.Action;
     id: "f334d6c784da0f8f87af89d63c4fa1f0")]
 public partial class SearchPlayerAction : Action
 {
-    [SerializeReference] public BlackboardVariable<float> Radius;
     [SerializeReference] public BlackboardVariable<EnemyInstance> Self;
+    [SerializeReference] public BlackboardVariable<float> Radius;
 
     protected override Status OnUpdate()
     {
@@ -26,6 +28,7 @@ public partial class SearchPlayerAction : Action
                 if (Self.Value.NavMesh.CurrentHealth != playerHitBox.HealthComponent && playerHitBox.HealthComponent.IsAllive)
                 {
                     Self.Value.NavMesh.SetTarget(playerHitBox.HealthComponent);
+                    Debug.Log("find player");
                 }
 
                 return Status.Success;

@@ -8,7 +8,7 @@ namespace Core.Items
     public class ItemInstance : MonoBehaviour, IItemInstance
     {
         [Inject] private IPlayerInstance _player;
-        
+
         public ScriptableItem ScriptableItem => _scriptableItem;
         [SerializeField] private ScriptableItem _scriptableItem;
 
@@ -16,8 +16,9 @@ namespace Core.Items
         {
             var item = _scriptableItem.CreateItem();
             _player.InventoryHandler.Inventory.AddItem(item);
-            
-            Destroy(gameObject);
+
+            //Destroy(gameObject, 0.08f);
+            this.gameObject.SetActive(false);
         }
     }
 }

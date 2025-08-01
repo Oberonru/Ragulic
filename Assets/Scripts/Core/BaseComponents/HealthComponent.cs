@@ -8,6 +8,7 @@ namespace Core.BaseComponents
 {
     public class HealthComponent : MonoBehaviour, IHealthComponent
     {
+        public Vector3 Position => transform.position;
         public bool IsAllive => _currentHealth > 0;
 
         [ShowInInspector, ReadOnly]

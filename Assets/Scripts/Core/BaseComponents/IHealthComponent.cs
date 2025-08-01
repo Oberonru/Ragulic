@@ -1,9 +1,11 @@
 using UniRx;
+using UnityEngine;
 
 namespace Core.BaseComponents
 {
     public interface IHealthComponent
     {
+        Vector3 Position { get; }
         bool IsAllive { get; }
         int MaxHealth { get; set; }
         int CurrentHealth { get; set; }

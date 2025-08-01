@@ -14,6 +14,8 @@ namespace Core.Enemies.Components
         [Inject] private AIConfig _aiConfig;
         [Inject] private NavMeshAgentConfig _navMeshAgentConfig;
 
+        public NavMeshAgent Agent => _agent;
+        
         [SerializeField, ReadOnly] private EnemyInstance _enemyInstance;
         [SerializeField, ReadOnly] private NavMeshAgent _agent;
         [SerializeField, ReadOnly] private BehaviorGraphAgent _agentGraph;

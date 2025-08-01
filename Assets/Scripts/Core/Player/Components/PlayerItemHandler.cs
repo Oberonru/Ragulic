@@ -8,7 +8,6 @@ namespace Core.Player.Components
     public class PlayerItemHandler : MonoBehaviour
     {
         [Inject] private KeyConfig _keyConfig;
-        [SerializeField] private PlayerInstance _player;
 
         private IInteractableObject _interactableObject;
 
@@ -33,13 +32,7 @@ namespace Core.Player.Components
             if (_interactableObject != null && Input.GetKey(_keyConfig.Interaction))
             {
                 _interactableObject.Interact();
-                _interactableObject = null;
             }
-        }
-
-        private void OnValidate()
-        {
-            if (_player is null) _player = GetComponent<PlayerInstance>();
         }
     }
 }
