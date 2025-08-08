@@ -3,6 +3,7 @@ using Core.BaseComponents;
 using Core.CombatSystem;
 using Core.Configs.Player;
 using Core.Handlers;
+using Core.Observers;
 using Core.Player.CombatSystem;
 using Core.Player.Components;
 using Core.Player.StateMachine;
@@ -20,6 +21,7 @@ namespace Core.Player
     [RequireComponent(typeof(InventoryPlayerHandler))]
     [RequireComponent(typeof(TriggerHitBoxDetector))]
     [RequireComponent(typeof(PlayerAnimator))]
+    [RequireComponent(typeof(PlayerStatisticHandler))]
     [RequireComponent(typeof(DisableComponentAfterDeathHandler))]
     public class PlayerInstance : MonoBehaviour, IPlayerInstance
     {
@@ -31,6 +33,10 @@ namespace Core.Player
         [SerializeField, ReadOnly] private InventoryPlayerHandler _inventory;
         [SerializeField, ReadOnly] private TriggerHitBoxDetector _triggerHitBoxDetector;
         [SerializeField, ReadOnly] private PlayerAnimator _playerAnimator;
+        [SerializeField, ReadOnly] private PlayerStatisticHandler _statisticHandler;
+        [SerializeField, ReadOnly] private PlayerItemHandler _itemHandler;
+
+
         private Animator _animator;
 
         private CinemachineInputAxisController _inputAxisController;
@@ -46,6 +52,9 @@ namespace Core.Player
         public PlayerAnimator PlayerAnimator => _playerAnimator;
         public Animator Animator => _animator;
 
+        public PlayerStatisticHandler StatisticHandler => _statisticHandler;
+        public PlayerItemHandler ItemHandler => _itemHandler;
+
         private void Awake()
         {
             _animator = GetComponent<Animator>();
@@ -54,6 +63,8 @@ namespace Core.Player
                 throw new NullReferenceException($"PlayerConfig is not set on player {gameObject.name}");
             _health.MaxHealth = Stats.Health;
             _health.CurrentHealth = _health.MaxHealth;
+
+            _playerStats.CreatePlayer();
         }
 
         private void Start()
@@ -75,6 +86,8 @@ namespace Core.Player
             if (_inventory is null) _inventory = GetComponent<InventoryPlayerHandler>();
             if (_triggerHitBoxDetector is null) _triggerHitBoxDetector = GetComponent<TriggerHitBoxDetector>();
             if (_playerAnimator is null) _playerAnimator = GetComponent<PlayerAnimator>();
+            if (_playerAnimator is null) _statisticHandler = GetComponent<PlayerStatisticHandler>();
+            if (_playerAnimator is null) _itemHandler = GetComponentInChildren<PlayerItemHandler>();
         }
     }
 }

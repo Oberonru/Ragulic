@@ -1,5 +1,6 @@
 using Core.Configs;
 using Core.Items;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -10,6 +11,9 @@ namespace Core.Player.Components
         [Inject] private KeyConfig _keyConfig;
 
         private IInteractableObject _interactableObject;
+
+        private Subject<Unit> _onInteract = new();
+        public ISubject<Unit> OnInteract => _onInteract;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -31,6 +35,7 @@ namespace Core.Player.Components
         {
             if (_interactableObject != null && Input.GetKey(_keyConfig.Interaction))
             {
+                _onInteract.OnNext(Unit.Default);
                 _interactableObject.Interact();
             }
         }

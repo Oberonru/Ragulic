@@ -16,5 +16,6 @@ namespace Core.Player
         PlayerCombatComponent CombatComponent { get; }
         PlayerStateMachine StateMachine { get; }
         InventoryPlayerHandler InventoryHandler { get; }
+        PlayerItemHandler ItemHandler { get; }
     }
 }

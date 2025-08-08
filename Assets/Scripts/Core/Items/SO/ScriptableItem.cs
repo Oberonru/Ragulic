@@ -1,5 +1,7 @@
+using System;
 using Core.SO;
 using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
 
 namespace Core.Items.SO
@@ -23,8 +25,12 @@ namespace Core.Items.SO
 
         public int Price => _price;
         
+        public IObservable<Unit> OnItemCreated => _onItemCreated;
+        private Subject<Unit> _onItemCreated = new();
+        
         public Item CreateItem()
         {
+            _onItemCreated.OnNext(Unit.Default);
             return new Item(this);
         }
     }

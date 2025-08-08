@@ -37,5 +37,10 @@ namespace Core.Configs.Player
         public float CrouchSpeed => _crouchSpeed;
         public float PanicSpeed => _panicSpeed;
         public float PanicTime => _panicTime;
+
+        public PlayerModel CreatePlayer()
+        {
+            return new PlayerModel(this);
+        }
     }
 }
